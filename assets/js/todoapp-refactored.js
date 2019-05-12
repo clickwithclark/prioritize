@@ -1,0 +1,675 @@
+/* eslint-disable require-jsdoc */
+/**
+ *quickly build array of list items to populate UI as default
+ * @function demo
+ * @return {Object} Object containing methods @function setDemoStatus
+ */
+const demo = (function() {
+    let isDemo = false;
+    let demoTodos;
+    let demoStorage = [];
+    return {
+        /**
+         * Sets the demo status
+         * @function setDemoStatus
+         * @param  {Boolean}  currentState represents the demo status
+         * @return {undefined}
+         */
+        setDemoStatus: function(currentState) {
+            isDemo = currentState;
+        },
+        /**
+         * Retrieves the demo status
+         * @function getDemoStatus
+         * @return {Boolean} The current demo status
+         */
+        getDemoStatus: function() {
+            return isDemo;
+        },
+        getDemoStorage: function() {
+            return demoStorage;
+        },
+        setDemoStorage: function(list) {
+            demoStorage = list;
+        },
+        /**
+         * Populates UI with default todos as a demo of the app
+         * if no todos are found in storage
+         * @function runDemo
+         * @param  {Array} ...listOfDemoTodos Takes a list of todos
+         * @return {undefined}
+         */
+        runDemo: function(...listOfDemoTodos) {
+            manageCreatedTodos.getInput(listOfDemoTodos.toString());
+            demoTodos = manageCreatedTodos.show();
+            demo.setDemoStorage = demoTodos;
+            manageCreatedTodos.removeAll();
+            idTracker.reset();
+            UI.showTodos(demoTodos);
+            demoConversation();
+        }
+    };
+})();
+// UI Class
+/**
+ * Manage User Interface
+ * @function UI
+ * @param  {Array}  demolist a list of todos to populate the UI
+ * @return {undefined}
+ */
+class UI {
+    static showTodos(demolist = undefined) {
+        // get todos from storage and populate UI if none found use demo todos
+        let storedTodos = manageCreatedTodos.show();
+        if (storedTodos.length !== 0) {
+            demolist = storedTodos;
+        }
+        if (demolist !== undefined) {
+            const ul = document.querySelector('.app-container ul');
+            demolist.forEach((todo) => {
+                const listItem = document.createElement('li');
+                listItem.setAttribute('data-id', todo.id);
+                listItem.innerHTML = todo.note;
+
+                ul.append(listItem);
+            });
+            return;
+        }
+
+        demo.setDemoStatus(true);
+        demo.runDemo(
+            `Eg. Buy Tomatoes (Market), 
+            Pack Lunch (field trip),
+            Eg. feed the dog,
+            Eg. Buy potatoes  (Market),
+            Eg. pay bill (water),
+            Eg. Buy Flowers (Anniversary)
+            `
+        );
+    }
+    /**
+     * Add a todo item
+     * @function addNoteToList
+     * @return {undefined}
+     */
+    static addNoteToList() {
+        document
+            .querySelector("input[type='text']")
+            .addEventListener('keyup', (event) => {
+                // when enter is pressed
+                if (event.which === 13) {
+                    // prevent submission of empty or space only entry
+                    if (event.target.value.trim() === '') {
+                        info('You Must Enter Something First!');
+                        // ensure every incorrect attempt shows an animation
+                        setTimeout(() => {
+                            $("input[type='text']").removeClass('shake');
+                        }, 401);
+                        return;
+                    } else {
+                        $("input[type='text']").removeClass('shake');
+                    }
+
+                    // remove demo values if valid submission is being entered
+                    demo.setDemoStatus(false);
+                    // clear UI
+                    UI.clearTodos();
+
+                    manageCreatedTodos.getInput(event.target.value.trim());
+                    // update UI
+                    UI.showTodos();
+
+                    // clear field after enter
+                    event.target.value = '';
+                }
+            });
+    }
+    /**
+     * Removes todos from UI
+     * @function clearTodos
+     * @return {undefined}
+     */
+    static clearTodos() {
+        const ul = document.querySelector('.app-container ul');
+        // faster than setting innerHtml=''
+        while (ul.firstChild) {
+            ul.removeChild(ul.firstChild);
+        }
+    }
+}
+
+class Todo {
+    constructor(note, category = undefined) {
+        category = category === undefined ? '' : `[${category}]`;
+        let generatedId = idTracker.getNewID();
+
+        Object.defineProperties(this, {
+            id: {
+                value: generatedId,
+                writable: false,
+                configurable: false
+            },
+            date: { value: new Date() },
+            formattedDate: {
+                value: `${new Date().getDate()}-${new Date().getMonth() +
+                    1}-${new Date().getFullYear()}`
+            },
+            note: {
+                // eslint-disable-next-line max-len
+
+                value: note = `<span><i class="far fa-check-square"></i></span> ${category} ${note} <span class="grip"><i class="fas fa-arrows-alt-v"></i></span>`
+            },
+            category: {
+                value: category
+            }
+        });
+    }
+
+    get summary() {
+        const aTodo = {
+            id: this.id,
+            note: this.note,
+            formattedDate: this.formattedDate,
+            date: this.date,
+            category: this.category
+        };
+        return aTodo;
+    }
+}
+
+/**
+ * @function manageCreatedTodos
+ *
+ * @return {Object}  Object with closure on an array called list
+ */
+const manageCreatedTodos = (function() {
+    let list = [];
+
+    return {
+        /**
+         *Add a todo to storage by retrieving data from localStorage store in manageCreatedTodos's
+         * list array, appends new Todo to the list, saves updated list to localStorage
+         * @param  {Todo} message accepts the content of the todo
+         * @return {Boolean} success as true and failure as false
+         */
+        create: function(message) {
+            let category = undefined;
+
+            // check for the presence of categories
+            if (message.indexOf('(') !== -1) {
+                category = message.match(/\((.*)\)/).pop();
+                // remove category from being included in a todo body
+                message = message.replace(`(${category})`, '');
+                //  message += escapeHtml(message);
+            }
+
+            const todo = new Todo(message, category);
+            list.push(todo.summary);
+
+            return this.save();
+        },
+        createManyTodos: function(note) {
+            const list = note.split(',');
+            list.forEach((listItem) => {
+                manageCreatedTodos.create(listItem);
+            });
+            // manageCreatedTodos.show();
+        },
+
+        /**
+         *@return {Number} the number of todo NOT committed to storage
+         */
+        count: function() {
+            return list.length;
+        },
+
+        /**
+         * Serializes the list of Todos that are NOT committed
+         * to storage to JSON format
+         * @return {String} JSON String
+         */
+        formatForLocalStorage: function() {
+            return JSON.stringify(list);
+        },
+        /**
+         * Remove a todo from storage
+         * @param  {Number} id The ID number of the Todo item to remove
+         * @return {Boolean} success as true and failure as false
+         */
+        remove: function(id) {
+            let idDoesExist = false;
+            this.show();
+            list.filter((listObject) => {
+                if (listObject.id == id) {
+                    return (idDoesExist = true);
+                }
+            });
+
+            if (idDoesExist) {
+                list = list.filter((listObject) => {
+                    return listObject.id != id;
+                });
+                return this.save();
+            }
+            return false;
+        },
+        removeAll: function() {
+            localStorage.removeItem('todos');
+            list = [];
+        },
+        /**
+         * @return {Array} An array of all todos
+         */
+        show: function() {
+            list = JSON.parse(localStorage.getItem('todos')) || [];
+            // when all todo's are deleted, reset id number generator
+            if (list.length === 0) {
+                idTracker.reset();
+            }
+
+            return list;
+        },
+        /**
+         * Stores whatever todos are in list array to localStorage
+         * @return {Boolean} success as true and failure as false
+         */
+        save: function() {
+            localStorage.setItem('todos', this.formatForLocalStorage(list));
+            const aList = this.show();
+
+            if (aList.length > 0) {
+                return true;
+            }
+
+            return false;
+        },
+        getInput: function(note) {
+            if (note.indexOf(',') !== -1) {
+                // check if input is a string or a comma seperated list
+                // if list detected, pass to function to create a list of todos from one input instead
+
+                return this.createManyTodos(note);
+            }
+            this.create(note);
+        },
+
+        set: function(newList) {
+            /* if its a demo, use demo storage not main storage */
+
+            if (newList.length < 1) {
+                throw new Error('The list passed is empty');
+            }
+            list = newList;
+            this.save();
+
+            const aList = this.show();
+
+            if (aList.length > 0) {
+                return true;
+            }
+
+            return false;
+        }
+    };
+})();
+
+const idTracker = (() => {
+    let id = 1;
+    return {
+        getNewID: function() {
+            this.retrieveStoredId();
+            id++;
+            this.storeId();
+            return id;
+        },
+
+        storeId: function() {
+            localStorage.setItem('noteIds', id);
+        },
+        retrieveStoredId: function() {
+            id = localStorage.getItem('noteIds') || 0;
+        },
+        reset: function() {
+            id = 0;
+            this.storeId();
+        }
+    };
+})();
+
+// sortable List Items use Jquery UI
+$(() => {
+    $('.list-group').sortable({
+        handle: '.grip',
+        forcePlaceholderSize: true,
+        placeholder: 'place-holder',
+        stop: function(event, ui) {
+            /* ignore if no todos are stored */
+            if (demo.getDemoStatus()) {
+                return;
+            }
+            if (event.type == 'sortstop') {
+                /* store todo id's in the order they are sorted, 
+                when sorting is done */
+                let positions = [];
+                let elements = document.querySelectorAll(
+                    '.app-container ul>li'
+                );
+                elements.forEach((element) => {
+                    /* populate new array with id's in new sorted order */
+                    positions.push(Number(element.getAttribute('data-id')));
+                });
+
+                let todosFromStorage = manageCreatedTodos.show();
+
+                let todoIdsAndTheirPositions = {};
+                let todosInStorage = {};
+                let newList = [];
+
+                /* store todos by their id */
+                for (const todo of todosFromStorage) {
+                    todosInStorage[todo.id] = todo;
+                }
+                /* store todo id as property and array index position in sorted list as value  */
+                for (const todoId of positions) {
+                    todoIdsAndTheirPositions[todoId] = positions.indexOf(
+                        todoId
+                    );
+                }
+
+                /*  rearrange list of todos */
+                for (const id in todoIdsAndTheirPositions) {
+                    /* store todos by their sorted index position */
+                    newList[todoIdsAndTheirPositions[id]] = todosInStorage[id];
+                }
+                /* update Storage with new postioning  */
+                manageCreatedTodos.removeAll();
+                idTracker.reset();
+                manageCreatedTodos.set(newList);
+                /* update UI */
+                UI.clearTodos();
+                UI.showTodos();
+            }
+        }
+    });
+    $('.list-group').disableSelection();
+});
+// using TouchPunch to get sortable list on mobile devices
+// prevents click events button added to enable/disable sorting
+//
+
+// Event:Display Notes on load
+document.addEventListener('DOMContentLoaded', UI.showTodos());
+
+// '+'  toggle button pressed, show input field
+$('.drop-down-entry').click(() => {
+    $("input[type='text']").fadeToggle();
+    // prevent animation from repeating
+    // when input field is hidden
+    $("input[type='text']").removeClass('shake');
+});
+
+// Event: Add event listener for enter key to capture notes
+UI.addNoteToList();
+
+document.addEventListener(
+    'click',
+    function(event) {
+        // selected completed todos
+        if (event.target.matches('.app-container ul>li')) {
+            event.target.firstChild.classList.toggle('clickedLi');
+            event.target.classList.toggle('completed');
+            fadeOutToggle(event.target.firstChild);
+        }
+
+        // deleting completed todos
+        if (
+            event.target.matches(' span.clickedLi ') ||
+            event.target.matches(' span.clickedLi > svg ')
+        ) {
+            /* multi-delete */
+            // when attempting a delete, find all other selected todos
+            // and delete them as well
+            let selectedTodos = document.querySelectorAll(
+                '.app-container ul>li> span.clickedLi'
+            );
+            selectedTodos.forEach((element) => {
+                let id = Number(element.parentNode.getAttribute('data-id'));
+                // fadeOut & delete todo from storage
+                let s = element.parentNode.style;
+                fadeAndDelete(s, id)();
+            });
+        }
+
+        // sort by date
+        if (
+            event.target.matches('.date-sort') ||
+            event.target.matches('.date-sort > svg ') ||
+            event.target.matches('.date-sort > svg > path')
+        ) {
+            // sort todos based on boolean
+            doSort.sort();
+            // store sorted todos
+            let sorted = doSort.getSortedTodos();
+            // flip bool value for different sort on same button click
+            manageCreatedTodos.set(sorted);
+            UI.clearTodos();
+            UI.showTodos();
+        }
+
+        // sort by category
+        if (
+            event.target.matches('.category-button') ||
+            event.target.matches('.category-button > svg ') ||
+            event.target.matches('.category-button > svg > path')
+        ) {
+            // sort todos based on boolean
+            doDateSort.sort();
+            // store sorted todos
+            let sorted = doDateSort.getSortedTodos();
+            // flip bool value for different sort on same button click
+            manageCreatedTodos.set(sorted);
+            UI.clearTodos();
+            UI.showTodos();
+        }
+
+        // sort by category
+    },
+    false
+);
+
+// prevent HTML injection
+
+const escapeHtml = (text) => {
+    const map = {
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#039;'
+    };
+
+    return text.replace(/[&<>"']/g, function(m) {
+        return map[m];
+    });
+};
+
+// display information messages to user
+
+const info = (message) => {
+    $("input[type='text']").addClass('shake');
+    $('#logo').attr('src', 'assets/img/oops.png');
+    $('#info-message').text(message);
+    $(document).scrollTop(0);
+    $('#info-bubble').css('visibility', 'visible');
+    // hide message after 3 seconds
+    setTimeout(() => {
+        $('#info-bubble').css('visibility', 'hidden');
+        $('#logo').attr('src', 'assets/img/cwc.svg');
+    }, 3000);
+};
+
+function sayToUser(message, time) {
+    return new Promise((resolve) => {
+        (function talk() {
+            $('#info-message').text(message);
+            $('#info-bubble').css('visibility', 'visible');
+            // hide message after 3 seconds
+            setTimeout(() => {
+                $(document).scrollTop(0);
+                $('#info-bubble').css('visibility', 'hidden');
+                resolve();
+            }, time);
+        })();
+    });
+}
+
+async function preparedConversationDemo(message) {
+    await sayToUser('Hello There, thanks for checking out this project', 4000);
+    await sayToUser(
+        'You can use the example task list below to get familiar with the controls',
+        5000
+    );
+    $('.date-sort > svg').addClass('intro');
+    await sayToUser('The First button lets you sort by date', 5000);
+    $('.category-button > svg').addClass('intro');
+    await sayToUser('The Second button lets you sort by category', 5000);
+    $('.drop-down-entry > svg').addClass('intro');
+    $("input[type='text']").fadeToggle();
+    await sayToUser(
+        'Finally to add a new task, use the add button...enjoy!',
+        5000
+    );
+}
+
+async function preparedConversation(...listOfComments) {
+    for (const comment of listOfComments) {
+        await sayToUser(comment, 5000);
+    }
+}
+
+let doSort = (function() {
+    let toSort = [];
+    let flip = 1;
+    /** Change the direction of the sort on each function call
+     * @function flipSort
+     * @param  {Element} a first element for comparison
+     * @param  {Element} b second  element for comparison
+     * @return {Number} Decision on whether [1] or not [-1] the element is correctly sorted
+     */
+    function flipSort(a, b) {
+        return (b > a ? 1 : -1) * flip;
+    }
+
+    return {
+        sort: function() {
+            toSort = manageCreatedTodos.show();
+
+            toSort.sort((x, y) => {
+                let a = x.date;
+                let b = y.date;
+
+                return flipSort(a, b);
+            });
+            // toggle sort direction
+            flip *= -1;
+        },
+
+        getSortedTodos: function() {
+            return toSort;
+        }
+    };
+})();
+
+let doDateSort = (function() {
+    let toSort = [];
+    let flip = 1;
+    /** Change the direction of the sort on each function call
+     * @function flipSort
+     * @param  {Element} a first element for comparison
+     * @param  {Element} b second  element for comparison
+     * @return {Number} Decision on whether [1] or not [-1] the element is correctly sorted
+     */
+    function flipSort(a, b) {
+        return (b > a ? 1 : -1) * flip;
+    }
+
+    return {
+        sort: function() {
+            toSort = manageCreatedTodos.show();
+
+            toSort.sort((x, y) => {
+                let a = x.category.toLowerCase();
+                let b = y.category.toLowerCase();
+
+                return flipSort(a, b);
+            });
+            // toggle sort direction
+            flip *= -1;
+        },
+
+        getSortedTodos: function() {
+            return toSort;
+        }
+    };
+})();
+
+function demoConversation() {
+    if (demo.getDemoStatus()) {
+        preparedConversationDemo();
+    }
+}
+
+function fadeAndDelete(s, id) {
+    return async function() {
+        await fadeOut(s);
+        // remove from db
+        manageCreatedTodos.remove(id);
+        // removes li from ul
+        UI.clearTodos();
+        // populate ul with li's pulled from db
+        UI.showTodos();
+    };
+}
+// fade out an element
+function fadeOut(s) {
+    return new Promise((resolve) => {
+        s.opacity = 1;
+        (function fade() {
+            if ((s.opacity -= 0.1) < 0) {
+                s.display = 'none';
+                return resolve('fadeOver');
+            } else {
+                setTimeout(fade, 40);
+            }
+        })();
+    });
+}
+
+// toggle fadeOut
+
+function fadeOutToggle(s) {
+    return new Promise((resolve) => {
+        s.opacity = 1;
+        if (s.opacity < 0) {
+            // 1-0
+            (function fade() {
+                if ((s.opacity -= 0.1) < 0) {
+                    s.display = 'none';
+                    return resolve('fadeOver');
+                } else {
+                    setTimeout(fade, 40);
+                }
+            })();
+        } else {
+            (function fade() {
+                if ((s.opacity += 0.1) < 1) {
+                    s.display = 'none';
+                    return resolve('fadeOver');
+                } else {
+                    setTimeout(fade, 40);
+                }
+            })();
+        }
+    });
+}
+// easter egg: hit my head ten times and i'll talk

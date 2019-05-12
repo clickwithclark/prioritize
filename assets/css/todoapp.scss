@@ -1,0 +1,247 @@
+
+// fancy font
+@font-face{
+    font-family: 'CabinSketch';
+    font-style: normal;
+    font-weight: 400;
+    src: url(../fonts/CabinSketch.woff2) format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+    font-family: 'Neucha';
+    font-style: normal;
+    font-weight: 400;
+    src: url(../fonts/Neucha.woff2) format('woff2');
+    //unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+  }
+
+  @font-face {
+    font-family: 'Neucha2';
+    font-style: normal;
+    font-weight: 400;
+    src: url(../fonts/Neucha2.woff2) format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  }
+html >body{
+    background-image: url(../img/background.png)!important;
+ background-repeat: repeat;
+ 
+}
+
+body {
+    font: 300 1.1em ;
+//     background: #CC95C0;  /* fallback for old browsers */
+// background: -webkit-linear-gradient(to right, #7AA1D2, #DBD4B4, #CC95C0);  /* Chrome 10-25, Safari 5.1-6 */
+// background: linear-gradient(to right, #7AA1D2, #DBD4B4, #CC95C0); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+ 
+ 
+}
+@keyframes bounce-cwc {
+    from {
+        transform: translateY(0)
+    }
+    to {
+        transform: translateY(-10%)
+    }
+}
+#logo{
+    
+   margin: 0 auto;
+   margin-top: 50px;
+    height: 150px;
+    display: block;
+    animation: bounce-cwc 2.5s infinite alternate;
+}
+#info-bubble{
+    margin: 0 auto;
+    margin-top: 10px;
+     height: 150px;
+     width: 192px;
+     display: block;
+     position: relative;
+     left: 80px;
+      visibility: hidden;
+     
+     font-size: 24px;
+}
+ #speech-bubble{
+    width: 190px;
+ }
+#info-message{
+    position: relative;
+    z-index: 100;
+    bottom: 164px;
+    font-size: 16px;
+    text-align: center;
+    padding: 20px;
+    font-family: "Neucha2";
+    font-weight: 500;
+   
+   
+}
+
+
+.app-container {
+    box-sizing: border-box;
+    margin: 50px auto;
+    // box-shadow: 0 0 3px rgba(26, 117, 118, 0.5);
+    width: 360px;
+    background-color:transparent;
+    h1 {
+        background-color: transparent ;
+        color: #212529;;
+        font: 400 1.6em "Neucha2";
+        // margin: 0;
+        padding: 10px 20px;
+        text-transform: uppercase;
+        .drop-down-entry{
+            
+            float: right;
+            cursor: pointer;
+            font-size: 30px;
+            &:active{
+                font-size: 25.6px;
+            }
+        }
+      
+
+       .fa-tags{
+        
+        cursor: pointer;
+        position: relative;
+        left: 100px;
+        font-size: 30px;
+        &:active{
+            font-size: 25.6px;
+        }
+       }
+
+       .fa-sort-amount-down {
+           cursor: pointer;
+           position: relative;
+           
+           font-size: 30px;
+
+           &:active {
+               font-size: 25.6px;
+           }
+
+       }
+    }
+    ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      
+        li {
+            line-height: 40px;
+            font: 500 1rem "Neucha2";
+            height: 40px;
+            line-height: 40px;
+            background-color: white;
+            span{
+                background-color: #fff;;
+                height: 40px;
+                margin-right: 20px;
+                text-align: center;
+                color: #212529;
+                width:  0;
+                opacity: 0;
+                display: inline-block;
+                // cursor: pointer;
+                 //essential for mobile app to prevent accidental deleting
+                pointer-events: none;
+                transition: 0.2s linear;
+              
+            }
+            
+            .grip{
+                color: #212529 !important;
+                width: 60px !important;
+                height: 26px;
+                opacity: 1 !important;
+                background-color: transparent !important;
+                pointer-events: all !important;
+                cursor: grab !important;
+                float: right;
+            }
+        } 
+        // &:active li {
+                    
+        //     cursor: pointer !important;
+        //     border: solid 1px #212529;
+         
+        // }
+    }
+
+    .ui-sortable-helper{
+        cursor: pointer !important;
+        border: solid 1px #212529 !important;
+    }
+ 
+    input[type="text"] {
+        width: 100%;
+        margin: 0;
+        box-sizing: border-box;
+        padding: 13px 13px 13px 20px;
+        background-color: #fafafa;
+        height: 40px;
+         font: 400 1.1em ;
+        color: #1A75BC;;
+        border: none;
+        display: none;
+        
+        &:focus{
+            background-color: #fff;
+            outline: none;
+            border: 2px solid black;
+            
+        }
+        
+        &::placeholder{
+            color:gray;
+            font-style: italic
+        }
+    }
+}
+
+.completed {
+    text-decoration: line-through;
+    color: grey;
+  
+}
+
+.clickedLi {
+    width: 40px !important;
+    opacity: 1 !important;
+    pointer-events: all !important;
+    cursor: pointer !important;
+   
+}
+
+@keyframes shake{
+    0%, 100% {  transform: translateX(0);}
+    20% , 60% { transform: translateX(-10%);}
+    40% , 80% { transform: translateX(10%);}
+  }
+
+  .shake{
+   animation: shake 0.4s 1 both !important;
+   
+  }
+  .intro {
+      animation: shake 0.4s 5  both !important;
+
+  }
+
+ 
+// sortable place holder highlighting
+
+.place-holder{
+    height: 1.5em; line-height: 1.2em !important;
+    
+
+    //border: 1px solid black !important;
+	background: grey!important;
+
+}

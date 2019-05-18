@@ -523,22 +523,39 @@ function sayToUser(message, time) {
     });
 }
 
-async function preparedConversationDemo(message) {
+async function preparedConversationDemo() {
+    let userInputDuringDemo = (event) => {
+        demo.setDemoStatus(false);
+    };
+    document
+        .querySelector("input[type='text']")
+        .addEventListener('keypress', userInputDuringDemo);
+    checkForUserInput();
     await sayToUser('Hello There, thanks for checking out this project', 4000);
+    checkForUserInput();
     await sayToUser(
         'You can use the example task list below to get familiar with the controls',
         5000
     );
-    $('.date-sort > svg').addClass('intro');
+    checkForUserInput();
+    document.querySelector('.date-sort > svg').classList.add('intro');
+    checkForUserInput();
     await sayToUser('The First button lets you sort by date', 5000);
-    $('.category-button > svg').addClass('intro');
+    checkForUserInput();
+    document.querySelector('.category-button > svg').classList.add('intro');
+    checkForUserInput();
     await sayToUser('The Second button lets you sort by category', 5000);
-    $('.drop-down-entry > svg').addClass('intro');
-    $("input[type='text']").fadeToggle();
+    checkForUserInput();
+    document.querySelector('.drop-down-entry > svg').classList.add('intro');
+
+    checkForUserInput();
+    fadeOutToggle(document.querySelector("input[type='text']"));
+    checkForUserInput();
     await sayToUser(
         'Finally to add a new task, use the add button...enjoy!',
         5000
     );
+    document.querySelector("input[type='text']").removeEventListener();
 }
 
 async function preparedConversation(...listOfComments) {
@@ -645,26 +662,42 @@ function fadeOut(s) {
     });
 }
 
-// toggle fadeOut
+function checkForUserInput() {
+    if (!demo.getDemoStatus()) {
+        throw new Error('Demo Interrupted');
+    }
+}
+
+/**
+ * @function fadeOutToggle
+ * @param  {DOM Element} s any element captured with document.querySelector
+ * @return {Promise} allows for use inside async functions so that adjacent functions wait for fade to complete before running
+ */
 
 function fadeOutToggle(s) {
     return new Promise((resolve) => {
-        s.opacity = 1;
-        if (s.opacity < 0) {
-            // 1-0
+        // set opacity based on the current state of the element
+        s.opacity =
+            window.getComputedStyle(s).getPropertyValue('display') == 'none'
+                ? 0
+                : 1;
+
+        if (s.opacity == 1) {
+            // opacity goes from 1-0
             (function fade() {
                 if ((s.opacity -= 0.1) < 0) {
                     s.display = 'none';
-                    return resolve('fadeOver');
+                    return resolve();
                 } else {
                     setTimeout(fade, 40);
                 }
             })();
         } else {
+            // opacity goes from 0-1
             (function fade() {
-                if ((s.opacity += 0.1) < 1) {
-                    s.display = 'none';
-                    return resolve('fadeOver');
+                if ((s.opacity += 0.1) > 1) {
+                    s.style.display = 'inline-block';
+                    return resolve();
                 } else {
                     setTimeout(fade, 40);
                 }

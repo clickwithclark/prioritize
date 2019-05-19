@@ -309,6 +309,29 @@ const manageCreatedTodos = (function() {
             }
 
             return false;
+        },
+        update: function(id, note, category = undefined) {
+            let updateCategory = category == undefined ? '' : `[${category}]`;
+
+            let newNote = `<span><i class="far fa-check-square"></i></span> ${updateCategory} ${note} <span class="grip"><i class="fas fa-arrows-alt-v"></i></span>`;
+            let idDoesExist = false;
+            this.show();
+            list.filter((listObject) => {
+                if (listObject.id == id) {
+                    return (idDoesExist = true);
+                }
+            });
+
+            if (idDoesExist) {
+                list.map((listObject) => {
+                    if (listObject.id === id) {
+                        listObject.category = category;
+                        listObject.note = newNote;
+                    }
+                });
+                return this.save();
+            }
+            return false;
         }
     };
 })();
@@ -705,4 +728,115 @@ function fadeOutToggle(s) {
         }
     });
 }
+
+const listenForUpdate = function() {
+    // detect li to be updated after holding for 2 seconds
+    // let allListItems = document.querySelectorAll('.app-container ul>li');
+    // allListItems.forEach((element) => {
+    //     element.addEventListener('mouseup', clearTimer);
+    //     element.addEventListener('mousedown', howLongMouseDown);
+    // });
+
+    let mouseDownId = null;
+    let time = 0;
+    document.addEventListener('mouseup', function clearTimer(event) {
+        if (event.target.matches('.app-container ul>li')) {
+            if (mouseDownId != null) {
+                clearInterval(mouseDownId);
+                mouseDownId = null;
+                time = 0;
+            }
+        }
+    });
+    document.addEventListener('mousedown', function howLongMouseDown(event) {
+        if (event.target.matches('.app-container ul>li')) {
+            if (mouseDownId === null) {
+                mouseDownId = setInterval(() => {
+                    time += 200;
+                    updateIF2Seconds(event);
+                }, 200);
+            }
+            // group data to update
+            itemToUpdate.domElement = event.target;
+            itemToUpdate.id = Number(event.target.getAttribute('data-id'));
+            let text = event.target.textContent;
+            itemToUpdate.text = event.target.textContent;
+
+            // check for the presence of categories
+            if (text.indexOf('[') !== -1) {
+                itemToUpdate.category = text.match(/\[(.*)\]/).pop();
+                // remove category from being included in a todo body
+                itemToUpdate.text = text.replace(
+                    `[${itemToUpdate.category}]`,
+                    `(${itemToUpdate.category})`
+                );
+                //  message += escapeHtml(message);
+            }
+        }
+    });
+
+    /* function howLongMouseDown(event) {
+        
+    } */
+    /*  function clearTimer() {
+      
+    } */
+
+    // store data to be updated
+    let itemToUpdate = {};
+    function updateIF2Seconds(event) {
+        if (time >= 800) {
+            clearInterval(mouseDownId);
+            // change li to input
+            let parent = event.target.parentNode;
+            let input = document.createElement('input');
+            // add data to input value
+            input.setAttribute('value', `${itemToUpdate.text}`);
+            parent.replaceChild(input, event.target);
+            // focus cursor to input box
+            input.focus();
+            input.select();
+            let allInputs = document.querySelectorAll(
+                '.app-container ul>input'
+            );
+            allInputs.forEach((element) => {
+                element.addEventListener('keyup', (event) => {
+                    // if enter is pressed
+                    if (event.which === 13) {
+                        // check for the presence of categories
+                        let updatedText = event.target.value;
+                        itemToUpdate.text = updatedText;
+                        if (updatedText.indexOf('(') !== -1) {
+                            itemToUpdate.category = updatedText
+                                .match(/\((.*)\)/)
+                                .pop();
+                            // remove category from being included in a todo body
+                            itemToUpdate.text = updatedText.replace(
+                                `(${itemToUpdate.category})`,
+                                ''
+                            );
+                            //  message += escapeHtml(message);
+                        }
+
+                        manageCreatedTodos.update(
+                            itemToUpdate.id,
+                            itemToUpdate.text,
+                            itemToUpdate.category
+                        );
+                        // update ui
+                        UI.clearTodos();
+                        UI.showTodos();
+                    }
+                });
+            });
+        }
+    }
+
+    // change icon from draggable to save icon
+    // on save change update todo via id and change value and date
+    // keep position of todo
+    // change input back to li
+};
+document.addEventListener('DOMContentLoaded', listenForUpdate);
+
 // easter egg: hit my head ten times and i'll talk

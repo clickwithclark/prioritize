@@ -1,3 +1,18 @@
+// prevent HTML injection
+
+const escapeHtml = (text) => {
+    const map = {
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#039;'
+    };
+
+    return text.replace(/[&<>"']/g, function(m) {
+        return map[m];
+    });
+};
 /* eslint-disable require-jsdoc */
 /**
  *quickly build array of list items to populate UI as default
@@ -42,7 +57,7 @@ const demo = (function() {
         runDemo: function(...listOfDemoTodos) {
             manageCreatedTodos.getInput(listOfDemoTodos.toString());
             demoTodos = manageCreatedTodos.show();
-            demo.setDemoStorage = demoTodos;
+            demo.setDemoStorage(demoTodos);
             manageCreatedTodos.removeAll();
             idTracker.reset();
             UI.showTodos(demoTodos);
@@ -115,7 +130,9 @@ class UI {
                     // clear UI
                     UI.clearTodos();
 
-                    manageCreatedTodos.getInput(event.target.value.trim());
+                    manageCreatedTodos.getInput(
+                        escapeHtml(event.target.value.trim())
+                    );
                     // update UI
                     UI.showTodos();
 
@@ -213,7 +230,6 @@ const manageCreatedTodos = (function() {
             list.forEach((listItem) => {
                 manageCreatedTodos.create(listItem);
             });
-            // manageCreatedTodos.show();
         },
 
         /**
@@ -297,7 +313,10 @@ const manageCreatedTodos = (function() {
             /* if its a demo, use demo storage not main storage */
 
             if (newList.length < 1) {
-                throw new Error('The list passed is empty');
+                // throw new Error('The list passed is empty');
+                // use demo items since there is nothing in storage
+                list = demo.getDemoStorage();
+                return;
             }
             list = newList;
             this.save();
@@ -475,8 +494,10 @@ document.addEventListener(
             let sorted = doSort.getSortedTodos();
             // flip bool value for different sort on same button click
             manageCreatedTodos.set(sorted);
+
             UI.clearTodos();
             UI.showTodos();
+            stopDemo();
         }
 
         // sort by category
@@ -493,6 +514,7 @@ document.addEventListener(
             manageCreatedTodos.set(sorted);
             UI.clearTodos();
             UI.showTodos();
+            stopDemo();
         }
 
         // sort by category
@@ -500,18 +522,17 @@ document.addEventListener(
     false
 );
 
-// prevent HTML injection
-
-const escapeHtml = (text) => {
+// undo escape for update purposes
+const unEscapeHtml = (text) => {
     const map = {
-        '&': '&amp;',
-        '<': '&lt;',
-        '>': '&gt;',
-        '"': '&quot;',
-        "'": '&#039;'
+        '&amp;': '&',
+        '&lt;': '<',
+        '&gt;': '>',
+        '&quot;': '"',
+        '&#039;': "'"
     };
 
-    return text.replace(/[&<>"']/g, function(m) {
+    return text.replace(/[&amp;&lt;&gt;&quot;&#039;]/g, function(m) {
         return map[m];
     });
 };
@@ -547,38 +568,47 @@ function sayToUser(message, time) {
 }
 
 async function preparedConversationDemo() {
-    let userInputDuringDemo = (event) => {
-        demo.setDemoStatus(false);
-    };
     document
         .querySelector("input[type='text']")
-        .addEventListener('keypress', userInputDuringDemo);
-    checkForUserInput();
-    await sayToUser('Hello There, thanks for checking out this project', 4000);
-    checkForUserInput();
-    await sayToUser(
-        'You can use the example task list below to get familiar with the controls',
-        5000
-    );
-    checkForUserInput();
-    document.querySelector('.date-sort > svg').classList.add('intro');
-    checkForUserInput();
-    await sayToUser('The First button lets you sort by date', 5000);
-    checkForUserInput();
-    document.querySelector('.category-button > svg').classList.add('intro');
-    checkForUserInput();
-    await sayToUser('The Second button lets you sort by category', 5000);
-    checkForUserInput();
-    document.querySelector('.drop-down-entry > svg').classList.add('intro');
+        .addEventListener('keypress', stopDemo);
+    while (demo.getDemoStatus()) {
+        checkForUserInput();
+        await sayToUser(
+            'Hello There, thanks for checking out this project',
+            4000
+        );
+        checkForUserInput();
+        await sayToUser(
+            'You can use the example task list below to get familiar with the controls',
+            5000
+        );
+        checkForUserInput();
+        document.querySelector('.date-sort > svg').classList.add('intro');
+        checkForUserInput();
+        await sayToUser('The First button lets you sort by date', 5000);
+        checkForUserInput();
+        document.querySelector('.category-button > svg').classList.add('intro');
+        checkForUserInput();
+        await sayToUser('The Second button lets you sort by category', 5000);
+        checkForUserInput();
+        document.querySelector('.drop-down-entry > svg').classList.add('intro');
 
-    checkForUserInput();
-    fadeOutToggle(document.querySelector("input[type='text']"));
-    checkForUserInput();
-    await sayToUser(
-        'Finally to add a new task, use the add button...enjoy!',
-        5000
-    );
-    document.querySelector("input[type='text']").removeEventListener();
+        checkForUserInput();
+        fadeOutToggle(document.querySelector("input[type='text']"));
+        checkForUserInput();
+        await sayToUser(
+            'Finally to add a new task, use the add button...enjoy!',
+            5000
+        );
+    }
+
+    document
+        .querySelector("input[type='text']")
+        .removeEventListener('keypress', userInputDuringDemo);
+}
+
+function stopDemo() {
+    demo.setDemoStatus(false);
 }
 
 async function preparedConversation(...listOfComments) {

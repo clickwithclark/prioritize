@@ -132,6 +132,13 @@ class UI {
                 const listItem = document.createElement('li');
                 listItem.setAttribute('data-id', todo.id);
                 listItem.innerHTML = todo.note;
+                // preserve state of selected todo
+                todo.isCompleted
+                    ? listItem.classList.add('completed')
+                    : listItem.classList.remove('completed');
+                todo.isCompleted
+                    ? listItem.firstChild.classList.add('clickedLi')
+                    : listItem.firstChild.classList.remove('clickedLi');
 
                 ul.append(listItem);
             });
@@ -405,6 +412,29 @@ const manageCreatedTodos = (function() {
                 return this.save();
             }
             return false;
+        },
+        setCompletedState: function(id) {
+            /* ignore if in demo mode */
+            if (demo.getDemoStorage() > 1) {
+                return;
+            }
+            let idDoesExist = false;
+            this.show();
+            list.filter((listObject) => {
+                if (listObject.id == id) {
+                    return (idDoesExist = true);
+                }
+            });
+
+            if (idDoesExist) {
+                list.map((listObject) => {
+                    if (listObject.id === id) {
+                        listObject.isCompleted =
+                            !listObject.isCompleted && true;
+                    }
+                });
+                return this.save();
+            }
         }
     };
 })();
@@ -512,6 +542,8 @@ document.addEventListener(
     function(event) {
         // selected completed todos
         if (event.target.matches('.app-container ul>li')) {
+            let id = Number(event.target.getAttribute('data-id'));
+            manageCreatedTodos.setCompletedState(id);
             event.target.firstChild.classList.toggle('clickedLi');
             event.target.classList.toggle('completed');
             fadeOutToggle(event.target.firstChild);
@@ -617,12 +649,6 @@ function stopDemo() {
     demo.setDemoStatus(false);
 }
 
-async function preparedConversation(...listOfComments) {
-    for (const comment of listOfComments) {
-        await sayToUser(comment, 5000);
-    }
-}
-
 let doDateSort = (function() {
     let toSort = [];
     let flip = 1;
@@ -703,11 +729,11 @@ let doCategorySort = (function() {
     };
 })();
 
-function demoConversation() {
-    if (demo.getDemoStatus()) {
-        preparedConversationDemo();
-    }
-}
+// function demoConversation() {
+//     if (demo.getDemoStatus()) {
+//         preparedConversationDemo();
+//     }
+// }
 
 function fadeAndDelete(s, id) {
     return async function() {
@@ -817,13 +843,6 @@ const listenForUpdate = function() {
             }
         }
     });
-
-    /* function howLongMouseDown(event) {
-        
-    } */
-    /*  function clearTimer() {
-      
-    } */
 
     // store data to be updated
     let itemToUpdate = {};

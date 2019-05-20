@@ -20,7 +20,7 @@ const escapeHtml = (text) => {
  * @return {Object} Object containing methods @function setDemoStatus
  */
 const demo = (function() {
-    let isDemo = false;
+    let isDemo = true;
     let demoTodos;
     let demoStorage = [];
     return {
@@ -61,7 +61,54 @@ const demo = (function() {
             manageCreatedTodos.removeAll();
             idTracker.reset();
             UI.showTodos(demoTodos);
-            demoConversation();
+        },
+        demoConversation: async function preparedConversationDemo() {
+            document
+                .querySelector("input[type='text']")
+                .addEventListener('keypress', stopDemo);
+            while (this.getDemoStatus()) {
+                checkForUserInput();
+                await sayToUser(
+                    'Hello There, thanks for checking out this project',
+                    4000
+                );
+                checkForUserInput();
+                await sayToUser(
+                    'You can use the example task list below to get familiar with the controls',
+                    5000
+                );
+                checkForUserInput();
+                document
+                    .querySelector('.date-sort > svg')
+                    .classList.add('intro');
+                checkForUserInput();
+                await sayToUser('The First button lets you sort by date', 5000);
+                checkForUserInput();
+                document
+                    .querySelector('.category-button > svg')
+                    .classList.add('intro');
+                checkForUserInput();
+                await sayToUser(
+                    'The Second button lets you sort by category',
+                    5000
+                );
+                checkForUserInput();
+                document
+                    .querySelector('.drop-down-entry > svg')
+                    .classList.add('intro');
+
+                checkForUserInput();
+                fadeOutToggle(document.querySelector("input[type='text']"));
+                checkForUserInput();
+                await sayToUser(
+                    'Finally to add a new task, use the add button...enjoy!',
+                    5000
+                );
+            }
+
+            document
+                .querySelector("input[type='text']")
+                .removeEventListener('keypress', stopDemo);
         }
     };
 })();
@@ -91,7 +138,6 @@ class UI {
             return;
         }
 
-        demo.setDemoStatus(true);
         demo.runDemo(
             `Eg. Buy Tomatoes (Market), 
             Pack Lunch (field trip),
@@ -101,6 +147,10 @@ class UI {
             Eg. Buy Flowers (Anniversary)
             `
         );
+
+        if (demo.getDemoStatus()) {
+            demo.demoConversation();
+        }
     }
     /**
      * Add a todo item
@@ -567,45 +617,45 @@ function sayToUser(message, time) {
     });
 }
 
-async function preparedConversationDemo() {
-    document
-        .querySelector("input[type='text']")
-        .addEventListener('keypress', stopDemo);
-    while (demo.getDemoStatus()) {
-        checkForUserInput();
-        await sayToUser(
-            'Hello There, thanks for checking out this project',
-            4000
-        );
-        checkForUserInput();
-        await sayToUser(
-            'You can use the example task list below to get familiar with the controls',
-            5000
-        );
-        checkForUserInput();
-        document.querySelector('.date-sort > svg').classList.add('intro');
-        checkForUserInput();
-        await sayToUser('The First button lets you sort by date', 5000);
-        checkForUserInput();
-        document.querySelector('.category-button > svg').classList.add('intro');
-        checkForUserInput();
-        await sayToUser('The Second button lets you sort by category', 5000);
-        checkForUserInput();
-        document.querySelector('.drop-down-entry > svg').classList.add('intro');
+// async function preparedConversationDemo() {
+//     document
+//         .querySelector("input[type='text']")
+//         .addEventListener('keypress', stopDemo);
+//     while (demo.getDemoStatus()) {
+//         checkForUserInput();
+//         await sayToUser(
+//             'Hello There, thanks for checking out this project',
+//             4000
+//         );
+//         checkForUserInput();
+//         await sayToUser(
+//             'You can use the example task list below to get familiar with the controls',
+//             5000
+//         );
+//         checkForUserInput();
+//         document.querySelector('.date-sort > svg').classList.add('intro');
+//         checkForUserInput();
+//         await sayToUser('The First button lets you sort by date', 5000);
+//         checkForUserInput();
+//         document.querySelector('.category-button > svg').classList.add('intro');
+//         checkForUserInput();
+//         await sayToUser('The Second button lets you sort by category', 5000);
+//         checkForUserInput();
+//         document.querySelector('.drop-down-entry > svg').classList.add('intro');
 
-        checkForUserInput();
-        fadeOutToggle(document.querySelector("input[type='text']"));
-        checkForUserInput();
-        await sayToUser(
-            'Finally to add a new task, use the add button...enjoy!',
-            5000
-        );
-    }
+//         checkForUserInput();
+//         fadeOutToggle(document.querySelector("input[type='text']"));
+//         checkForUserInput();
+//         await sayToUser(
+//             'Finally to add a new task, use the add button...enjoy!',
+//             5000
+//         );
+//     }
 
-    document
-        .querySelector("input[type='text']")
-        .removeEventListener('keypress', userInputDuringDemo);
-}
+//     document
+//         .querySelector("input[type='text']")
+//         .removeEventListener('keypress', userInputDuringDemo);
+// }
 
 function stopDemo() {
     demo.setDemoStatus(false);

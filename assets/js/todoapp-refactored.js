@@ -60,7 +60,7 @@ const demo = (function() {
             demo.setDemoStorage(demoTodos);
             manageCreatedTodos.removeAll();
             idTracker.reset();
-            UI.showTodos(demoTodos);
+            UI.showTodos(this.getDemoStorage());
         },
         demoConversation: async function preparedConversationDemo() {
             document
@@ -137,7 +137,9 @@ class UI {
             });
             return;
         }
-
+        if (demo.getDemoStorage().length > 1) {
+            return this.showTodos(demo.getDemoStorage());
+        }
         demo.runDemo(
             `Eg. Buy Tomatoes (Market), 
             Pack Lunch (field trip),
@@ -163,6 +165,8 @@ class UI {
             .addEventListener('keyup', (event) => {
                 // when enter is pressed
                 if (event.which === 13) {
+                    // remove all demo data from storage
+                    demo.setDemoStorage([]);
                     // prevent submission of empty or space only entry
                     if (event.target.value.trim() === '') {
                         info('You Must Enter Something First!');
@@ -436,7 +440,7 @@ $(() => {
         placeholder: 'place-holder',
         stop: function(event, ui) {
             /* ignore if no todos are stored */
-            if (demo.getDemoStatus()) {
+            if (demo.getDemoStorage().length > 1) {
                 return;
             }
             if (event.type == 'sortstop') {
@@ -538,12 +542,7 @@ document.addEventListener(
             event.target.matches('.date-sort > svg ') ||
             event.target.matches('.date-sort > svg > path')
         ) {
-            // sort todos based on boolean
-            doSort.sort();
-            // store sorted todos
-            let sorted = doSort.getSortedTodos();
-            // flip bool value for different sort on same button click
-            manageCreatedTodos.set(sorted);
+            doDateSort.sort();
 
             UI.clearTodos();
             UI.showTodos();
@@ -557,11 +556,8 @@ document.addEventListener(
             event.target.matches('.category-button > svg > path')
         ) {
             // sort todos based on boolean
-            doDateSort.sort();
-            // store sorted todos
-            let sorted = doDateSort.getSortedTodos();
-            // flip bool value for different sort on same button click
-            manageCreatedTodos.set(sorted);
+            doCategorySort.sort();
+
             UI.clearTodos();
             UI.showTodos();
             stopDemo();
@@ -617,46 +613,6 @@ function sayToUser(message, time) {
     });
 }
 
-// async function preparedConversationDemo() {
-//     document
-//         .querySelector("input[type='text']")
-//         .addEventListener('keypress', stopDemo);
-//     while (demo.getDemoStatus()) {
-//         checkForUserInput();
-//         await sayToUser(
-//             'Hello There, thanks for checking out this project',
-//             4000
-//         );
-//         checkForUserInput();
-//         await sayToUser(
-//             'You can use the example task list below to get familiar with the controls',
-//             5000
-//         );
-//         checkForUserInput();
-//         document.querySelector('.date-sort > svg').classList.add('intro');
-//         checkForUserInput();
-//         await sayToUser('The First button lets you sort by date', 5000);
-//         checkForUserInput();
-//         document.querySelector('.category-button > svg').classList.add('intro');
-//         checkForUserInput();
-//         await sayToUser('The Second button lets you sort by category', 5000);
-//         checkForUserInput();
-//         document.querySelector('.drop-down-entry > svg').classList.add('intro');
-
-//         checkForUserInput();
-//         fadeOutToggle(document.querySelector("input[type='text']"));
-//         checkForUserInput();
-//         await sayToUser(
-//             'Finally to add a new task, use the add button...enjoy!',
-//             5000
-//         );
-//     }
-
-//     document
-//         .querySelector("input[type='text']")
-//         .removeEventListener('keypress', userInputDuringDemo);
-// }
-
 function stopDemo() {
     demo.setDemoStatus(false);
 }
@@ -666,39 +622,6 @@ async function preparedConversation(...listOfComments) {
         await sayToUser(comment, 5000);
     }
 }
-
-let doSort = (function() {
-    let toSort = [];
-    let flip = 1;
-    /** Change the direction of the sort on each function call
-     * @function flipSort
-     * @param  {Element} a first element for comparison
-     * @param  {Element} b second  element for comparison
-     * @return {Number} Decision on whether [1] or not [-1] the element is correctly sorted
-     */
-    function flipSort(a, b) {
-        return (b > a ? 1 : -1) * flip;
-    }
-
-    return {
-        sort: function() {
-            toSort = manageCreatedTodos.show();
-
-            toSort.sort((x, y) => {
-                let a = x.date;
-                let b = y.date;
-
-                return flipSort(a, b);
-            });
-            // toggle sort direction
-            flip *= -1;
-        },
-
-        getSortedTodos: function() {
-            return toSort;
-        }
-    };
-})();
 
 let doDateSort = (function() {
     let toSort = [];
@@ -710,12 +633,56 @@ let doDateSort = (function() {
      * @return {Number} Decision on whether [1] or not [-1] the element is correctly sorted
      */
     function flipSort(a, b) {
+        // flip bool value for different sort on same button click
         return (b > a ? 1 : -1) * flip;
     }
 
     return {
         sort: function() {
-            toSort = manageCreatedTodos.show();
+            /* check if user ever entered a todo 
+             since demo storage is cleared when user makes
+             a new entry
+            */
+            toSort =
+                demo.getDemoStorage().length > 1
+                    ? demo.getDemoStorage()
+                    : manageCreatedTodos.show();
+
+            toSort.sort((x, y) => {
+                let a = x.date;
+                let b = y.date;
+
+                return flipSort(a, b);
+            });
+            // toggle sort direction
+            flip *= -1;
+
+            demo.getDemoStorage().length > 1
+                ? demo.setDemoStorage(toSort)
+                : manageCreatedTodos.set(toSort);
+        }
+    };
+})();
+
+let doCategorySort = (function() {
+    let toSort = [];
+    let flip = 1;
+    /** Change the direction of the sort on each function call
+     * @function flipSort
+     * @param  {Element} a first element for comparison
+     * @param  {Element} b second  element for comparison
+     * @return {Number} Decision on whether [1] or not [-1] the element is correctly sorted
+     */
+    function flipSort(a, b) {
+        return (b > a ? 1 : -1) * flip;
+    }
+
+    return {
+        sort: function() {
+            toSort =
+                demo.getDemoStorage().length > 1
+                    ? demo.getDemoStorage()
+                    : manageCreatedTodos.show();
 
             toSort.sort((x, y) => {
                 let a = x.category.toLowerCase();
@@ -725,6 +692,9 @@ let doDateSort = (function() {
             });
             // toggle sort direction
             flip *= -1;
+            demo.getDemoStorage().length > 1
+                ? demo.setDemoStorage(toSort)
+                : manageCreatedTodos.set(toSort);
         },
 
         getSortedTodos: function() {
@@ -810,13 +780,6 @@ function fadeOutToggle(s) {
 }
 
 const listenForUpdate = function() {
-    // detect li to be updated after holding for 2 seconds
-    // let allListItems = document.querySelectorAll('.app-container ul>li');
-    // allListItems.forEach((element) => {
-    //     element.addEventListener('mouseup', clearTimer);
-    //     element.addEventListener('mousedown', howLongMouseDown);
-    // });
-
     let mouseDownId = null;
     let time = 0;
     document.addEventListener('mouseup', function clearTimer(event) {
@@ -911,11 +874,6 @@ const listenForUpdate = function() {
             });
         }
     }
-
-    // change icon from draggable to save icon
-    // on save change update todo via id and change value and date
-    // keep position of todo
-    // change input back to li
 };
 document.addEventListener('DOMContentLoaded', listenForUpdate);
 

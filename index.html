@@ -4,16 +4,14 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>To Do List</title>
-  <!--Jquery-->
-  <script src="assets/jquery/jquery-3.3.1.min.js"></script>
-  <script src="assets/jquery/jquery-ui.min.js"></script>
-  <script src="assets/jquery/jquery.ui.touch-punch.min.js"></script>
+  <title>Prioritize</title>
+
   <!--site js-->
-  <script defer src="assets/js/todoapp-refactored.js"></script>
+  <script type="module" defer src="assets/js/todoapp-refactored.js"></script>
   <!--site css-->
-  <link rel="stylesheet" href="assets/css/todoapp.css" />
   <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
+  <!-- <link rel="stylesheet" href="assets/css/todoapp.css" /> -->
+  <link rel="stylesheet" href="./dist/css/todoapp.min.css" />
   <!--site font-->
   <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700" rel="stylesheet" />
   <!--icons-->
@@ -38,7 +36,7 @@
           class="fas fa-sort-amount-down"></i></span>
     </h1>
     <input type="text" placeholder="Add New Task" maxlength="32" />
-    <ul class="list-group"></ul>
+    <ul class="list-group" data-draggable-container></ul>
   </div>
 </body>
 

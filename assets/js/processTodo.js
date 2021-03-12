@@ -16,7 +16,6 @@ export function processTodo(message) {
   if (category) {
     category = capitalizeFirstLetter(category);
   }
-  note = capitalizeFirstLetter(note);
   const TODO = {
     id: generateID(),
     message: note,

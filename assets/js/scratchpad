@@ -1,0 +1,36 @@
+{
+  const list = document.createElement('ul');
+
+function addTodoToDOM(todo) {
+
+  const item = document.createElement('li');
+  const checkmarkSpan = document.createElement('span');
+  const checkmarkIcon = document.createElement('i');
+  const gripSpan = document.createElement('span');
+  const gripIcon = document.createElement('i');
+  //
+  checkmarkSpan.appendChild(checkmarkIcon);
+  gripSpan.appendChild(gripIcon);
+  gripIcon.className = 'fas fa-arrows-alt-v';
+  checkmarkIcon.className = 'far fa-check-square';
+
+  // build html elements
+  item.innerText = `[${todo.category}] ${todo.message}`;
+  item.insertAdjacentElement('afterbegin',checkmarkSpan);
+  item.insertAdjacentElement('beforeend',gripSpan);
+
+  list.append(item);
+  console.log({checkmarkIcon,checkmarkSpan,gripSpan,gripIcon});
+}
+const someTodo = {
+  id: 7777,
+  message:'this is a message',
+  date: new Date(),
+  category:"Kitchen"
+};
+
+addTodoToDOM(someTodo)
+console.log(list);
+console.log(list.innerHTML);
+document.body.append(list);
+}

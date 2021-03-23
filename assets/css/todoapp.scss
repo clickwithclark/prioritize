@@ -25,6 +25,7 @@
 html > body {
   background-image: url(../../assets/img/background.png) !important;
   background-repeat: repeat;
+  background-color: #fff;
 }
 body {
   font: 300 1.1em;
@@ -123,16 +124,15 @@ body {
   font: 500 1rem "Neucha2";
   height: 40px;
   line-height: 40px;
-  background-color: white;
+  background-color: #212529;
 }
+
 .app-container ul li span {
   background-color: #212529;
   height: 40px;
   margin-right: 20px;
   text-align: center;
   color: white;
-  width: 0;
-  opacity: 0;
   display: inline-block;
   pointer-events: none;
   -webkit-transition: 0.2s linear;

@@ -1,5 +1,5 @@
-import {manageCreatedTodos} from './manageCreatedTodos.js'
-import {demo} from './demo.js'
+import { manageCreatedTodos } from './manageCreatedTodos.js';
+import { demo } from './demo.js';
 /* eslint-disable require-jsdoc */
 // UI Class
 /**

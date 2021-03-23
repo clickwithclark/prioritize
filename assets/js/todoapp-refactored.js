@@ -1,11 +1,8 @@
-import {UI} from './UI.js'
-import {manageCreatedTodos} from './manageCreatedTodos.js'
-import {draggable} from './draggable.js';
-import {demo} from './demo.js'
-//mngn
-
-
-
+import { UI } from './UI.js';
+import { manageCreatedTodos } from './manageCreatedTodos.js';
+import { draggable } from './draggable.js';
+import { demo } from './demo.js';
+// mngn
 
 // sortable List Items use Jquery UI
 // $(() => {
@@ -19,7 +16,7 @@ import {demo} from './demo.js'
 //         return;
 //       }
 //       if (event.type == 'sortstop') {
-//         /* store todo id's in the order they are sorted, 
+//         /* store todo id's in the order they are sorted,
 //                 when sorting is done */
 //         const positions = [];
 //         const elements = document.querySelectorAll('.app-container ul>li');
@@ -67,14 +64,12 @@ import {demo} from './demo.js'
 // Event:Display Notes on load
 document.addEventListener('DOMContentLoaded', UI.showTodos());
 
-
-
 // '+'  toggle button pressed, show input field
 const addTodo = document.querySelector('.drop-down-entry');
-addTodo.addEventListener('click',() => {
- document.querySelector("input[type='text']").classList.toggle('fade-in');
- document.querySelector("input[type='text']").classList.remove('shake');
-// addTodo.classList.remove('fade-out');
+addTodo.addEventListener('click', () => {
+  document.querySelector("input[type='text']").classList.toggle('fade-in');
+  document.querySelector("input[type='text']").classList.remove('shake');
+  // addTodo.classList.remove('fade-out');
 });
 // $('.drop-down-entry').click(() => {
 //   $("input[type='text']").fadeToggle();
@@ -92,7 +87,7 @@ document.addEventListener(
     // selected completed todos
     if (event.target.matches('.app-container ul>li')) {
       const id = Number(event.target.getAttribute('data-id'));
-     // manageCreatedTodos.setCompletedState(id);
+      // manageCreatedTodos.setCompletedState(id);
       event.target.firstChild.classList.toggle('clickedLi');
       event.target.classList.toggle('completed');
       fadeOutToggle(event.target.firstChild);
@@ -167,9 +162,6 @@ const info = (message) => {
     $('#logo').attr('src', 'assets/img/cwc.svg');
   }, 3000);
 };
-
-
-
 
 const doDateSort = (function () {
   let toSort = [];
@@ -259,8 +251,6 @@ function fadeAndDelete(s, id) {
   };
 }
 
-
-
 // fade out an element
 function fadeOut(s) {
   return new Promise((resolve) => {
@@ -274,8 +264,6 @@ function fadeOut(s) {
     })();
   });
 }
-
-
 
 /**
  * @function fadeOutToggle

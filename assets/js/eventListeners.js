@@ -1,36 +1,69 @@
-import { editTodo } from "./updateTodo";
+import { editTodo } from './editTodo.js';
+import { addTodo } from './addTodo.js';
+import { updateDOM } from './updateDOM.js';
+import { addGlobalEventListener } from './addGlobalEventListener.js';
 
-const input= document.querySelector('#todoInput');
-export function initializeEventListeners(){
-/**
-* @function addGlobalEventListener
-* @param  {String} type - Event type eg. 'click'
-* @param  {String} selector - CSS selector eg. '#id', '.class'
-* @param  {Function} callback - Function
-*
-*/
-export function addGlobalEventListener(type, selector, callback) {
-    document.addEventListener(type, (event) => {
-      if (e.target.matches(selector)) {
-        callback(e);
+export function initializeEventListeners() {
+  // entering todo info
+  addGlobalEventListener('keydown', '#todoInput', (event) => {
+    // when enter is pressed
+    if (event.key === 'Enter') {
+      try {
+        addTodo();
+      } catch (error) {
+        console.error(error);
       }
-    });
-  }
-
-  addGlobalEventListener('keyup', input, (event) => {
-      // when enter is pressed
-        if (event.which==13) {
-            try {
-                addTodo()
-            } catch (error) {
-                console.error(error)
-            }
-        }
+    }
   });
-}
 
-function addEditBtnEventListener(e){
-  document.addEventListener('pointerup', (e) => {
-    editTodo(e);
-  })  
+  // editing existing todo
+  addGlobalEventListener('pointerup', '.edit', editTodo);
+
+  // adding new todo
+  addGlobalEventListener('pointerup', '.drop-down-entry', () => {
+    const input = document.querySelector('#todoInput');
+    input.classList.toggle('pop-out-fade-out');
+    input.focus();
+  });
+  /* -------------------------------------------------------------------*/
+  // #region of grip button
+  /* -------------------------------------------------------------------*/
+
+  addGlobalEventListener('pointerdown', '.grip', (event) => {
+    event.target.style.cursor = 'grabbing';
+    const todoList = document.querySelector('#todoList');
+    todoList.style.cursor = 'grabbing';
+  });
+  addGlobalEventListener('pointerup', '#todoList', (event) => {
+    const todoList = document.querySelector('#todoList');
+    const allGrippableDescendents = [...todoList.querySelectorAll('.grip')];
+    allGrippableDescendents.forEach((element) => {
+      element.style.setProperty('cursor', 'grab');
+    });
+    todoList.style.cursor = 'default';
+  });
+
+  /* -------------------------------------------------------------------*/
+  // #endregion of grip button
+
+  // selecting completed todos
+  addGlobalEventListener('pointerdown', '.main-message', (event) => {
+    const todo = event.target;
+    // prevent todo saving as completed if user is editing
+    if (todo.classList.contains('editing-in-progress')) {
+      return;
+    }
+    todo.classList.toggle('completed');
+    const checkmarkIcon = todo.previousElementSibling;
+    checkmarkIcon.classList.toggle('show-checkmark');
+  });
+
+  // new one above
+
+  updateDOM();
+} // END initializeEventListeners
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initializeEventListeners);
+} else {
+  initializeEventListeners();
 }

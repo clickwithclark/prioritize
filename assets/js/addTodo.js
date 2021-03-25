@@ -1,7 +1,8 @@
 import { createOneTodo } from './createOneTodo.js';
 import { createManyTodos } from './createManyTodos.js';
 
-export function addTodo(message) {
+export function addTodo() {
+  const message = document.querySelector('#todoInput').value.trim();
   if (message.indexOf(',') === -1) {
     return createOneTodo(message);
   }

@@ -124,29 +124,30 @@ body {
   font: 500 1rem "Neucha2";
   height: 40px;
   line-height: 40px;
-  background-color: #212529;
+  background-color: white;
 }
 
 .app-container ul li span {
-  background-color: #212529;
   height: 40px;
   margin-right: 20px;
   text-align: center;
-  color: white;
   display: inline-block;
-  pointer-events: none;
-  -webkit-transition: 0.2s linear;
-  transition: 0.2s linear;
 }
-.app-container ul li .grip {
+.app-container ul li .grip,
+.edit {
   color: #212529 !important;
-  width: 60px !important;
+  // width: 60px !important;
   height: 26px;
   opacity: 1 !important;
   background-color: transparent !important;
   pointer-events: all !important;
-  cursor: pointer !important;
   float: right;
+}
+.edit {
+  cursor: pointer;
+}
+.grip {
+  cursor: grab;
 }
 .app-container .ui-sortable-helper {
   cursor: pointer !important;
@@ -192,12 +193,31 @@ body {
   text-decoration: line-through;
   color: grey;
 }
-.clickedLi {
+.show-checkmark {
   width: 40px !important;
   opacity: 1 !important;
   pointer-events: all !important;
   cursor: pointer !important;
 }
+.completed {
+  text-decoration: line-through;
+  color: grey;
+}
+
+.checkmark {
+  background-color: #212529;
+  height: 40px;
+  margin-right: 20px;
+  text-align: center;
+  color: white;
+  width: 0;
+  opacity: 0;
+  display: inline-block;
+  pointer-events: none;
+  -webkit-transition: 0.2s linear;
+  transition: 0.2s linear;
+}
+
 @-webkit-keyframes shake {
   0%,
   100% {
@@ -244,6 +264,10 @@ body {
 
 .pop-out-fade-out {
   display: block !important;
-  opacity: 1;
+  opacity: 1 !important;
+}
+
+svg {
+  pointer-events: none;
 }
 /*# sourceMappingURL=todoapp.css.map */

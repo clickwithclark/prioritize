@@ -1,18 +1,21 @@
 import { addGlobalEventListener } from './addGlobalEventListener.js';
+import { endUpdate } from './endUpdate.js';
+import { updateDOM } from './updateDOM.js';
 import { updateTodo } from './updateTodo.js';
 import { updateTodoFromSpan } from './updateTodoFromSpan.js';
 
-function endUpdate(messageNode) {
-  messageNode.contentEditable = false;
-  messageNode.style.backgroundColor = 'inherit';
-  messageNode.style.color = 'inherit';
-}
 export function editTodo(e) {
   const listItemToEdit = e.target.closest('li');
   const messageNode = listItemToEdit.querySelector('.main-message');
   messageNode.classList.add('editing-in-progress');
 
   const originalMessage = messageNode.innerText;
+
+  // prevent editing if todo is crossed off
+  if (messageNode.classList.contains('completed')) {
+    return updateDOM();
+  }
+
   messageNode.contentEditable = true;
 
   messageNode.focus();

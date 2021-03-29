@@ -297,6 +297,9 @@ body {
   opacity: 1 !important;
 }
 
-svg {
-  pointer-events: none;
+.deleted {
+  opacity: 0 !important;
+  visibility: hidden;
+  -webkit-transition: all 0.3s linear !important;
+  transition: all 0.3s linear !important;
 }

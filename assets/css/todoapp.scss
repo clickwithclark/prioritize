@@ -267,7 +267,11 @@ body {
   opacity: 1 !important;
 }
 
-svg {
-  pointer-events: none;
+.deleted {
+  opacity: 0 !important;
+  // display: none !important;
+  visibility: hidden;
+  transition: all 0.3s linear !important;
 }
+
 /*# sourceMappingURL=todoapp.css.map */

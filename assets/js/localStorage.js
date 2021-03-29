@@ -18,3 +18,13 @@ export function deleteOneFromLocalStorage(todoID) {
   delete storedTodos[todoID];
   localStorage.setItem('todos', JSON.stringify(storedTodos));
 }
+
+export function updateOneInLocalStorage(partialTodo) {
+  // get current stored todos first then append new todo
+  const currentStored = retrieveFromLocalStorage();
+  let updatedTodo = currentStored[partialTodo.id];
+  updatedTodo = { ...updatedTodo, ...partialTodo };
+  Object.assign(currentStored, { [updatedTodo.id]: updatedTodo });
+
+  localStorage.setItem('todos', JSON.stringify(currentStored));
+}

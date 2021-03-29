@@ -2,6 +2,7 @@ import { editTodo } from './editTodo.js';
 import { addTodo } from './addTodo.js';
 import { updateDOM } from './updateDOM.js';
 import { addGlobalEventListener } from './addGlobalEventListener.js';
+import { updateTodoStatus } from './updateTodoStatus.js';
 
 export function initializeEventListeners() {
   // entering todo info
@@ -56,6 +57,7 @@ export function initializeEventListeners() {
     todo.classList.toggle('completed');
     const checkmarkIcon = todo.previousElementSibling;
     checkmarkIcon.classList.toggle('show-checkmark');
+    updateTodoStatus(event);
   });
 
   // new one above

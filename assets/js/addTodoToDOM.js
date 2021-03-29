@@ -26,6 +26,7 @@ export function addTodoToDOM(todo) {
   messageSpan.innerText = todo.category ? `[${todo.category}] ${todo.message}` : `${todo.message}`;
   if (todo.completed) {
     messageSpan.classList.add('completed');
+    checkmarkSpan.classList.add('show-checkmark');
   }
   item.insertAdjacentElement('afterbegin', checkmarkSpan);
   item.insertAdjacentElement('beforeend', gripSpan);

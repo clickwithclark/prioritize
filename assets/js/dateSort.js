@@ -1,5 +1,5 @@
 import { addTodoToDOM } from './addTodoToDOM.js';
-import { retrieveFromLocalStorage } from './localStorage.js';
+import { retrieveFromLocalStorage, sortedTodosToLocalStorage } from './localStorage.js';
 
 const dateSortBtn = document.querySelector('.date-sort');
 
@@ -20,17 +20,16 @@ export const dateSort = (function (event) {
   return {
     sort() {
       toSort = Object.entries(retrieveFromLocalStorage());
-      const pop = {};
+      console.log(toSort);
       const sortedTodos = new Map();
-      console.log('tosort', toSort);
-      console.log('new obj', pop);
       try {
         if (toSort.length === 0) {
           return;
         }
         toSort.sort((x, y) => {
-          const a = x.date;
-          const b = y.date;
+          const a = x[1].date;
+          const b = y[1].date;
+          console.log(a, b);
           return flipSort(a, b);
         });
         // toggle sort direction
@@ -45,11 +44,10 @@ export const dateSort = (function (event) {
       const list = document.querySelector('#todoList');
       list.innerHTML = '';
       toSort.forEach((element) => {
-        console.log({ [element[0]]: element[1] });
-        console.log(sortedTodos.set([element[0]], element[1]));
+        console.log(sortedTodos.set(+element[0], element[1]));
         addTodoToDOM({ ...element[1] });
       });
-      localst
+      sortedTodosToLocalStorage(sortedTodos);
     },
   };
 })();

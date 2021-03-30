@@ -297,9 +297,13 @@ body {
   opacity: 1 !important;
 }
 
-.deleted {
-  opacity: 0 !important;
-  visibility: hidden;
-  -webkit-transition: all 0.3s linear !important;
-  transition: all 0.3s linear !important;
+.category-button,
+.date-sort {
+  cursor: pointer;
+  font-size: 30px;
+}
+
+.category-button:active,
+.date-sort:active {
+  font-size: 25.6px;
 }

@@ -5,7 +5,14 @@ export function updateDOM() {
   const list = document.querySelector('#todoList');
   list.innerHTML = '';
   const storedTodos = retrieveFromLocalStorage();
-  Object.keys(storedTodos).forEach((oneTodo) => {
-    addTodoToDOM(storedTodos[oneTodo]);
+  const mappedTodos = new Map(JSON.parse(localStorage.getItem('todos')));
+  if (mappedTodos.size === 0) {
+    Object.keys(storedTodos).forEach((oneTodo) => {
+      addTodoToDOM(storedTodos[oneTodo]);
+    });
+    return;
+  }
+  mappedTodos.forEach((value) => {
+    addTodoToDOM(value);
   });
 }

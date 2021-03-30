@@ -184,8 +184,9 @@ body {
   border: none;
   opacity: 0;
   display: none;
-  -webkit-transition: opacity 3s ease-in-out;
-  transition: opacity 3s ease-in-out;
+  -webkit-transition: 0.2s linear;
+  transition: 0.2s linear;
+  margin-bottom: 20px;
 }
 
 .app-container input[type="text"]:focus {

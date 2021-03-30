@@ -1,13 +1,14 @@
+import { getDefaultTodos } from './defaultTodos.js';
 import { mapToObject } from './mapToObject.js';
 import { objectToMap } from './objectToMap.js';
 
 export function retrieveFromLocalStorage() {
   const localStorageMappedTodos = new Map(JSON.parse(localStorage.getItem('todos')));
   const localStorageTodos = mapToObject(localStorageMappedTodos);
+  const defaultTodos = getDefaultTodos();
 
-  return localStorageTodos !== null ? localStorageTodos : {};
+  return Object.keys(localStorageTodos).length !== 0 ? localStorageTodos : defaultTodos;
 }
-
 export function addToLocalStorage(givenTodo) {
   // get current stored todos first then append new todo
   const currentStored = retrieveFromLocalStorage();
@@ -28,7 +29,7 @@ export function deleteOneFromLocalStorage(todoID) {
 
 export function updateOneInLocalStorage(partialTodo) {
   // get current stored todos first then append new todo
-  const currentStored = retrieveFromLocalStorage();
+  const mappedTodos = new Map(JSON.parse(localStorage.getItem('todos')));
   let updatedTodo = currentStored[partialTodo.id];
   updatedTodo = { ...updatedTodo, ...partialTodo };
   Object.assign(currentStored, { [updatedTodo.id]: updatedTodo });

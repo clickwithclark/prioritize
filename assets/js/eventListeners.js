@@ -24,7 +24,7 @@ import { dateSort } from './dateSort.js';
 
   5. [] [A] make draggable
 
-  6. [] [] Sixth todo
+  6. [] [] no empty entry-logo saying noo
 
   7. [] [] Seventh todo
 

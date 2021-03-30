@@ -12,7 +12,7 @@ export function processTodo(message) {
     // remove category from being included in a todo body
     note = message.replace(`(${category})`, '');
   }
-  note = escapeHtml(note);
+  // note = escapeHtml(note);
 
   if (category) {
     category = capitalizeFirstLetter(category);

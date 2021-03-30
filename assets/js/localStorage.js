@@ -19,7 +19,6 @@ export function retrieveFromLocalStorage() {
   }
   return currentStored;
 }
-
 export function addToLocalStorage(givenTodo) {
   // get current stored todos first then append new todo
   const state = { ...getState() };

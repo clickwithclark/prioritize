@@ -105,8 +105,10 @@ body {
   text-transform: uppercase;
 }
 
-.app-container h1 .drop-down-entry {
-  float: right;
+.drop-down-entry {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
   cursor: pointer;
   font-size: 30px;
 }
@@ -298,14 +300,25 @@ body {
   opacity: 1 !important;
 }
 
-.category-button,
+.date-sort {
+  margin-right: 200px;
+}
+
+.category-sort,
 .date-sort {
   cursor: pointer;
   font-size: 30px;
 }
 
-.category-button:active,
+.category-sort:active,
 .date-sort:active {
   font-size: 25.6px;
-  margin-right: 5.4px;
+}
+
+.buttons {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
 }

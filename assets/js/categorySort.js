@@ -1,7 +1,7 @@
 import { addTodoToDOM } from './addTodoToDOM.js';
 import { retrieveFromLocalStorage, sortedTodosToLocalStorage } from './localStorage.js';
 
-export const dateSort = (function (event) {
+export const categorySort = (function (event) {
   let toSort = [];
   let flip = 1;
   /** Change the direction of the sort on each function call
@@ -23,8 +23,8 @@ export const dateSort = (function (event) {
           return;
         }
         toSort.sort((x, y) => {
-          const a = x[1].date;
-          const b = y[1].date;
+          const a = x[1].category;
+          const b = y[1].category;
           return flipSort(a, b);
         });
         // toggle sort direction

@@ -20,21 +20,23 @@
 
 <body>
   <div id="info-bubble">
-    <img id="speech-bubble" src="assets/img/speak.png" alt="speech Bubble">
+    <img id="speech-bubble" src="assets/img/speak.png" alt="speech Bubble" />
     <!--  <i class="far fa-comment-alt fa-8x"></i> -->
     <p id="info-message"></p>
   </div>
   <div class="chat icon"></div>
   <img id="logo" src="assets/img/cwc.svg" alt="clickwithclark logo" />
 
-
-  <div class="app-container mt-4 ">
+  <div class="app-container mt-4">
     <h1 class="">
       <!-- <i class="fas fa-clipboard-list"></i> -->
-      Prioritize <span class="category-button"><i class="fas fa-tags"></i></span>
-      <span class="drop-down-entry"><i class="fas fa-plus"></i></span> <span class="date-sort"><i
-          class="fas fa-sort-amount-down"></i></span>
+      Prioritize
     </h1>
+    <div class="buttons">
+      <span class="category-sort"><i class="fas fa-tags"></i></span>
+      <span class="date-sort"><i class="fas fa-sort-amount-down"></i></span>
+      <span class="drop-down-entry"><i class="fas fa-plus"></i></span>
+    </div>
     <input id="todoInput" type="text" placeholder="Add New Task" maxlength="32" />
     <ul id="todoList" class="list-group" data-draggable-container></ul>
   </div>

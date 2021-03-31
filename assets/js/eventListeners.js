@@ -6,6 +6,7 @@ import { updateTodoStatus } from './updateTodoStatus.js';
 import { deleteOneFromLocalStorage } from './localStorage.js';
 import { endUpdate } from './endUpdate.js';
 import { dateSort } from './dateSort.js';
+import { categorySort } from './categorySort.js';
 
 /* -------------------------------------------------------------------*/
 // #region of TODO
@@ -122,6 +123,7 @@ export function initializeEventListeners() {
   // date sort
 
   addGlobalEventListener('pointerdown', '.date-sort', dateSort.sort);
+  addGlobalEventListener('pointerdown', '.category-sort', categorySort.sort);
 
   // new one above
 

@@ -1,5 +1,4 @@
 import { generateID } from './generateID.js';
-import { escapeHtml } from './escapeHtml.js';
 import { capitalizeFirstLetter } from './capitalizeFirstLetter.js';
 
 export function processTodo(message) {

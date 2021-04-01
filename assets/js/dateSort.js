@@ -1,5 +1,6 @@
 import { addTodoToDOM } from './addTodoToDOM.js';
-import { retrieveFromLocalStorage, sortedTodosToLocalStorage } from './localStorage.js';
+import { draggable } from './draggable.js';
+import { retrieveFromLocalStorage, saveSortedTodos } from './localStorage.js';
 
 export const dateSort = (function (event) {
   let toSort = [];
@@ -41,7 +42,8 @@ export const dateSort = (function (event) {
       toSort.forEach((element) => {
         addTodoToDOM({ ...element[1] });
       });
-      sortedTodosToLocalStorage(toSort);
+      saveSortedTodos(toSort);
+      draggable();
     },
   };
 })();

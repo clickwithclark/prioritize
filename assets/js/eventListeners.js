@@ -2,12 +2,16 @@ import { editTodo } from './editTodo.js';
 import { addTodo } from './addTodo.js';
 import { updateDOM } from './updateDOM.js';
 import { addGlobalEventListener } from './addGlobalEventListener.js';
-import { updateTodoStatus } from './updateTodoStatus.js';
+import { updateCompletedStatus } from './updateTodoStatus.js';
 import { deleteOneFromLocalStorage } from './localStorage.js';
 import { endUpdate } from './endUpdate.js';
 import { dateSort } from './dateSort.js';
 import { categorySort } from './categorySort.js';
+import { tellUserAboutError } from './tellUserAboutError.js';
 
+// global state management
+
+// eslint-disable-next-line prefer-const
 /* -------------------------------------------------------------------*/
 // #region of TODO
 /* -------------------------------------------------------------------*/
@@ -15,21 +19,22 @@ import { categorySort } from './categorySort.js';
 /**
   # TODO:[x]-completed [A]-priority-letter
 
-  1. [] [A] add category sort
+  1. [x] [A] add category sort
 
-  2. [] [A] add date sort
+  2. [x] [A] add date sort
 
   3. [] [A] make pwa
 
   4. [] [C] make a bundle with parcel
 
-  5. [] [A] make draggable
+  5. [x] [A] make draggable
 
-  6. [] [] no empty entry-logo saying noo
+  6. [X] [X] no empty entry-logo saying noo
 
-  7. [] [] Seventh todo
+  
+  
 
-  8. [] [] Eight todo
+  8. [x] [x] sorted state  needs to persists
 
   9. [] [] Ninth todo
 
@@ -49,9 +54,16 @@ export function initializeEventListeners() {
     // when enter is pressed
     if (event.key === 'Enter') {
       try {
+        // complain if invalid values
+        if (event.target.value.trim() === '') {
+          throw new Error('Woops, you have to enter something first!');
+        }
+        // if this is first entry replace demo todos
+
         addTodo();
         event.target.value = '';
       } catch (error) {
+        tellUserAboutError(error);
         console.error(error);
       }
     }
@@ -102,13 +114,12 @@ export function initializeEventListeners() {
     todo.classList.toggle('completed');
     const checkmarkIcon = todo.previousElementSibling;
     checkmarkIcon.classList.toggle('show-checkmark');
-    updateTodoStatus(event);
+    updateCompletedStatus(event);
   });
 
   // delete todo & fade out
   addGlobalEventListener('pointerdown', '.checkmark', (event) => {
     const liToRemove = event.target.closest('li');
-    console.log(liToRemove);
     const { id } = liToRemove.dataset;
     liToRemove.style.transition = '0.3s';
     liToRemove.style.opacity = 0;
@@ -126,7 +137,6 @@ export function initializeEventListeners() {
   addGlobalEventListener('pointerdown', '.category-sort', categorySort.sort);
 
   // new one above
-
   updateDOM();
 } // END initializeEventListeners
 if (document.readyState === 'loading') {

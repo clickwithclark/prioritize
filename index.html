@@ -5,12 +5,12 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Prioritize</title>
-
+  <link rel="manifest" href="./manifest.json" />
   <!--site js-->
-  <script type="module" defer src="assets/js/eventListeners.js"></script>
+  <script type="module" defer src="./assets/js/eventListeners.js"></script>
+  <script type="module" defer src="./serviceworker.js"></script>
   <!--site css-->
   <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
-  <!-- <link rel="stylesheet" href="assets/css/todoapp.css" /> -->
   <link rel="stylesheet" href="./dist/css/todoapp.min.css" />
   <!--site font-->
   <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700" rel="stylesheet" />
@@ -21,15 +21,14 @@
 <body>
   <div id="info-bubble">
     <img id="speech-bubble" src="assets/img/speak.png" alt="speech Bubble" />
-    <!--  <i class="far fa-comment-alt fa-8x"></i> -->
     <p id="info-message"></p>
   </div>
   <div class="chat icon"></div>
-  <img id="logo" src="assets/img/cwc.svg" alt="clickwithclark logo" />
+  <img id="logo" src="assets/img/cwc.png" alt="clickwithclark logo" />
 
   <div class="app-container mt-4">
     <h1 class="">
-      <!-- <i class="fas fa-clipboard-list"></i> -->
+      <i class="fas fa-clipboard-list"></i>
       Prioritize
     </h1>
     <div class="buttons">

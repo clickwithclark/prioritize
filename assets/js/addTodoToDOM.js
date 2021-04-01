@@ -1,6 +1,7 @@
 const list = document.querySelector('#todoList');
 export function addTodoToDOM(todo) {
   const item = document.createElement('li');
+  item.draggable = 'true';
   const checkmarkSpan = document.createElement('span');
   const checkmarkIcon = document.createElement('i');
   const gripSpan = document.createElement('span');

@@ -1,43 +1,82 @@
 import { getDefaultTodos } from './defaultTodos.js';
-import { mapToObject } from './mapToObject.js';
-import { objectToMap } from './objectToMap.js';
 
+export function getState() {
+  return JSON.parse(localStorage.getItem('state'));
+}
 export function retrieveFromLocalStorage() {
-  const localStorageMappedTodos = new Map(JSON.parse(localStorage.getItem('todos')));
-  const localStorageTodos = mapToObject(localStorageMappedTodos);
+  const state = { ...getState() };
+  // wrapped in object incase state is null or undefined
+  const currentStored = { ...state?.todos };
   const defaultTodos = getDefaultTodos();
 
-  return Object.keys(localStorageTodos).length !== 0 ? localStorageTodos : defaultTodos;
+  if (Object.keys(currentStored).length === 0) {
+    // if no todos exist show demo todos
+    document.querySelector('#todoList').style.opacity = '0.5';
+    return defaultTodos;
+  }
+  return currentStored;
 }
+
 export function addToLocalStorage(givenTodo) {
   // get current stored todos first then append new todo
-  const currentStored = retrieveFromLocalStorage();
-
+  const state = { ...getState() };
+  const currentStored = { ...state?.todos };
+  if (Object.keys(currentStored).length === 0) {
+    document.querySelector('#todoList').style.opacity = '1';
+  }
   Object.assign(currentStored, { [givenTodo.id]: givenTodo });
-
-  const storedAsMap = objectToMap(currentStored);
-
-  localStorage.setItem('todos', JSON.stringify([...storedAsMap]));
+  // latest todo gets first index to be top of list
+  state.order = state?.order ?? [];
+  state.order = [givenTodo.id, ...state.order];
+  state.todos = currentStored;
+  localStorage.setItem('state', JSON.stringify(state));
 }
 
 export function deleteOneFromLocalStorage(todoID) {
-  const storedTodos = retrieveFromLocalStorage();
-  delete storedTodos[todoID];
-  const storedAsMap = objectToMap(storedTodos);
-  localStorage.setItem('todos', JSON.stringify([...storedAsMap]));
+  const state = { ...getState() };
+  const currentStored = { ...state?.todos };
+  delete currentStored[todoID];
+  state.todos = currentStored;
+  localStorage.setItem('state', JSON.stringify(state));
 }
 
 export function updateOneInLocalStorage(partialTodo) {
-  // get current stored todos first then append new todo
-  const mappedTodos = new Map(JSON.parse(localStorage.getItem('todos')));
-  let updatedTodo = currentStored[partialTodo.id];
-  updatedTodo = { ...updatedTodo, ...partialTodo };
-  Object.assign(currentStored, { [updatedTodo.id]: updatedTodo });
+  // get current stored todos first then modify new todo properties
+  const state = { ...getState() };
+  const currentStored = { ...state?.todos };
 
-  const storedAsMap = objectToMap(currentStored);
-  localStorage.setItem('todos', JSON.stringify([...storedAsMap]));
+  // if no todos are stored then assume demo mode and DO NOT save;
+  if (Object.keys(currentStored).length === 0) {
+    return;
+  }
+
+  let todoToUpdate = currentStored[partialTodo.id];
+  todoToUpdate = { ...todoToUpdate, ...partialTodo };
+  Object.assign(currentStored, { [todoToUpdate.id]: todoToUpdate });
+  state.todos = currentStored;
+  localStorage.setItem('state', JSON.stringify(state));
 }
 
-export function sortedTodosToLocalStorage(sortedTodos) {
-  localStorage.setItem('todos', JSON.stringify([...sortedTodos]));
+export function saveSortedTodos(sortedTodos) {
+  const state = { ...getState() };
+  const order = [];
+  sortedTodos.forEach((element) => {
+    order.push(+element[0]);
+  });
+  state.order = order;
+  localStorage.setItem('state', JSON.stringify(state));
+}
+
+export function saveDOMOrder() {
+  const listOfTodos = [...document.querySelectorAll('li')];
+  const listOfIds = [];
+  listOfTodos.forEach((item) => {
+    listOfIds.push(+item.dataset.id);
+  });
+
+  const state = getState();
+  if (listOfIds.length > 0) {
+    state.order = listOfIds;
+    localStorage.setItem('state', JSON.stringify(state));
+  }
 }

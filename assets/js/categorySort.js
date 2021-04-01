@@ -1,5 +1,6 @@
 import { addTodoToDOM } from './addTodoToDOM.js';
-import { retrieveFromLocalStorage, sortedTodosToLocalStorage } from './localStorage.js';
+import { draggable } from './draggable.js';
+import { retrieveFromLocalStorage, saveSortedTodos } from './localStorage.js';
 
 export const categorySort = (function (event) {
   let toSort = [];
@@ -29,8 +30,6 @@ export const categorySort = (function (event) {
         });
         // toggle sort direction
         flip *= -1;
-
-        // const rebuiltStorage =
       } catch (error) {
         console.error(error);
       }
@@ -41,7 +40,8 @@ export const categorySort = (function (event) {
       toSort.forEach((element) => {
         addTodoToDOM({ ...element[1] });
       });
-      sortedTodosToLocalStorage(toSort);
+      saveSortedTodos(toSort);
+      draggable();
     },
   };
 })();

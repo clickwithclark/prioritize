@@ -8,15 +8,12 @@
   </div>
  */
 
-export const draggable = (function () {
-  const draggables = [...document.querySelectorAll('[draggable]')];
+import { saveDOMOrder } from './localStorage.js';
+
+export const draggable = function () {
+  const draggables = [...document.querySelectorAll('li')];
   const containers = [...document.querySelectorAll('[data-draggable-container]')];
-  console.log({ draggables });
-  console.log({ containers });
-  function styleElement(element, stylesObj) {
-    console.log(element);
-    Object.assign(element.style, stylesObj);
-  }
+
   function getDragAfterElement(container, y) {
     const draggableElements = [...container.querySelectorAll('[draggable="true"]:not(.dragging)')];
 
@@ -32,16 +29,16 @@ export const draggable = (function () {
       { offset: Number.NEGATIVE_INFINITY }
     ).element;
   }
-  draggables.forEach((draggable) => {
-    styleElement(draggable, {
-      cursor: `move`,
-    });
-    draggable.addEventListener('dragstart', () => {
-      draggable.classList.add('dragging');
+  draggables.forEach((item) => {
+    item.addEventListener('dragstart', () => {
+      item.classList.add('dragging');
     });
 
-    draggable.addEventListener('dragend', () => {
-      draggable.classList.remove('dragging');
+    item.addEventListener('dragend', () => {
+      document.querySelector('#todoList').style.cursor = 'default';
+
+      item.classList.remove('dragging');
+      saveDOMOrder();
     });
   });
 
@@ -50,15 +47,13 @@ export const draggable = (function () {
       e.preventDefault();
       const afterElement = getDragAfterElement(container, e.clientY);
       const selectedElement = document.querySelector('.dragging');
-      styleElement(selectedElement, {
-        opacity: '.5',
-      });
-      const draggable = document.querySelector('.dragging');
+      selectedElement.opacity = '0.5';
+
       if (afterElement == null) {
-        container.appendChild(draggable);
+        container.appendChild(selectedElement);
         return;
       }
-      container.insertBefore(draggable, afterElement);
+      container.insertBefore(selectedElement, afterElement);
     });
   });
-})();
+};

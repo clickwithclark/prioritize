@@ -28,10 +28,9 @@ const cacheAssets = [
   '/assets/fonts/Neucha.woff2',
   '/assets/fonts/Neucha2.woff2',
   '/dist/bundle.js',
-  'https://fonts.googleapis.com/css?family=Lato:300,400,700',
 ];
 
-function fillServiceWorkerCache2() {
+function preCacheServiceWorker() {
   /* It will not cache and also not reject for individual resources that failed to be added in the cache. unlike fillServiceWorkerCache which stops caching as soon as one problem occurs. see http://stackoverflow.com/questions/41388616/what-can-cause-a-promise-rejected-with-invalidstateerror-here */
   return caches
     .open(cacheName)
@@ -39,17 +38,15 @@ function fillServiceWorkerCache2() {
 }
 
 // Call Install Event
-self.addEventListener('install', (e) => {
+self.addEventListener('install', (event) => {
   console.log('Service Worker: Installed');
 
-  e.waitUntil(
-    caches
-      .open(cacheName)
-      .then((cache) => {
-        console.log('Service Worker: Caching Files');
-        fillServiceWorkerCache2();
-      })
-      .then(() => self.skipWaiting())
+  event.waitUntil(
+    caches.open(cacheName).then((cache) => {
+      console.log('Service Worker: pre-caching assets');
+      preCacheServiceWorker();
+    })
+    // .then(() => self.skipWaiting())
   );
 });
 
@@ -73,9 +70,15 @@ self.addEventListener('fetch', (event) => {
             return response;
           })
       )
-      .catch((
-        err // load default page as generic fallback
-      ) => caches.match('/index.html'))
+      .catch(
+        (
+          err // load default page as generic fallback
+        ) => {
+          const path = new URL(event.request.url).pathname;
+          console.log('currPath', { path });
+          caches.match(path);
+        }
+      )
   );
 });
 

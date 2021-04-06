@@ -7,7 +7,7 @@ if ('serviceWorker' in navigator) {
       .catch((error) => console.error(`service worker error:😭${error}`));
   });
 }
-const cacheName = 'v2';
+const cacheName = 'v1';
 
 const cacheAssets = [
   '/',
@@ -52,6 +52,23 @@ self.addEventListener('install', (event) => {
       })
       // Call Activate Event
       .then(() => self.skipWaiting())
+  );
+});
+
+self.addEventListener('activate', (e) => {
+  console.log('Service Worker: Activated');
+  // Remove unwanted caches
+  e.waitUntil(
+    caches.keys().then((cacheNames) =>
+      Promise.all(
+        cacheNames.map((cache) => {
+          if (cache !== cacheName) {
+            console.log('Service Worker: Clearing Old Cache...🧹');
+            return caches.delete(cache);
+          }
+        })
+      )
+    )
   );
 });
 

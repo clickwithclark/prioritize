@@ -8,6 +8,7 @@ if ('serviceWorker' in navigator) {
   });
 }
 const cacheName = 'v1';
+const assetLog = {};
 
 const cacheAssets = [
   '/',
@@ -35,7 +36,9 @@ function preCacheServiceWorker() {
   return caches
     .open(cacheName)
     .then((cache) =>
-      Promise.all(cacheAssets.map((url) => cache.add(url).catch((reason) => console.table([`Service Worker: ${url} failed...😭 ${String(reason)}`]))))
+      Promise.all(
+        cacheAssets.map((url) => cache.add(url).catch((reason) => console.table({ [`Service Worker: ${url} failed...😭`]: ` ${String(reason)}` })))
+      )
     );
 }
 
@@ -73,7 +76,8 @@ self.addEventListener('activate', (e) => {
 });
 
 self.addEventListener('fetch', (event) => {
-  console.table('Service Worker: Fetching...🦅');
+  // keep track of assets
+  assetLog[new URL(event.request.url).pathname] = { 'Service Worker': 'Fetching...🦅' };
   event.respondWith(
     (async () => {
       try {
@@ -98,4 +102,5 @@ self.addEventListener('fetch', (event) => {
       }
     })()
   );
+  console.table(assetLog, ['Pathname', 'Service Worker']);
 });

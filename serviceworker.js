@@ -13,74 +13,96 @@ const cacheAssets = [
   '/',
   '/index.html',
   '/assets/js/eventListeners.js',
-  '/css',
   '/assets/css/bootstrap.min.css',
   '/dist/css/todoapp.min.css',
   '/serviceworker.js',
   '/assets/icons/all.js',
+  '/assets/img/oops.png',
   '/assets/img/speak.png',
   '/assets/img/cwc.png',
+  'assets/icons/maskable_icon300.png',
+  'assets/icons/maskable_icon_x128.png',
   '/manifest.json',
   '/assets/img/background.png',
   '/assets/fonts/CabinSketch.woff2',
   '/assets/fonts/Neucha.woff2',
-  '/assets/js/editTodo.js',
-  '/assets/js/addTodo.js',
-  '/assets/js/updateDOM.js',
-  '/assets/js/addGlobalEventListener.js',
-  '/assets/js/updateTodoStatus.js',
-  '/assets/js/localStorage.js',
-  '/assets/js/endUpdate.js',
-  '/assets/js/dateSort.js',
-  '/assets/js/categorySort.js',
-  '/assets/js/tellUserAboutError.js',
-  '/assets/icons/maskable_icon300.png',
-  '/assets/js/updateTodo.js',
-  '/assets/js/updateTodoFromSpan.js',
-  '/assets/js/createOneTodo.js',
-  '/assets/js/createManyTodos.js',
-  '/assets/js/addTodoToDOM.js',
-  '/assets/js/draggable.js',
-  '/assets/js/defaultTodos.js',
-  '/assets/js/processTodo.js',
-  '/assets/js/generateID.js',
-  '/assets/js/capitalizeFirstLetter.js',
   '/assets/fonts/Neucha2.woff2',
+  '/dist/bundle.js',
+  'https://fonts.googleapis.com/css?family=Lato:300,400,700',
 ];
+
+function fillServiceWorkerCache2() {
+  /* It will not cache and also not reject for individual resources that failed to be added in the cache. unlike fillServiceWorkerCache which stops caching as soon as one problem occurs. see http://stackoverflow.com/questions/41388616/what-can-cause-a-promise-rejected-with-invalidstateerror-here */
+  return caches
+    .open(cacheName)
+    .then((cache) => Promise.all(cacheAssets.map((url) => cache.add(url).catch((reason) => console.error([`${url} failed: ${String(reason)}`])))));
+}
 
 // Call Install Event
 self.addEventListener('install', (e) => {
   console.log('Service Worker: Installed');
 
   e.waitUntil(
-    caches.open(cacheName).then((cache) => {
-      console.log('Service Worker: Caching Files');
-      return cache.addAll(cacheAssets);
-    })
-    // .then(() => self.skipWaiting())
+    caches
+      .open(cacheName)
+      .then((cache) => {
+        console.log('Service Worker: Caching Files');
+        fillServiceWorkerCache2();
+      })
+      .then(() => self.skipWaiting())
   );
 });
 
 // Call Activate Event
-self.addEventListener('activate', (e) => {
-  console.log('Service Worker: Activated');
-  // Remove unwanted caches
-  e.waitUntil(
-    caches.keys().then((cacheNames) =>
-      Promise.all(
-        cacheNames.map((cache) => {
-          if (cache !== cacheName) {
-            console.log('Service Worker: Clearing Old Cache');
-            return caches.delete(cache);
-          }
-        })
+self.addEventListener('fetch', (event) => {
+  // console.log('Service Worker: Fetching...🦅');
+  event.respondWith(
+    caches
+      .match(event.request)
+      .then(
+        (response) =>
+          response ??
+          fetch(event.request).then((res) => {
+            // make clone of response
+            const clonedResponse = res.clone();
+            // open cache
+            caches.open(cacheName).then((cache) => {
+              // add response to cache
+              cache.put(event.request, clonedResponse);
+            });
+            return response;
+          })
       )
-    )
+      .catch((
+        err // load default page as generic fallback
+      ) => caches.match('/index.html'))
   );
 });
 
-// Call Fetch Event
-self.addEventListener('fetch', (e) => {
-  console.log('Service Worker: Fetching');
-  e.respondWith(fetch(e.request).catch(() => caches.match(e.request)));
-});
+// // cached response
+// self.addEventListener('fetch', (event) => {
+//   console.log('Service Worker: Fetching...🦅');
+//   event.respondWith(
+//     caches
+//       .match(event.request)
+//       .then(
+//         (response) =>
+//           response ??
+//           fetch(event.request).then((res) => {
+//             // make clone of response
+//             const clonedResponse = res.clone();
+//             // open cache
+//             caches.open(cacheName).then((cache) => {
+//               // add response to cache
+//               cache.put(event.request, clonedResponse);
+//             });
+//             return response;
+//           })
+//       )
+//       .catch(
+//         (err) =>
+//           // load default page as generic fallback
+//           caches.match('/') ?? caches.match('/index.html')
+//       )
+//   );
+// });

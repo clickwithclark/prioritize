@@ -9,6 +9,7 @@ if ('serviceWorker' in navigator) {
 }
 const cacheName = 'v1';
 const assetLog = {};
+const failedAssets = {};
 
 const cacheAssets = [
   '/',
@@ -31,15 +32,20 @@ const cacheAssets = [
   '/dist/bundle.js',
 ];
 
-function preCacheServiceWorker() {
+async function preCacheServiceWorker() {
   /* It will not cache and also not reject for individual resources that failed to be added in the cache. unlike fillServiceWorkerCache which stops caching as soon as one problem occurs. see http://stackoverflow.com/questions/41388616/what-can-cause-a-promise-rejected-with-invalidstateerror-here */
-  return caches
-    .open(cacheName)
-    .then((cache) =>
-      Promise.all(
-        cacheAssets.map((url) => cache.add(url).catch((reason) => console.table({ [`Service Worker: ${url} failed...😭`]: ` ${String(reason)}` })))
-      )
-    );
+  const cache = await caches.open(cacheName);
+
+  Promise.all(
+    cacheAssets.map((url) =>
+      cache.add(url).catch((reason) => {
+        failedAssets[`Service Worker: Asset not stored in cache...😭:  ${url}`] = {
+          Reason: ` ${String(reason)}`,
+        };
+        console.table(failedAssets);
+      })
+    )
+  );
 }
 
 // Call Install Event
@@ -81,11 +87,11 @@ self.addEventListener('fetch', (event) => {
   event.respondWith(
     (async () => {
       try {
-        const cacheResponse = await caches.match(event.request);
+        const cachedResponse = await caches.match(event.request);
 
         // get response from cache if it exists
-        if (cacheResponse) {
-          return cacheResponse;
+        if (cachedResponse) {
+          return cachedResponse;
         }
         // if it does not exists try to get response from network
         const netWorkResponse = await fetch(event.request);
@@ -102,5 +108,5 @@ self.addEventListener('fetch', (event) => {
       }
     })()
   );
-  console.table(assetLog, ['Pathname', 'Service Worker']);
+  console.table(assetLog);
 });

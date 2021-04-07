@@ -3,6 +3,9 @@ import { getDefaultTodos } from './defaultTodos.js';
 export function getState() {
   return JSON.parse(localStorage.getItem('state'));
 }
+export function saveState(state) {
+  localStorage.setItem('state', JSON.stringify(state));
+}
 export function retrieveFromLocalStorage() {
   const state = { ...getState() };
   // wrapped in object incase state is null or undefined
@@ -29,15 +32,27 @@ export function addToLocalStorage(givenTodo) {
   state.order = state?.order ?? [];
   state.order = [givenTodo.id, ...state.order];
   state.todos = currentStored;
-  localStorage.setItem('state', JSON.stringify(state));
+  saveState(state);
+}
+export function updateTodo(givenTodo) {
+  // get current stored todos first then append new todo
+  const state = { ...getState() };
+  const currentStored = { ...state?.todos };
+  Object.assign(currentStored, { [givenTodo.id]: givenTodo });
+  state.todos = currentStored;
+  saveState(state);
 }
 
 export function deleteOneFromLocalStorage(todoID) {
   const state = { ...getState() };
+  let order = [...getState()?.order];
   const currentStored = { ...state?.todos };
+  order = order.filter((id) => id !== todoID);
   delete currentStored[todoID];
   state.todos = currentStored;
-  localStorage.setItem('state', JSON.stringify(state));
+  console.log(order);
+  state.order = order;
+  saveState(state);
 }
 
 export function updateOneInLocalStorage(partialTodo) {
@@ -54,7 +69,7 @@ export function updateOneInLocalStorage(partialTodo) {
   todoToUpdate = { ...todoToUpdate, ...partialTodo };
   Object.assign(currentStored, { [todoToUpdate.id]: todoToUpdate });
   state.todos = currentStored;
-  localStorage.setItem('state', JSON.stringify(state));
+  saveState(state);
 }
 
 export function saveSortedTodos(sortedTodos) {
@@ -64,7 +79,7 @@ export function saveSortedTodos(sortedTodos) {
     order.push(+element[0]);
   });
   state.order = order;
-  localStorage.setItem('state', JSON.stringify(state));
+  saveState(state);
 }
 
 export function saveDOMOrder() {
@@ -77,6 +92,16 @@ export function saveDOMOrder() {
   const state = getState();
   if (listOfIds.length > 0) {
     state.order = listOfIds;
-    localStorage.setItem('state', JSON.stringify(state));
+    saveState(state);
   }
+}
+export function saveUpdateConfig(config) {
+  const state = getState();
+  state.updateConfig = config;
+  saveState(state);
+}
+export function clearUpdateConfig() {
+  const state = getState();
+  state.updateConfig = null;
+  saveState(state);
 }

@@ -1,52 +1,40 @@
-import { addGlobalEventListener } from './addGlobalEventListener.js';
-import { endUpdate } from './endUpdate.js';
+import { saveUpdateConfig } from './localStorage.js';
 import { updateDOM } from './updateDOM.js';
-import { updateTodo } from './updateTodo.js';
-import { updateTodoFromSpan } from './updateTodoFromSpan.js';
 
 export function editTodo(e) {
+  const input = document.querySelector('#todoInput');
   const listItemToEdit = e.target.closest('li');
+  const { id } = listItemToEdit.dataset;
+  const todoOffset = listItemToEdit.offsetTop;
+  const editingAreaLocation = document.querySelector('h1').offsetTop;
   const messageNode = listItemToEdit.querySelector('.main-message');
-  messageNode.classList.add('editing-in-progress');
-
   const originalMessage = messageNode.innerText;
 
-  // prevent editing if todo is crossed off
+  // prevent editing if todo is completed (crossed off)
   if (messageNode.classList.contains('completed')) {
     return updateDOM();
   }
 
-  messageNode.contentEditable = true;
-
-  messageNode.focus();
-  messageNode.style.backgroundColor = 'white';
-  messageNode.style.color = 'black';
   let editValue = messageNode.innerText.replace('[', '(');
   editValue = editValue.replace(']', ')');
-  messageNode.innerText = editValue;
+  input.value = editValue;
+  input.classList.add('editing-in-progress');
+  input.classList.add('pop-out-fade-out');
+  input.placeholder = `Updating: ${originalMessage.slice(0, 16)}...📑`;
+  window.scrollTo({ top: editingAreaLocation, behavior: 'smooth' });
+  input.focus();
 
-  // placing caret midway of content
-  const selection = window.getSelection();
-  const halfwayPoint = Math.floor(messageNode.innerText.length / 2);
-  const range = document.createRange();
-  range.setStart(messageNode.childNodes[0], halfwayPoint);
-  range.collapse(true);
-  selection.removeAllRanges();
-  selection.addRange(range);
+  // capture original ID for todo
+  const updatedTodo = {};
+  updatedTodo.id = +id;
 
-  // handle update if button is pressed while an update is ongoing
-  // assume user is saving
-  // if (originalMessage.trim() === messageNode.innerText.trim()) {
-  //   endUpdate(messageNode);
-  //   return;
-  // }
+  /**
+   * @config
+   * @property {number}  todoOffset - The offset top position of the todo.
+   * @property {object}  updatedTodo - a partial of the todo being updated.
+   * @property {number}  updatedTodo.id - The id of the todo being updated.
+   */
+  const config = { todoOffset, updatedTodo };
 
-  messageNode.addEventListener('keydown', (event) => {
-    // if enter is pressed
-    if (event.key === 'Enter') {
-      event.preventDefault();
-      endUpdate(messageNode);
-      updateTodo(event);
-    }
-  });
+  saveUpdateConfig(config);
 }

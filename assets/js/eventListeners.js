@@ -3,11 +3,12 @@ import { addTodo } from './addTodo.js';
 import { updateDOM } from './updateDOM.js';
 import { addGlobalEventListener } from './addGlobalEventListener.js';
 import { updateCompletedStatus } from './updateTodoStatus.js';
-import { deleteOneFromLocalStorage } from './localStorage.js';
-import { endUpdate } from './endUpdate.js';
+import { deleteOneFromLocalStorage, getState, clearUpdateConfig, updateTodo } from './localStorage.js';
 import { dateSort } from './dateSort.js';
 import { categorySort } from './categorySort.js';
 import { tellUserAboutError } from './tellUserAboutError.js';
+import { processTodo } from './processTodo.js';
+import { endUpdate } from './endUpdate.js';
 
 // global state management
 
@@ -53,6 +54,31 @@ export function initializeEventListeners() {
   addGlobalEventListener('keydown', '#todoInput', (event) => {
     // when enter is pressed
     if (event.key === 'Enter') {
+      if (event.target.classList.contains('editing-in-progress')) {
+        const config = getState()?.updateConfig;
+        if (config) {
+          // user is trying to save updated todo
+
+          const input = document.querySelector('#todoInput');
+          const newTask = input.value.trim();
+          const updatedTodo = processTodo(newTask);
+          updatedTodo.id = config.updatedTodo.id;
+          updateTodo(updatedTodo);
+
+          // reset input to pre-updating defaults
+
+          endUpdate(input);
+          clearUpdateConfig();
+
+          // scroll back to original todo position in list
+
+          window.scrollTo({ top: config.todoOffset, behavior: 'smooth' });
+
+          updateDOM();
+        }
+        // exit if no config exists, the user is probably editing
+        return;
+      }
       try {
         // complain if invalid values
         if (event.target.value.trim() === '') {
@@ -63,18 +89,19 @@ export function initializeEventListeners() {
         addTodo();
         event.target.value = '';
       } catch (error) {
+        console.trace(error);
         tellUserAboutError(error);
-        console.error(error);
       }
     }
   });
   // cancel editing if focus lost
-  addGlobalEventListener('focusout', '.main-message', (event) => {
+  addGlobalEventListener('focusout', '#todoInput', (event) => {
     endUpdate(event.target);
+    clearUpdateConfig();
     updateDOM();
   });
 
-  // editing existing todo
+  // edit existing todo
   addGlobalEventListener('pointerup', '.edit', editTodo);
 
   // adding new todo
@@ -107,7 +134,7 @@ export function initializeEventListeners() {
   // selecting completed todos
   addGlobalEventListener('pointerdown', '.main-message', (event) => {
     const todo = event.target;
-    // prevent todo saving as completed if user is editing
+    // prevent todo state change if user is editing
     if (todo.classList.contains('editing-in-progress')) {
       return;
     }
@@ -124,7 +151,7 @@ export function initializeEventListeners() {
     liToRemove.style.transition = '0.3s';
     liToRemove.style.opacity = 0;
     liToRemove.style.marginTop = '-40px';
-    deleteOneFromLocalStorage(id);
+    deleteOneFromLocalStorage(+id);
     setTimeout(() => {
       liToRemove.remove();
       updateDOM();
@@ -134,9 +161,11 @@ export function initializeEventListeners() {
   // date sort
 
   addGlobalEventListener('pointerdown', '.date-sort', dateSort.sort);
+  // category sort
+
   addGlobalEventListener('pointerdown', '.category-sort', categorySort.sort);
 
-  // new one above
+  // insert new one above this line
   updateDOM();
 } // END initializeEventListeners
 if (document.readyState === 'loading') {

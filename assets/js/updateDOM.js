@@ -7,8 +7,7 @@ export function updateDOM() {
   const list = document.querySelector('#todoList');
   list.innerHTML = '';
   const storedTodos = retrieveFromLocalStorage();
-  const state = getState()?.order;
-  const storedOrder = state?.order ?? [];
+  const storedOrder = getState()?.order ?? [];
   try {
     if (storedOrder.length === 0) {
       // show demo todos
@@ -18,12 +17,12 @@ export function updateDOM() {
       draggable();
       return;
     }
-
     storedOrder.forEach((id) => {
       addTodoToDOM(storedTodos[+id]);
     });
     draggable();
   } catch (error) {
     tellUserAboutError(error);
+    console.trace();
   }
 }

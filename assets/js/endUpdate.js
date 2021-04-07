@@ -1,5 +1,5 @@
-export function endUpdate(messageNode) {
-  messageNode.contentEditable = false;
-  messageNode.style.backgroundColor = 'inherit';
-  messageNode.style.color = 'inherit';
+export function endUpdate(input) {
+  input.value = '';
+  input.placeholder = 'Add New Task...📄';
+  input.classList.remove('editing-in-progress');
 }

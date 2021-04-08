@@ -1,6 +1,6 @@
 {
   "name": "prioritize",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "",
   "main": "index.js",
   "dependencies": {},
@@ -30,7 +30,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "docs": "node_modules/.bin/jsdoc -c .eslintrc.js",
-    "start": "webpack",
+    "build": "webpack",
     "release": "standard-version"
   },
   "keywords": [],

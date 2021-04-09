@@ -9,14 +9,12 @@ export function processTodo(message) {
   if (message.indexOf('(') !== -1) {
     category = message.match(/\((.*)\)/).pop();
     // remove category from being included in a todo body
-    note = message.replace(`(${category})`, '');
+    note = message.replace(`(${category})`, '').trim();
   }
-  // note = escapeHtml(note);
-
+  note = capitalizeFirstLetter(note);
   if (category) {
     category = capitalizeFirstLetter(category);
   }
-  note = capitalizeFirstLetter(note);
   const TODO = {
     id: generateID(),
     message: note,

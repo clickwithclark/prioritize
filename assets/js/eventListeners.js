@@ -58,33 +58,31 @@ export function initializeEventListeners() {
         const config = getState()?.updateConfig;
         if (config) {
           // user is trying to save updated todo
+          const input = document.querySelector('#todoInput');
           try {
-          
-            const input = document.querySelector('#todoInput');
             const newTask = input.value.trim();
             // complain if invalid values
-        if (newTask === '') {
-          throw new Error('Woops, update cannot be blank!');
-        }
+            if (newTask === '') {
+              throw new Error('Woops, update cannot be blank! ..try deleting it instead');
+            }
             const updatedTodo = processTodo(newTask);
             updatedTodo.id = config.updatedTodo.id;
             updateTodo(updatedTodo);
+
+            // reset input to pre-updating defaults
+
+            endUpdate(input);
+            clearUpdateConfig();
+
+            // scroll back to original todo position in list
+
+            window.scrollTo({ top: config.todoOffset, behavior: 'smooth' });
+
+            updateDOM();
           } catch (error) {
             console.trace(error);
             tellUserAboutError(error);
-           
           }
-
-          // reset input to pre-updating defaults
-
-          endUpdate(input);
-          clearUpdateConfig();
-
-          // scroll back to original todo position in list
-
-          window.scrollTo({ top: config.todoOffset, behavior: 'smooth' });
-
-          updateDOM();
         }
         // exit if no config exists, the user is probably editing
         return;

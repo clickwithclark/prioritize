@@ -58,12 +58,22 @@ export function initializeEventListeners() {
         const config = getState()?.updateConfig;
         if (config) {
           // user is trying to save updated todo
-
-          const input = document.querySelector('#todoInput');
-          const newTask = input.value.trim();
-          const updatedTodo = processTodo(newTask);
-          updatedTodo.id = config.updatedTodo.id;
-          updateTodo(updatedTodo);
+          try {
+          
+            const input = document.querySelector('#todoInput');
+            const newTask = input.value.trim();
+            // complain if invalid values
+        if (newTask === '') {
+          throw new Error('Woops, update cannot be blank!');
+        }
+            const updatedTodo = processTodo(newTask);
+            updatedTodo.id = config.updatedTodo.id;
+            updateTodo(updatedTodo);
+          } catch (error) {
+            console.trace(error);
+            tellUserAboutError(error);
+           
+          }
 
           // reset input to pre-updating defaults
 

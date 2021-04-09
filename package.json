@@ -7,7 +7,7 @@
   "devDependencies": {
     "babel-eslint": "^10.0.3",
     "dependency-cruiser": "^9.23.2",
-    "eslint": "^7.21.0",
+    "eslint": "^7.23.0",
     "eslint-config-airbnb": "^18.2.1",
     "eslint-config-clickwithclark": "^1.1.8",
     "eslint-config-google": "^0.12.0",

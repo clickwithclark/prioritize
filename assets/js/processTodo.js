@@ -1,5 +1,6 @@
 import { generateID } from './generateID.js';
 import { capitalizeFirstLetter } from './capitalizeFirstLetter.js';
+import { tellUserAboutError } from './tellUserAboutError.js';
 
 export function processTodo(message) {
   let category = null;
@@ -11,16 +12,26 @@ export function processTodo(message) {
     // remove category from being included in a todo body
     note = message.replace(`(${category})`, '').trim();
   }
-  note = capitalizeFirstLetter(note);
-  if (category) {
-    category = capitalizeFirstLetter(category);
+  try {
+    if (note.length === 0) {
+      throw new Error(`Task left blank during multi-entry mode
+      Example:   task1, ,task2`);
+    }
+    note = capitalizeFirstLetter(note);
+    if (category) {
+      category = capitalizeFirstLetter(category);
+    }
+    console.log('todo still built');
+    const TODO = {
+      id: generateID(),
+      message: note,
+      date: new Date(),
+      category,
+      completed: false,
+    };
+    return TODO;
+  } catch (error) {
+    console.trace();
+    tellUserAboutError(error, 7);
   }
-  const TODO = {
-    id: generateID(),
-    message: note,
-    date: new Date(),
-    category,
-    completed: false,
-  };
-  return TODO;
 }

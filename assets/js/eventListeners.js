@@ -63,7 +63,7 @@ export function initializeEventListeners() {
             const newTask = input.value.trim();
             // complain if invalid values
             if (newTask === '') {
-              throw new Error('Woops, update cannot be blank! ..try deleting it instead');
+              throw new Error('Woops, update cannot be blank! . . . try deleting it instead');
             }
             const updatedTodo = processTodo(newTask);
             updatedTodo.id = config.updatedTodo.id;

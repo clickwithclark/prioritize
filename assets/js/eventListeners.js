@@ -3,7 +3,7 @@ import { addTodo } from './addTodo.js';
 import { updateDOM } from './updateDOM.js';
 import { addGlobalEventListener } from './addGlobalEventListener.js';
 import { updateCompletedStatus } from './updateTodoStatus.js';
-import { deleteOneFromLocalStorage, getState, clearUpdateConfig, updateTodo } from './localStorage.js';
+import { deleteOneFromLocalStorage, getState, clearUpdateConfig, updateTodo, deleteAllTodos } from './localStorage.js';
 import { dateSort } from './dateSort.js';
 import { categorySort } from './categorySort.js';
 import { tellUserAboutError } from './tellUserAboutError.js';
@@ -172,7 +172,10 @@ export function initializeEventListeners() {
   // category sort
 
   addGlobalEventListener('pointerdown', '.category-sort', categorySort.sort);
-
+  // delete all
+  // pointerup selected to allow user to move away on pointerdown
+  // if pressed by accident
+  addGlobalEventListener('pointerup', '.delete-all', deleteAllTodos);
   // insert new one above this line
   updateDOM();
 } // END initializeEventListeners

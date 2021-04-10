@@ -7,9 +7,9 @@
   <title>Prioritize</title>
   <link rel="manifest" href="./manifest.json" />
   <!--site js-->
-  <!-- <script type="module" defer src="./assets/js/eventListeners.js"></script> -->
-  <script defer src="./dist/bundle.js"></script>
-  <script defer src="./serviceworker.js"></script>
+  <script type="module" defer src="./assets/js/eventListeners.js"></script>
+  <!-- <script defer src="./dist/bundle.js"></script> -->
+  <!-- <script defer src="./serviceworker.js"></script> -->
   <!--site css-->
   <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
   <link rel="stylesheet" href="./dist/css/todoapp.min.css" />
@@ -20,14 +20,14 @@
 </head>
 
 <body>
-  <div id="info-bubble">
-    <img id="speech-bubble" src="assets/img/speak.png" alt="speech Bubble" />
-    <p id="info-message"></p>
-  </div>
-  <div class="chat icon"></div>
-  <img id="logo" src="assets/img/cwc.png" alt="clickwithclark logo" />
-
   <div class="app-container mt-4">
+    <div class="logo-container">
+      <img id="logo" src="assets/img/cwc.png" alt="clickwithclark logo" />
+      <div class="bubble info-message">
+
+      </div>
+    </div>
+
     <h1 class="">
       <i class="fas fa-clipboard-list"></i>
       Pr1oriti23
@@ -35,6 +35,8 @@
     <div class="buttons">
       <span class="category-sort"><i class="fas fa-tags"></i></span>
       <span class="date-sort"><i class="fas fa-sort-amount-down"></i></span>
+      <span class="delete-all"><i class="fas fa-trash-alt"></i></i></span>
+      <span class="tutorial"><i class="fas fa-chalkboard-teacher"></i></span>
       <span class="drop-down-entry"><i class="fas fa-plus"></i></span>
     </div>
     <input id="todoInput" type="text" placeholder="Add New Task...📄" maxlength="32" />

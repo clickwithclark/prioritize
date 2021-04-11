@@ -1,6 +1,6 @@
 import { addToLocalStorage } from './localStorage.js';
 import { processTodo } from './processTodo.js';
-import { tellUserAboutError } from './tellUserAboutError.js';
+import { feedbackMessage } from './feedbackMessage.js';
 import { updateDOM } from './updateDOM.js';
 
 export function createOneTodo(message) {
@@ -12,7 +12,7 @@ export function createOneTodo(message) {
       return;
     }
   } catch (error) {
-    console.trace();
-    tellUserAboutError(error);
+    console.error(error)
+    feedbackMessage(error.message);
   }
 }

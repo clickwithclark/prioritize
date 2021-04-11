@@ -3,13 +3,13 @@ import { addTodo } from './addTodo.js';
 import { updateDOM } from './updateDOM.js';
 import { addGlobalEventListener } from './addGlobalEventListener.js';
 import { updateCompletedStatus } from './updateTodoStatus.js';
-import { deleteOneFromLocalStorage, getState, clearUpdateConfig, updateTodo, deleteAllTodos } from './localStorage.js';
+import { deleteOneFromLocalStorage, getState, clearUpdateConfig, updateTodo } from './localStorage.js';
 import { dateSort } from './dateSort.js';
 import { categorySort } from './categorySort.js';
-import { tellUserAboutError } from './tellUserAboutError.js';
+import { feedbackMessage } from './feedbackMessage.js';
 import { processTodo } from './processTodo.js';
 import { endUpdate } from './endUpdate.js';
-
+import { deleteAllTodosDialog, confirmDelete, resetAppUI } from './deleteAllTodos.js';
 // global state management
 
 // eslint-disable-next-line prefer-const
@@ -81,7 +81,7 @@ export function initializeEventListeners() {
             updateDOM();
           } catch (error) {
             console.trace(error);
-            tellUserAboutError(error);
+            feedbackMessage(error.message);
           }
         }
         // exit if no config exists, the user is probably editing
@@ -98,16 +98,16 @@ export function initializeEventListeners() {
         event.target.value = '';
       } catch (error) {
         console.trace(error);
-        tellUserAboutError(error);
+        feedbackMessage(error.message);
       }
     }
   });
   // cancel editing if focus lost
-  addGlobalEventListener('focusout', '#todoInput', (event) => {
-    endUpdate(event.target);
-    clearUpdateConfig();
-    updateDOM();
-  });
+  // addGlobalEventListener('focusout', '#todoInput', (event) => {
+  //   endUpdate(event.target);
+  //   clearUpdateConfig();
+  //   updateDOM();
+  // });
 
   // edit existing todo
   addGlobalEventListener('pointerup', '.edit', editTodo);
@@ -175,7 +175,9 @@ export function initializeEventListeners() {
   // delete all
   // pointerup selected to allow user to move away on pointerdown
   // if pressed by accident
-  addGlobalEventListener('pointerup', '.delete-all', deleteAllTodos);
+  addGlobalEventListener('pointerup', '.delete-all', deleteAllTodosDialog);
+  addGlobalEventListener('pointerup', '.yes-btn', confirmDelete);
+  addGlobalEventListener('pointerup', '.no-btn', resetAppUI);
   // insert new one above this line
   updateDOM();
 } // END initializeEventListeners

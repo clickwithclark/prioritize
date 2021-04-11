@@ -1,5 +1,4 @@
 import { getDefaultTodos } from './defaultTodos.js';
-import { updateDOM } from './updateDOM.js';
 
 export function getState() {
   return JSON.parse(localStorage.getItem('state'));
@@ -51,7 +50,6 @@ export function deleteOneFromLocalStorage(todoID) {
   order = order.filter((id) => id !== todoID);
   delete currentStored[todoID];
   state.todos = currentStored;
-  console.log(order);
   state.order = order;
   saveState(state);
 }
@@ -105,12 +103,4 @@ export function clearUpdateConfig() {
   const state = getState();
   state.updateConfig = null;
   saveState(state);
-}
-
-export function deleteAllTodos() {
-  const state = getState();
-  state.todos = null;
-  state.order = null;
-  saveState(state);
-  updateDOM();
 }

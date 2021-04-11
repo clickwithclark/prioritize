@@ -28,7 +28,7 @@
       </div>
     </div>
 
-    <h1 class="">
+    <h1 class="app-name">
       <i class="fas fa-clipboard-list"></i>
       Pr1oriti23
     </h1>
@@ -39,9 +39,20 @@
       <span class="tutorial"><i class="fas fa-chalkboard-teacher"></i></span>
       <span class="drop-down-entry"><i class="fas fa-plus"></i></span>
     </div>
-    <input id="todoInput" type="text" placeholder="Add New Task...📄" maxlength="32" />
+    <input id="todoInput" type="text" placeholder="Add New Task...📄" />
     <ul id="todoList" class="list-group" data-draggable-container></ul>
+
+    <!-- #region of confirmation popup -->
+    <div class="confirmation-popup">
+      <h2>
+        Confirm Deletion</h2>
+      <button class="confirmation-btn yes-btn"><i class="fas fa-check"></i></button>
+      <button class="confirmation-btn no-btn"><i class="fas fa-times"></i></button>
+
+    </div>
+    <!-- #endregion of confirmation popup -->
   </div>
+
 </body>
 
 </html>

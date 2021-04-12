@@ -9,14 +9,21 @@ const popUp = document.querySelector('.confirmation-popup');
 const logoContainer = document.querySelector('.logo-container');
 
 export function deleteAllTodosDialog() {
-  appContainer.classList.add('blur');
-  logo.classList.add('negate-blur');
-  logoContainer.classList.add('negate-blur');
-  appName.classList.add('negate-blur');
-  popUp.classList.add('active');
-  popUp.classList.add('negate-blur');
-  document.body.style.overflow = 'hidden';
-  feedbackMessage('Are you sure you want to delete all your Tasks?!', 300);
+  try {
+    if (!getState()?.todos) {
+      throw new Error(`You Dont have any tasks to delete yet , That's just a demonstration`);
+    }
+    appContainer.classList.add('blur');
+    logo.classList.add('negate-blur');
+    logoContainer.classList.add('negate-blur');
+    appName.classList.add('negate-blur');
+    popUp.classList.add('active');
+    popUp.classList.add('negate-blur');
+    document.body.style.overflow = 'hidden';
+    feedbackMessage('Are you sure you want to delete all your Tasks?!', 300);
+  } catch (error) {
+    feedbackMessage(error.message, 3);
+  }
 }
 
 export function resetAppUI() {
@@ -37,6 +44,6 @@ export function confirmDelete() {
   state.order = null;
   saveState(state);
   resetAppUI();
-  feedbackMessageNormal('Done! . . .');
   updateDOM();
+  feedbackMessageNormal('Done! . . .');
 }

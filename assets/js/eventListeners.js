@@ -10,6 +10,7 @@ import { feedbackMessage } from './feedbackMessage.js';
 import { processTodo } from './processTodo.js';
 import { endUpdate } from './endUpdate.js';
 import { deleteAllTodosDialog, confirmDelete, resetAppUI } from './deleteAllTodos.js';
+import { deleteSelected } from './deleteSelected.js';
 // global state management
 
 // eslint-disable-next-line prefer-const
@@ -178,6 +179,9 @@ export function initializeEventListeners() {
   addGlobalEventListener('pointerup', '.delete-all', deleteAllTodosDialog);
   addGlobalEventListener('pointerup', '.yes-btn', confirmDelete);
   addGlobalEventListener('pointerup', '.no-btn', resetAppUI);
+
+  addGlobalEventListener('pointerup', '.delete-selected', deleteSelected);
+  // addGlobalEventListener('pointerdown', '.tutorial', tutorial);
   // insert new one above this line
   updateDOM();
 } // END initializeEventListeners

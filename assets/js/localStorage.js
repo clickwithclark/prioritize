@@ -71,7 +71,7 @@ export function updateOneInLocalStorage(partialTodo) {
   saveState(state);
 }
 
-export function saveSortedTodos(sortedTodos) {
+export function saveTodoOrder(sortedTodos) {
   const state = { ...getState() };
   const order = [];
   sortedTodos.forEach((element) => {

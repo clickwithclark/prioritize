@@ -432,6 +432,7 @@ body {
 .date-sort,
 .delete-all,
 .tutorial,
+.delete-selected,
 .confirmation-btn {
   cursor: pointer;
   font-size: 30px;
@@ -444,6 +445,7 @@ body {
 .category-sort:active,
 .delete-all:active,
 .tutorial:active,
+.delete-selected:active,
 .drop-down-entry:active,
 .date-sort:active {
   font-size: 25.6px;

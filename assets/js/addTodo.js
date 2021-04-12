@@ -5,6 +5,7 @@ import { feedbackMessage } from './feedbackMessage.js';
 
 export function addTodo() {
   const message = document.querySelector('#todoInput').value.trim();
+
   if (message.indexOf(',') === -1) {
     return createOneTodo(message);
   }

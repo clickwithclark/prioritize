@@ -1,6 +1,6 @@
 import { addTodoToDOM } from './addTodoToDOM.js';
 import { draggable } from './draggable.js';
-import { retrieveFromLocalStorage, saveSortedTodos } from './localStorage.js';
+import { retrieveFromLocalStorage, saveTodoOrder } from './localStorage.js';
 import { updateDOM } from './updateDOM.js';
 import { dateSort } from './dateSort.js';
 
@@ -44,7 +44,7 @@ export const categorySort = (function (event) {
 
       // after all sorting merge sorted categories with date sorted non categorized tasks
 
-      saveSortedTodos([...categorized, ...dateSort.getEtries()]);
+      saveTodoOrder([...categorized, ...dateSort.getEtries()]);
       updateDOM();
       draggable();
     },

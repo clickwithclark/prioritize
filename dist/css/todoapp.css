@@ -203,12 +203,46 @@ body {
 }
 
 .drop-down-entry,
-.tutorial {
+.tutorial-btn,
+.tutorial-ok-btn {
   cursor: pointer;
   font-size: 30px;
 }
 
-.app-container h1 .drop-down-entry:active {
+.main-btn {
+  min-width: 45%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -ms-flex-item-align: start;
+      align-self: flex-start;
+}
+
+.special-btn {
+  min-width: 30%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+}
+
+.buttons {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.app-container h1 .drop-down-entry:active,
+tutorial-btn:active {
   font-size: 25.6px;
 }
 
@@ -396,14 +430,10 @@ body {
   opacity: 1 !important;
 }
 
-.delete-all {
-  margin-right: 200px;
-}
-
 .category-sort,
 .date-sort,
 .delete-all,
-.tutorial,
+.delete-selected,
 .confirmation-btn {
   cursor: pointer;
   font-size: 30px;
@@ -415,18 +445,11 @@ body {
 
 .category-sort:active,
 .delete-all:active,
-.tutorial:active,
+.tutorial-btn:active,
+.delete-selected:active,
 .drop-down-entry:active,
 .date-sort:active {
   font-size: 25.6px;
-}
-
-.buttons {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-pack: distribute;
-      justify-content: space-around;
 }
 
 .confirmation-popup {
@@ -514,6 +537,37 @@ body {
   color: #212529;
 }
 
+.tutorial {
+  overflow-y: auto;
+  height: 40%;
+  font-family: "Neucha2";
+}
+
+.instructions {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: column wrap;
+          flex-flow: column wrap;
+  font-size: 1rem;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.guide {
+  font-family: "Neucha2";
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
 /* -------------------------------------------------------------------*/
 /* -------------------------------------------------------------------*/
 @media only screen and (min-width: 575.98px) {
@@ -529,12 +583,67 @@ body {
         flex-basis: 100%;
   }
   .confirmation-popup.active {
-    top: 50%;
+    top: 60%;
     visibility: visible;
     opacity: 1;
     -webkit-transition: 0.5s;
     transition: 0.5s;
-    max-width: 400px;
+    min-width: 400px;
+  }
+  .confirmation-popup.active.tutorial {
+    height: 60%;
+    font-family: "Neucha2";
+    background-color: transparent;
+    opacity: 0.97;
+    max-width: 750px;
+    bottom: 0.2rem;
+  }
+  /* -------------------------------------------------------------------*/
+  /* -------------------------------------------------------------------*/
+  .confirmation-popup.active.tutorial::-webkit-scrollbar {
+    width: 1em;
+  }
+  .confirmation-popup.active.tutorial::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+            box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  }
+  .confirmation-popup.active.tutorial::-webkit-scrollbar-thumb {
+    background-color: #212529;
+    outline: 1px solid slategrey;
+  }
+  /* -------------------------------------------------------------------*/
+  .guide {
+    font-family: "Neucha2";
+    line-height: 5.5vh;
+  }
+  .instructions {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-flow: column wrap;
+            flex-flow: column wrap;
+    font-size: 1rem;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+  }
+  .tutorial-ok-btn:focus {
+    border: none;
+    outline: none;
+  }
+  .tutorial-ok-btn:active {
+    color: #2ecc71;
+    font-size: 25px;
+  }
+  .tutorial-ok-btn {
+    border: none;
+    background-color: transparent;
+    border: none;
+    padding: 0.5rem;
+    border: none;
+    outline: none;
   }
 }
 

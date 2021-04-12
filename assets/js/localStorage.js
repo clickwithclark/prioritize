@@ -71,7 +71,7 @@ export function updateOneInLocalStorage(partialTodo) {
   saveState(state);
 }
 
-export function saveSortedTodos(sortedTodos) {
+export function saveTodoOrder(sortedTodos) {
   const state = { ...getState() };
   const order = [];
   sortedTodos.forEach((element) => {
@@ -94,13 +94,27 @@ export function saveDOMOrder() {
     saveState(state);
   }
 }
-export function saveUpdateConfig(config) {
-  const state = getState();
-  state.updateConfig = config;
-  saveState(state);
-}
 export function clearUpdateConfig() {
-  const state = getState();
+  let state = getState();
+  state = state ?? {};
   state.updateConfig = null;
   saveState(state);
+}
+
+export function saveUpdateConfig(config) {
+  const state = getState();
+  /*
+   * It is possible the user may want to try editing one of the demo tasks
+   * so if the user is trying to update a todo that does not exists
+   * create a new one from the contents of user input
+   *
+   * since the input eventlistener checks for the presence of a config file to
+   * distinguish an update from a create, nullify the config file passed.
+   */
+
+  if (state?.todos?.[config.updatedTodo.id] ?? false) {
+    state.updateConfig = config;
+    saveState(state);
+  }
+  clearUpdateConfig();
 }

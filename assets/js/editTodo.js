@@ -34,6 +34,5 @@ export function editTodo(e) {
    * @property {number}  updatedTodo.id - The id of the todo being updated.
    */
   const config = { todoOffset, updatedTodo };
-
   saveUpdateConfig(config);
 }

@@ -10,6 +10,8 @@ import { feedbackMessage } from './feedbackMessage.js';
 import { processTodo } from './processTodo.js';
 import { endUpdate } from './endUpdate.js';
 import { deleteAllTodosDialog, confirmDelete, resetAppUI } from './deleteAllTodos.js';
+import { deleteSelected } from './deleteSelected.js';
+import { tutorial, tutorialOk } from './tutorial.js';
 // global state management
 
 // eslint-disable-next-line prefer-const
@@ -84,8 +86,6 @@ export function initializeEventListeners() {
             feedbackMessage(error.message);
           }
         }
-        // exit if no config exists, the user is probably editing
-        return;
       }
       try {
         // complain if invalid values
@@ -96,6 +96,8 @@ export function initializeEventListeners() {
 
         addTodo();
         event.target.value = '';
+        endUpdate(event.target); // for times when editing event lead to adding a new todo
+        updateDOM();
       } catch (error) {
         console.trace(error);
         feedbackMessage(error.message);
@@ -178,6 +180,10 @@ export function initializeEventListeners() {
   addGlobalEventListener('pointerup', '.delete-all', deleteAllTodosDialog);
   addGlobalEventListener('pointerup', '.yes-btn', confirmDelete);
   addGlobalEventListener('pointerup', '.no-btn', resetAppUI);
+
+  addGlobalEventListener('pointerup', '.delete-selected', deleteSelected);
+  addGlobalEventListener('pointerdown', '.tutorial-btn', tutorial);
+  addGlobalEventListener('pointerdown', '.tutorial-ok-btn', tutorialOk);
   // insert new one above this line
   updateDOM();
 } // END initializeEventListeners

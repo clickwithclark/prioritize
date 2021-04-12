@@ -1,6 +1,6 @@
 import { addTodoToDOM } from './addTodoToDOM.js';
 import { draggable } from './draggable.js';
-import { retrieveFromLocalStorage, saveSortedTodos } from './localStorage.js';
+import { retrieveFromLocalStorage, saveTodoOrder } from './localStorage.js';
 import { updateDOM } from './updateDOM.js';
 
 export const dateSort = (function (event) {
@@ -39,7 +39,7 @@ export const dateSort = (function (event) {
       }
 
       // after sort
-      saveSortedTodos(toSort);
+      saveTodoOrder(toSort);
       updateDOM();
       draggable();
     },

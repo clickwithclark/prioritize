@@ -22,6 +22,7 @@ const cacheAssets = [
   '/assets/img/oops.png',
   '/assets/img/speak.png',
   '/assets/img/cwc.png',
+  '/assets/img/cwc-shades.png',
   'assets/icons/maskable_icon300.png',
   'assets/icons/maskable_icon_x128.png',
   '/manifest.json',

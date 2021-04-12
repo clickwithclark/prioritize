@@ -40,6 +40,7 @@ export function resetModalUI() {
 
 export function resetAppUI() {
   resetLogo();
+  feedbackMessage('Few! . . .that was close!', 2);
   resetModalUI();
   updateDOM();
   feedbackMessage('Few! . . .that was close!', 2);

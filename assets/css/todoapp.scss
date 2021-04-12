@@ -189,6 +189,23 @@ body {
   cursor: pointer;
   font-size: 30px;
 }
+.main-btn {
+  min-width: 45%;
+  display: flex;
+  justify-content: space-between;
+  align-self: flex-start;
+}
+.special-btn {
+  min-width: 30%;
+  display: flex;
+  justify-content: space-around;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-around;
+  justify-content: space-between;
+}
 .app-container h1 .drop-down-entry:active {
   font-size: 25.6px;
 }
@@ -357,7 +374,6 @@ body {
   opacity: 1 !important;
 }
 .delete-all {
-  margin-right: 200px;
 }
 .category-sort,
 .date-sort,
@@ -377,11 +393,6 @@ body {
 .drop-down-entry:active,
 .date-sort:active {
   font-size: 25.6px;
-}
-
-.buttons {
-  display: flex;
-  justify-content: space-around;
 }
 
 .confirmation-popup {

@@ -125,8 +125,10 @@ body {
   border-radius: 6px;
   overflow-wrap: break-word;
   word-wrap: break-word;
-  hyphens: auto;
+  // word-break:keep-all ;
+  hyphens: manual;
   visibility: hidden;
+  white-space: pre-wrap;
   position: relative;
   left: 20%;
 }
@@ -140,6 +142,12 @@ body {
   width: 0;
   position: absolute;
   pointer-events: none;
+}
+.good {
+  color: #2ecc71;
+}
+.bad {
+  color: #c0392b;
 }
 
 .bubble:after {
@@ -211,6 +219,8 @@ body {
   margin-right: 20px;
   text-align: center;
   display: inline-block;
+}
+.main-message {
 }
 .app-container ul li .grip,
 .edit {
@@ -390,7 +400,6 @@ body {
   background-color: #f7f7f7;
   visibility: hidden;
   opacity: 0;
-  transition: 0.5s;
   z-index: 1;
   display: flex;
   flex-flow: row wrap;

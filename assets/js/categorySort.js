@@ -1,9 +1,11 @@
 import { addTodoToDOM } from './addTodoToDOM.js';
 import { draggable } from './draggable.js';
 import { retrieveFromLocalStorage, saveSortedTodos } from './localStorage.js';
+import { updateDOM } from './updateDOM.js';
+import { dateSort } from './dateSort.js';
 
 export const categorySort = (function (event) {
-  let toSort = [];
+  let toSort = null;
   let flip = 1;
   /** Change the direction of the sort on each function call
    * @function flipSort
@@ -18,12 +20,18 @@ export const categorySort = (function (event) {
 
   return {
     sort() {
+      let unCategorized;
+      let categorized;
       toSort = Object.entries(retrieveFromLocalStorage());
       try {
         if (toSort.length === 0) {
           return;
         }
-        toSort.sort((x, y) => {
+        categorized = toSort.filter((item) => item[1].category !== null);
+        unCategorized = toSort.filter((item) => item[1].category === null);
+        dateSort.setSort(unCategorized);
+        dateSort.sort();
+        categorized.sort((x, y) => {
           const a = x[1].category;
           const b = y[1].category;
           return flipSort(a, b);
@@ -34,13 +42,10 @@ export const categorySort = (function (event) {
         console.error(error);
       }
 
-      // after sort
-      const list = document.querySelector('#todoList');
-      list.innerHTML = '';
-      toSort.forEach((element) => {
-        addTodoToDOM({ ...element[1] });
-      });
-      saveSortedTodos(toSort);
+      // after all sorting merge sorted categories with date sorted non categorized tasks
+
+      saveSortedTodos([...categorized, ...dateSort.getEtries()]);
+      updateDOM();
       draggable();
     },
   };

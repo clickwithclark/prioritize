@@ -1,9 +1,10 @@
 import { addTodoToDOM } from './addTodoToDOM.js';
 import { draggable } from './draggable.js';
 import { retrieveFromLocalStorage, saveSortedTodos } from './localStorage.js';
+import { updateDOM } from './updateDOM.js';
 
 export const dateSort = (function (event) {
-  let toSort = [];
+  let toSort = null;
   let flip = 1;
   /** Change the direction of the sort on each function call
    * @function flipSort
@@ -18,7 +19,8 @@ export const dateSort = (function (event) {
 
   return {
     sort() {
-      toSort = Object.entries(retrieveFromLocalStorage());
+      // this is so that toSort can be initialized with lists outside of localStorage
+      toSort = toSort ?? Object.entries(retrieveFromLocalStorage());
       try {
         if (toSort.length === 0) {
           return;
@@ -37,13 +39,17 @@ export const dateSort = (function (event) {
       }
 
       // after sort
-      const list = document.querySelector('#todoList');
-      list.innerHTML = '';
-      toSort.forEach((element) => {
-        addTodoToDOM({ ...element[1] });
-      });
       saveSortedTodos(toSort);
+      updateDOM();
       draggable();
+    },
+    getEtries() {
+      const sorted = toSort;
+      toSort = null;
+      return sorted;
+    },
+    setSort(arr) {
+      toSort = arr;
     },
   };
 })();

@@ -1,7 +1,7 @@
 import { addTodoToDOM } from './addTodoToDOM.js';
 import { draggable } from './draggable.js';
 import { retrieveFromLocalStorage, getState } from './localStorage.js';
-import { tellUserAboutError } from './tellUserAboutError.js';
+import { feedbackMessage, resetLogo } from './feedbackMessage.js';
 
 export function updateDOM() {
   const list = document.querySelector('#todoList');
@@ -21,8 +21,10 @@ export function updateDOM() {
       addTodoToDOM(storedTodos[+id]);
     });
     draggable();
+    resetLogo();
   } catch (error) {
-    tellUserAboutError(error);
-    console.trace();
+    feedbackMessage(error.message);
+    console.error();
+    console.error(error);
   }
 }

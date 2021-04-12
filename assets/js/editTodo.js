@@ -15,8 +15,7 @@ export function editTodo(e) {
     return updateDOM();
   }
 
-  let editValue = messageNode.innerText.replace('[', '(');
-  editValue = editValue.replace(']', ')');
+  const editValue = messageNode.innerText.replace('[', '(').replace(']', ')');
   input.value = editValue;
   input.classList.add('editing-in-progress');
   input.classList.add('pop-out-fade-out');

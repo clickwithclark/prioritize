@@ -11,6 +11,7 @@ import { processTodo } from './processTodo.js';
 import { endUpdate } from './endUpdate.js';
 import { deleteAllTodosDialog, confirmDelete, resetAppUI } from './deleteAllTodos.js';
 import { deleteSelected } from './deleteSelected.js';
+import { tutorial, tutorialOk } from './tutorial.js';
 // global state management
 
 // eslint-disable-next-line prefer-const
@@ -181,7 +182,8 @@ export function initializeEventListeners() {
   addGlobalEventListener('pointerup', '.no-btn', resetAppUI);
 
   addGlobalEventListener('pointerup', '.delete-selected', deleteSelected);
-  // addGlobalEventListener('pointerdown', '.tutorial', tutorial);
+  addGlobalEventListener('pointerdown', '.tutorial-btn', tutorial);
+  addGlobalEventListener('pointerdown', '.tutorial-ok-btn', tutorialOk);
   // insert new one above this line
   updateDOM();
 } // END initializeEventListeners

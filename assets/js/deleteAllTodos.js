@@ -10,7 +10,9 @@ const logoContainer = document.querySelector('.logo-container');
 
 export function deleteAllTodosDialog() {
   try {
-    if (!getState()?.todos) {
+    let todos = { ...getState()?.todos };
+    todos = todos ?? {};
+    if (Object.keys(todos).length === 0) {
       throw new Error(`You Dont have any tasks to delete yet , That's just a demonstration`);
     }
     appContainer.classList.add('blur');
@@ -22,6 +24,7 @@ export function deleteAllTodosDialog() {
     document.body.style.overflow = 'hidden';
     feedbackMessage('Are you sure you want to delete all your Tasks?!', 300);
   } catch (error) {
+    console.error(error);
     feedbackMessage(error.message, 3);
   }
 }

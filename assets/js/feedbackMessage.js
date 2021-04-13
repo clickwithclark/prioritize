@@ -6,7 +6,7 @@ export function resetLogo() {
   speechBubble.textContent = '';
   // needed to remove 'shine' from hair that stays when image is just replaced!
   logo.src = '';
-  logo.src = '../assets/img/cwc.png';
+  logo.src = '../assets/img/cwc-shades.png';
 }
 
 /**

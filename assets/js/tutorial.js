@@ -1,4 +1,4 @@
-import { resetModalUI } from './deleteAllTodos.js';
+import { resetAppUI } from './deleteAllTodos.js';
 import { updateDOM } from './updateDOM.js';
 
 const appContainer = document.querySelector('.app-container');
@@ -69,6 +69,6 @@ you don't have to write... </br><span class="bad">(Grocerylist) eggs , (Groceryl
 export function tutorialOk(event) {
   event.preventDefault();
   popUp.replaceChildren(...childrenToReplace);
-  resetModalUI();
+  resetAppUI();
   updateDOM();
 }

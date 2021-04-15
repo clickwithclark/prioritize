@@ -31,6 +31,18 @@ body {
   padding: 0;
 }
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+article,
+summary {
+  width: clamp(45ch, 50%, 75ch);
+}
+
 img {
   max-width: 100%;
 }
@@ -46,6 +58,7 @@ a {
 
 html {
   font-size: 16px;
+  scroll-padding-top: 1em;
 }
 
 @font-face {
@@ -200,6 +213,7 @@ body {
   font: 400 30px "CabinSketch";
   padding: 10px 20px;
   text-transform: uppercase;
+  width: 100%;
 }
 
 .drop-down-entry,
@@ -264,29 +278,47 @@ tutorial-btn:active {
 }
 
 .app-container ul li {
-  line-height: 40px;
-  font: 500 1rem "Neucha2";
-  height: 40px;
-  line-height: 40px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  font: 500 1.2rem "Neucha2";
+  min-height: 0.4rem;
+  padding: 0.4rem 0;
   background-color: white;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  align-items: center;
+}
+
+.app-container ul li .main-message {
+  -webkit-box-flex: 80%;
+      -ms-flex: 80%;
+          flex: 80%;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 .app-container ul li span {
-  height: 40px;
+  height: 100%;
   margin-right: 20px;
-  text-align: center;
-  display: inline-block;
 }
 
 .app-container ul li .grip,
 .edit {
   color: #212529 !important;
-  height: 26px;
   opacity: 1 !important;
   background-color: transparent !important;
   pointer-events: all !important;
-  float: right;
-  font-size: 23px;
+  justify-self: flex-end;
 }
 
 .edit {
@@ -311,8 +343,9 @@ tutorial-btn:active {
   padding: 13px 13px 13px 20px;
   background-color: #fafafa;
   height: 40px;
-  font: 400 1.1em;
-  color: #1a75bc;
+  color: #212529;
+  font: 500 1.8rem "Neucha2";
+  height: 6rem;
   border: none;
   opacity: 0;
   display: none;
@@ -322,7 +355,7 @@ tutorial-btn:active {
 }
 
 .app-container input[type="text"]:focus {
-  background-color: #fff;
+  background-color: #f7f7f7;
   outline: none;
   border: 2px solid black;
 }
@@ -364,18 +397,25 @@ tutorial-btn:active {
   color: grey;
 }
 
+span svg svg {
+  vertical-align: middle;
+}
+
 .checkmark {
-  background-color: #212529;
-  height: 40px;
+  color: #212529;
   margin-right: 20px;
   text-align: center;
-  color: white;
+  padding-top: 0rem;
   width: 0;
   opacity: 0;
   display: inline-block;
   pointer-events: none;
   -webkit-transition: 0.2s linear;
   transition: 0.2s linear;
+}
+
+.checkmark .svg-inline--fa {
+  height: inherit;
 }
 
 @-webkit-keyframes shake {

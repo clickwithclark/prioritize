@@ -114,7 +114,7 @@ export function saveUpdateConfig(config) {
 
   if (state?.todos?.[config.updatedTodo.id] ?? false) {
     state.updateConfig = config;
-    saveState(state);
+    return saveState(state);
   }
   clearUpdateConfig();
 }

@@ -30,7 +30,7 @@ export function addTodoToDOM(todo) {
     checkmarkSpan.classList.add('show-checkmark');
   }
   item.insertAdjacentElement('afterbegin', checkmarkSpan);
-  item.insertAdjacentElement('beforeend', gripSpan);
   item.insertAdjacentElement('beforeend', editSpan);
+  item.insertAdjacentElement('beforeend', gripSpan);
   list.append(item);
 }

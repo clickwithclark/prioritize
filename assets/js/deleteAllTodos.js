@@ -42,6 +42,9 @@ export function resetAppUI() {
   resetLogo();
   resetModalUI();
   updateDOM();
+}
+export function cancelDelete() {
+  resetAppUI();
   feedbackMessage('Few! . . .that was close!', 2);
 }
 

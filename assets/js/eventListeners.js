@@ -9,7 +9,7 @@ import { categorySort } from './categorySort.js';
 import { feedbackMessage } from './feedbackMessage.js';
 import { processTodo } from './processTodo.js';
 import { endUpdate } from './endUpdate.js';
-import { deleteAllTodosDialog, confirmDelete, resetAppUI } from './deleteAllTodos.js';
+import { deleteAllTodosDialog, confirmDelete, resetAppUI, cancelDelete } from './deleteAllTodos.js';
 import { deleteSelected } from './deleteSelected.js';
 import { tutorial, tutorialOk } from './tutorial.js';
 // global state management
@@ -80,7 +80,7 @@ export function initializeEventListeners() {
 
             window.scrollTo({ top: config.todoOffset, behavior: 'smooth' });
 
-            updateDOM();
+            return updateDOM();
           } catch (error) {
             console.trace(error);
             feedbackMessage(error.message);
@@ -179,7 +179,7 @@ export function initializeEventListeners() {
   // if pressed by accident
   addGlobalEventListener('pointerup', '.delete-all', deleteAllTodosDialog);
   addGlobalEventListener('pointerup', '.yes-btn', confirmDelete);
-  addGlobalEventListener('pointerup', '.no-btn', resetAppUI);
+  addGlobalEventListener('pointerup', '.no-btn', cancelDelete);
 
   addGlobalEventListener('pointerup', '.delete-selected', deleteSelected);
   addGlobalEventListener('pointerdown', '.tutorial-btn', tutorial);

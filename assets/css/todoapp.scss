@@ -27,6 +27,17 @@ body {
   margin: 0;
   padding: 0;
 }
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+article,
+summary {
+  width: clamp(45ch, 50%, 75ch);
+}
 
 img {
   max-width: 100%;
@@ -40,6 +51,7 @@ a {
 }
 html {
   font-size: 16px;
+  scroll-padding-top: 1em;
 }
 @font-face {
   font-family: "CabinSketch";
@@ -182,6 +194,7 @@ body {
   font: 400 30px "CabinSketch";
   padding: 10px 20px;
   text-transform: uppercase;
+  width: 100%;
 }
 
 .drop-down-entry,
@@ -226,30 +239,37 @@ tutorial-btn:active {
   padding: 0;
 }
 .app-container ul li {
-  line-height: 40px;
-  font: 500 1rem "Neucha2";
-  height: 40px;
-  line-height: 40px;
+  display: flex;
+  flex-direction: row;
+  font: 500 1.2rem "Neucha2";
+  min-height: 0.4rem;
+  padding: 0.4rem 0;
   background-color: white;
+  justify-content: flex-start;
+  align-items: center;
+  .main-message {
+    flex: 80%;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  &:first-child {
+  }
+  align-items: center;
 }
 
 .app-container ul li span {
-  height: 40px;
+  height: 100%;
   margin-right: 20px;
-  text-align: center;
-  display: inline-block;
 }
-.main-message {
-}
+
 .app-container ul li .grip,
 .edit {
   color: #212529 !important;
-  height: 26px;
   opacity: 1 !important;
   background-color: transparent !important;
   pointer-events: all !important;
-  float: right;
-  font-size: 23px;
+  justify-self: flex-end;
 }
 .edit {
   cursor: pointer;
@@ -269,8 +289,9 @@ tutorial-btn:active {
   padding: 13px 13px 13px 20px;
   background-color: #fafafa;
   height: 40px;
-  font: 400 1.1em;
-  color: #1a75bc;
+  color: #212529;
+  font: 500 1.8rem "Neucha2";
+  height: 6rem;
   border: none;
   opacity: 0;
   display: none;
@@ -278,7 +299,7 @@ tutorial-btn:active {
   margin-bottom: 20px;
 }
 .app-container input[type="text"]:focus {
-  background-color: #fff;
+  background-color: #f7f7f7;
   outline: none;
   border: 2px solid black;
 }
@@ -313,18 +334,27 @@ tutorial-btn:active {
   color: grey;
 }
 
+span {
+  svg {
+    svg {
+      vertical-align: middle;
+    }
+  }
+}
 .checkmark {
-  background-color: #212529;
-  height: 40px;
+  color: #212529;
   margin-right: 20px;
   text-align: center;
-  color: white;
+  padding-top: 0rem;
   width: 0;
   opacity: 0;
   display: inline-block;
   pointer-events: none;
   -webkit-transition: 0.2s linear;
   transition: 0.2s linear;
+  .svg-inline--fa {
+    height: inherit;
+  }
 }
 
 @-webkit-keyframes shake {
@@ -540,16 +570,14 @@ tutorial-btn:active {
     font-size: 1rem;
     justify-content: center;
   }
-  
+
   .tutorial-ok-btn:focus {
     border: none;
     outline: none;
   }
-  .tutorial-ok-btn:active{
+  .tutorial-ok-btn:active {
     color: #2ecc71;
     font-size: 25px;
-
-
   }
   .tutorial-ok-btn {
     border: none;

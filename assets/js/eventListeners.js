@@ -2,16 +2,21 @@ import { editTodo } from './editTodo.js';
 import { addTodo } from './addTodo.js';
 import { updateDOM } from './updateDOM.js';
 import { addGlobalEventListener } from './addGlobalEventListener.js';
-import { updateCompletedStatus } from './updateTodoStatus.js';
-import { deleteOneFromLocalStorage, getState, clearUpdateConfig, updateTodo } from './localStorage.js';
+import { getState, updateTodo } from './localStorage.js';
 import { dateSort } from './dateSort.js';
 import { categorySort } from './categorySort.js';
 import { feedbackMessage } from './feedbackMessage.js';
 import { processTodo } from './processTodo.js';
-import { endUpdate } from './endUpdate.js';
 import { deleteAllTodosDialog, confirmDelete, resetAppUI, cancelDelete } from './deleteAllTodos.js';
 import { deleteSelected } from './deleteSelected.js';
 import { tutorial, tutorialOk } from './tutorial.js';
+import { processInput } from './processInput.js';
+import { focusOut } from './focusOut.js';
+import { deleteCompletedTask } from './deleteCompletedTask.js';
+import { markTaskComplete } from './markTaskComplete.js';
+import { addGrabCursor } from './addGrabCursor.js';
+import { dropDownToggle } from './dropDownToggle.js';
+import { addGrabbingCursor } from './addGrabbingCursor.js';
 // global state management
 
 // eslint-disable-next-line prefer-const
@@ -53,120 +58,24 @@ import { tutorial, tutorialOk } from './tutorial.js';
 
 export function initializeEventListeners() {
   // entering todo info
-  addGlobalEventListener('keydown', '#todoInput', (event) => {
-    // when enter is pressed
-    if (event.key === 'Enter') {
-      if (event.target.classList.contains('editing-in-progress')) {
-        const config = getState()?.updateConfig;
-        if (config) {
-          // user is trying to save updated todo
-          const input = document.querySelector('#todoInput');
-          try {
-            const newTask = input.value.trim();
-            // complain if invalid values
-            if (newTask === '') {
-              throw new Error('Woops, update cannot be blank! . . . try deleting it instead');
-            }
-            const updatedTodo = processTodo(newTask);
-            updatedTodo.id = config.updatedTodo.id;
-            updateTodo(updatedTodo);
-
-            // reset input to pre-updating defaults
-
-            endUpdate(input);
-            clearUpdateConfig();
-
-            // scroll back to original todo position in list
-
-            window.scrollTo({ top: config.todoOffset, behavior: 'smooth' });
-
-            return updateDOM();
-          } catch (error) {
-            console.trace(error);
-            feedbackMessage(error.message);
-          }
-        }
-      }
-      try {
-        // complain if invalid values
-        if (event.target.value.trim() === '') {
-          throw new Error('Woops, you have to enter something first!');
-        }
-        // if this is first entry replace demo todos
-
-        addTodo();
-        event.target.value = '';
-        endUpdate(event.target); // for times when editing event lead to adding a new todo
-        updateDOM();
-      } catch (error) {
-        console.trace(error);
-        feedbackMessage(error.message);
-      }
-    }
-  });
+  addGlobalEventListener('keydown', '#todoInput', processInput);
   // cancel editing if focus lost
-  // addGlobalEventListener('focusout', '#todoInput', (event) => {
-  //   endUpdate(event.target);
-  //   clearUpdateConfig();
-  //   updateDOM();
-  // });
+  addGlobalEventListener('focusout', '#todoInput', focusOut);
 
   // edit existing todo
   addGlobalEventListener('pointerup', '.edit', editTodo);
 
   // adding new todo
-  addGlobalEventListener('pointerup', '.drop-down-entry', () => {
-    const input = document.querySelector('#todoInput');
-    input.classList.toggle('pop-out-fade-out');
-    input.focus();
-  });
-  /* -------------------------------------------------------------------*/
-  // #region of grip button
-  /* -------------------------------------------------------------------*/
+  addGlobalEventListener('pointerup', '.drop-down-entry', dropDownToggle);
 
-  addGlobalEventListener('pointerdown', '.grip', (event) => {
-    event.target.style.cursor = 'grabbing';
-    const todoList = document.querySelector('#todoList');
-    todoList.style.cursor = 'grabbing';
-  });
-  addGlobalEventListener('pointerup', '#todoList', (event) => {
-    const todoList = document.querySelector('#todoList');
-    const allGrippableDescendents = [...todoList.querySelectorAll('.grip')];
-    allGrippableDescendents.forEach((element) => {
-      element.style.setProperty('cursor', 'grab');
-    });
-    todoList.style.cursor = 'default';
-  });
-
-  /* -------------------------------------------------------------------*/
-  // #endregion of grip button
+  addGlobalEventListener('pointerdown', '.grip', addGrabbingCursor);
+  addGlobalEventListener('pointerup', '#todoList', addGrabCursor);
 
   // selecting completed todos
-  addGlobalEventListener('pointerdown', '.main-message', (event) => {
-    const todo = event.target;
-    // prevent todo state change if user is editing
-    if (todo.classList.contains('editing-in-progress')) {
-      return;
-    }
-    todo.classList.toggle('completed');
-    const checkmarkIcon = todo.previousElementSibling;
-    checkmarkIcon.classList.toggle('show-checkmark');
-    updateCompletedStatus(event);
-  });
+  addGlobalEventListener('pointerdown', '.main-message', markTaskComplete);
 
   // delete todo & fade out
-  addGlobalEventListener('pointerdown', '.checkmark', (event) => {
-    const liToRemove = event.target.closest('li');
-    const { id } = liToRemove.dataset;
-    liToRemove.style.transition = '0.3s';
-    liToRemove.style.opacity = 0;
-    liToRemove.style.marginTop = '-40px';
-    deleteOneFromLocalStorage(+id);
-    setTimeout(() => {
-      liToRemove.remove();
-      updateDOM();
-    }, 400);
-  });
+  addGlobalEventListener('pointerdown', '.checkmark', deleteCompletedTask);
 
   // date sort
 
@@ -184,7 +93,8 @@ export function initializeEventListeners() {
   addGlobalEventListener('pointerup', '.delete-selected', deleteSelected);
   addGlobalEventListener('pointerdown', '.tutorial-btn', tutorial);
   addGlobalEventListener('pointerdown', '.tutorial-ok-btn', tutorialOk);
-  // insert new one above this line
+
+  // insert new event above this line
   updateDOM();
 } // END initializeEventListeners
 if (document.readyState === 'loading') {

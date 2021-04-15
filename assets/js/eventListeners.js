@@ -17,6 +17,7 @@ import { markTaskComplete } from './markTaskComplete.js';
 import { addGrabCursor } from './addGrabCursor.js';
 import { dropDownToggle } from './dropDownToggle.js';
 import { addGrabbingCursor } from './addGrabbingCursor.js';
+import { exportTask } from './exportTasks.js';
 // global state management
 
 // eslint-disable-next-line prefer-const
@@ -93,6 +94,8 @@ export function initializeEventListeners() {
   addGlobalEventListener('pointerup', '.delete-selected', deleteSelected);
   addGlobalEventListener('pointerdown', '.tutorial-btn', tutorial);
   addGlobalEventListener('pointerdown', '.tutorial-ok-btn', tutorialOk);
+
+  addGlobalEventListener('pointerdown', '#logo', exportTask);
 
   // insert new event above this line
   updateDOM();

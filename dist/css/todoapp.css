@@ -31,18 +31,6 @@ body {
   padding: 0;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p,
-article,
-summary {
-  width: clamp(45ch, 50%, 75ch);
-}
-
 img {
   max-width: 100%;
 }
@@ -581,6 +569,15 @@ span svg svg {
   overflow-y: auto;
   height: 40%;
   font-family: "Neucha2";
+}
+
+.tutorial-ok-btn {
+  border: none;
+  background-color: transparent;
+  border: none;
+  padding: 0.5rem;
+  border: none;
+  outline: none;
 }
 
 .instructions {

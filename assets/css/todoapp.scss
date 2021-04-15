@@ -27,17 +27,6 @@ body {
   margin: 0;
   padding: 0;
 }
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p,
-article,
-summary {
-  width: clamp(45ch, 50%, 75ch);
-}
 
 img {
   max-width: 100%;
@@ -137,7 +126,6 @@ body {
   border-radius: 6px;
   overflow-wrap: break-word;
   word-wrap: break-word;
-  // word-break:keep-all ;
   hyphens: manual;
   visibility: hidden;
   white-space: pre-wrap;
@@ -495,7 +483,17 @@ span {
   font-family: "Neucha2";
 }
 .tutorial-ok-btn {
+  border: none;
+  background-color: transparent;
+  border: none;
+  padding: 0.5rem;
+  border: none;
+  outline: none;
+  &:active {
+    transform: scale(0.8);
+  }
 }
+
 .instructions {
   display: flex;
   flex-flow: column wrap;
@@ -588,7 +586,6 @@ span {
     outline: none;
   }
 }
-
 /* -------------------------------------------------------------------*/
 //#endregion of Desktop-size
 

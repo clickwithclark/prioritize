@@ -8,11 +8,10 @@ export function createOneTodo(message) {
   try {
     if (TODO) {
       addToLocalStorage(TODO);
-      updateDOM();
-      return;
+      return updateDOM();
     }
   } catch (error) {
-    console.error(error)
+    console.error(error);
     feedbackMessage(error.message);
   }
 }

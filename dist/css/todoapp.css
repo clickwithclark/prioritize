@@ -1,34 +1,39 @@
-*,
-*::before,
+/*------------------------------------------------------------------
+[Master Stylesheet]
+
+Project:		Pr1oriti23
+Version:		1.0
+Date   :		15/04/2021
+Done By:		Clark
+Primary use:	Task Management (TODOLIST)
+-------------------------------------------------------------------*/
+/*------------------------------------------------------------------
+[Colours]
+-------------------------------------------------------------------*/
+/*-------------------------------------------------------------------*/
+/*------------------------------------------------------------------
+[URL's]
+-------------------------------------------------------------------*/
+/*-------------------------------------------------------------------*/
+* {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+*::before {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
 *::after {
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
 }
 
-:root {
-  /*box-shadows*/
-  --box-shadowA: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-  --box-shadowB: 0 2px 10px rgba(0, 0, 0, 0.3);
-  /*text-shadows*/
-  --text-shadowA: 0 1px 1px rgba(0, 0, 0, 0.4);
-  --text-shadowB: black 0px 0.5px 0.5px;
-  --text-shadowC: 2px 2px 2px rgba(0, 0, 0, 0.2), 0 0 10px rgba(0, 0, 0, 0.1);
-  --colour-primary: #396c7a;
-  --colour-secondary: #c48f59;
-  --colour-success: #28a745;
-  --colour-danger: #dc3545;
-  --colour-warning: #ffc107;
-  --colour-info: #17a2b8;
-  --colour-disabled: #6c757d;
-  --colour-light: #f8f9fa;
-  --colour-dark: #343a40;
-  --grey-dark: #2a3436;
-  --grey-light: #f8f9f9;
-}
-
 body {
   margin: 0;
   padding: 0;
+  font: 300 1.1em;
 }
 
 img {
@@ -49,58 +54,62 @@ html {
   scroll-padding-top: 1em;
 }
 
+html > body {
+  background-image: url("../../assets/img/background.png") !important;
+  background-repeat: repeat;
+  background-color: #fff;
+}
+
+/*------------------------------------------------------------------
+[Fonts]
+-------------------------------------------------------------------*/
 @font-face {
   font-family: "CabinSketch";
   font-style: normal;
   font-weight: 400;
-  src: url(../../assets/fonts/CabinSketch.woff2) format("woff2");
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  src: url("../../assets/fonts/CabinSketch.woff2") format("woff2");
+  unicode-range: U0-0ff, U131, U152-153, U2bb-2bc, U2c6, U2da, U2dc, U2000-206f, U2074, U20ac, U2122, U2191, U2193, U2212, U2215, UFEFF, UFFFD;
 }
 
 @font-face {
   font-family: "Neucha";
   font-style: normal;
   font-weight: 400;
-  src: url(../../assets/fonts/Neucha.woff2) format("woff2");
+  src: url("../../assets/fonts/Neucha.woff2") format("woff2");
 }
 
 @font-face {
   font-family: "Neucha2";
   font-style: normal;
   font-weight: 400;
-  src: url(../../assets/fonts/Neucha2.woff2) format("woff2");
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  src: url("../../assets/fonts/Neucha2.woff2") format("woff2");
+  unicode-range: U0-0ff, U131, U152-153, U2bb-2bc, U2c6, U2da, U2dc, U2000-206f, U2074, U20ac, U2122, U2191, U2193, U2212, U2215, UFEFF, UFFFD;
 }
 
-html > body {
-  background-image: url(../../assets/img/background.png) !important;
-  background-repeat: repeat;
-  background-color: #fff;
-}
-
-body {
-  font: 300 1.1em;
+/*-------------------------------------------------------------------*/
+datalist {
+  max-height: 2px;
 }
 
 @-webkit-keyframes bounce-cwc {
   from {
     -webkit-transform: translateY(0);
-    transform: translateY(0);
+            transform: translateY(0);
   }
   to {
     -webkit-transform: translateY(-10%);
-    transform: translateY(-10%);
+            transform: translateY(-10%);
   }
 }
 
 @keyframes bounce-cwc {
   from {
     -webkit-transform: translateY(0);
-    transform: translateY(0);
+            transform: translateY(0);
   }
   to {
     -webkit-transform: translateY(-10%);
-    transform: translateY(-10%);
+            transform: translateY(-10%);
   }
 }
 
@@ -120,13 +129,11 @@ body {
   height: 150px;
   max-width: 192px;
   -webkit-animation: bounce-cwc 2.5s infinite alternate;
-  animation: bounce-cwc 2.5s infinite alternate;
+          animation: bounce-cwc 2.5s infinite alternate;
   position: relative;
   left: 10%;
 }
 
-/* -------------------------------------------------------------------*/
-/* -------------------------------------------------------------------*/
 .bubble {
   -ms-flex-item-align: start;
       -ms-grid-row-align: start;
@@ -135,7 +142,7 @@ body {
   border: 5px solid #212529;
   max-width: 50%;
   padding: 20px;
-  font-family: Neucha2;
+  font-family: "Neucha2";
   font-size: 14px;
   border-radius: 6px;
   overflow-wrap: break-word;
@@ -149,7 +156,21 @@ body {
   left: 20%;
 }
 
-.bubble:after,
+.bubble:after {
+  right: 100%;
+  top: 50%;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+  border-color: rgba(255, 255, 204, 0);
+  border-right-color: #f7f7f7;
+  border-width: 20px;
+  margin-top: -15px;
+}
+
 .bubble:before {
   right: 100%;
   top: 50%;
@@ -159,6 +180,10 @@ body {
   width: 0;
   position: absolute;
   pointer-events: none;
+  border-color: rgba(255, 204, 0, 0);
+  border-right-color: #212529;
+  border-width: 26px;
+  margin-top: -16px;
 }
 
 .good {
@@ -169,24 +194,9 @@ body {
   color: #c0392b;
 }
 
-.bubble:after {
-  border-color: rgba(255, 255, 204, 0);
-  border-right-color: #f7f7f7;
-  border-width: 20px;
-  margin-top: -15px;
-}
-
-.bubble:before {
-  border-color: rgba(255, 204, 0, 0);
-  border-right-color: #212529;
-  border-width: 26px;
-  margin-top: -16px;
-}
-
-/* -------------------------------------------------------------------*/
 .app-container {
   -webkit-box-sizing: border-box;
-  box-sizing: border-box;
+          box-sizing: border-box;
   margin: 0 auto;
   width: 100%;
   max-width: 750px;
@@ -204,11 +214,153 @@ body {
   width: 100%;
 }
 
-.drop-down-entry,
-.tutorial-btn,
+.app-container h1 .fa-save {
+  cursor: pointer;
+  position: relative;
+  left: 100px;
+  font-size: 30px;
+}
+
+.app-container h1 .fa-save:active {
+  font-size: 25.6px;
+}
+
+.app-container h1 .drop-down-entry:active {
+  font-size: 25.6px;
+}
+
+.app-container ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.app-container ul li {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  font: 500 1.2rem "Neucha2";
+  min-height: 0.4rem;
+  padding: 0.4rem 0;
+  background-color: #fff;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.app-container ul li .main-message {
+  -webkit-box-flex: 80%;
+      -ms-flex: 80%;
+          flex: 80%;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.app-container ul li span {
+  height: 100%;
+  margin-right: 20px;
+}
+
+.app-container ul li .grip {
+  color: #212529 !important;
+  opacity: 1 !important;
+  background-color: transparent !important;
+  pointer-events: all !important;
+  justify-self: flex-end;
+}
+
+.app-container .ui-sortable-helper {
+  cursor: pointer !important;
+  border: solid 1px #212529 !important;
+}
+
+.app-container input[type="text"] {
+  width: 100%;
+  margin: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  padding: 13px 13px 13px 20px;
+  background-color: #fafafa;
+  color: #212529;
+  font: 500 1.8rem "Neucha2";
+  height: 6rem;
+  border: none;
+  opacity: 0;
+  display: none;
+  -webkit-transition: 0.2s linear;
+  transition: 0.2s linear;
+  margin-bottom: 20px;
+}
+
+.app-container input[type="text"]:focus {
+  background-color: #f7f7f7;
+  outline: none;
+  border: 2px solid black;
+}
+
+.app-container input[type="text"]:-ms-input-placeholder {
+  color: gray;
+  font-style: italic;
+}
+
+.app-container input[type="text"]::-webkit-input-placeholder {
+  color: gray;
+  font-style: italic;
+}
+
+.app-container input[type="text"]::-ms-input-placeholder {
+  color: gray;
+  font-style: italic;
+}
+
+.app-container input[type="text"]::placeholder {
+  color: gray;
+  font-style: italic;
+}
+
+.app-container.blur > * {
+  -webkit-filter: blur(20px);
+          filter: blur(20px);
+}
+
+.drop-down-entry {
+  cursor: pointer;
+  font-size: 30px;
+}
+
+.drop-down-entry:active {
+  font-size: 25.6px;
+}
+
+.tutorial-btn {
+  cursor: pointer;
+  font-size: 30px;
+}
+
+.tutorial-btn:active {
+  font-size: 25.6px;
+}
+
 .tutorial-ok-btn {
   cursor: pointer;
   font-size: 30px;
+  background-color: transparent;
+  padding: 0.5rem;
+  border: none;
+  outline: none;
+}
+
+.tutorial-ok-btn:active {
+  -webkit-transform: scale(0.8);
+          transform: scale(0.8);
 }
 
 .main-btn {
@@ -236,80 +388,17 @@ body {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -ms-flex-pack: distribute;
-      justify-content: space-around;
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
 }
 
-.app-container h1 .drop-down-entry:active,
-tutorial-btn:active {
-  font-size: 25.6px;
-}
-
-.app-container h1 .fa-save {
-  cursor: pointer;
-  position: relative;
-  left: 100px;
-  font-size: 30px;
-}
-
-.app-container h1 .fa-save:active {
-  font-size: 25.6px;
-}
-
-.app-container ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.app-container ul li {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: row;
-          flex-direction: row;
-  font: 500 1.2rem "Neucha2";
-  min-height: 0.4rem;
-  padding: 0.4rem 0;
-  background-color: white;
-  -webkit-box-pack: start;
-      -ms-flex-pack: start;
-          justify-content: flex-start;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  align-items: center;
-}
-
-.app-container ul li .main-message {
-  -webkit-box-flex: 80%;
-      -ms-flex: 80%;
-          flex: 80%;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: nowrap;
-}
-
-.app-container ul li span {
-  height: 100%;
-  margin-right: 20px;
-}
-
-.app-container ul li .grip,
 .edit {
   color: #212529 !important;
   opacity: 1 !important;
   background-color: transparent !important;
   pointer-events: all !important;
   justify-self: flex-end;
-}
-
-.edit {
   cursor: pointer;
 }
 
@@ -318,59 +407,9 @@ tutorial-btn:active {
   cursor: grab;
 }
 
-.app-container .ui-sortable-helper {
-  cursor: pointer !important;
-  border: solid 1px #212529 !important;
-}
-
-.app-container input[type="text"] {
-  width: 100%;
-  margin: 0;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-  padding: 13px 13px 13px 20px;
-  background-color: #fafafa;
-  height: 40px;
-  color: #212529;
-  font: 500 1.8rem "Neucha2";
-  height: 6rem;
-  border: none;
-  opacity: 0;
-  display: none;
-  -webkit-transition: 0.2s linear;
-  transition: 0.2s linear;
-  margin-bottom: 20px;
-}
-
-.app-container input[type="text"]:focus {
-  background-color: #f7f7f7;
-  outline: none;
-  border: 2px solid black;
-}
-
-.app-container input[type="text"]::-webkit-input-placeholder {
-  color: gray;
-  font-style: italic;
-}
-
-.app-container input[type="text"]:-ms-input-placeholder {
-  color: gray;
-  font-style: italic;
-}
-
-.app-container input[type="text"]::-ms-input-placeholder {
-  color: gray;
-  font-style: italic;
-}
-
-.app-container input[type="text"]::placeholder {
-  color: gray;
-  font-style: italic;
-}
-
 .completed {
   text-decoration: line-through;
-  color: grey;
+  color: gray;
 }
 
 .show-checkmark {
@@ -380,20 +419,11 @@ tutorial-btn:active {
   cursor: pointer !important;
 }
 
-.completed {
-  text-decoration: line-through;
-  color: grey;
-}
-
-span svg svg {
-  vertical-align: middle;
-}
-
 .checkmark {
   color: #212529;
   margin-right: 20px;
   text-align: center;
-  padding-top: 0rem;
+  padding-top: 0;
   width: 0;
   opacity: 0;
   display: inline-block;
@@ -407,50 +437,68 @@ span svg svg {
 }
 
 @-webkit-keyframes shake {
-  0%,
+  0% {
+    -webkit-transform: translateX(0);
+            transform: translateX(0);
+  }
   100% {
     -webkit-transform: translateX(0);
-    transform: translateX(0);
+            transform: translateX(0);
   }
-  20%,
+  20% {
+    -webkit-transform: translateX(-10%);
+            transform: translateX(-10%);
+  }
   60% {
     -webkit-transform: translateX(-10%);
-    transform: translateX(-10%);
+            transform: translateX(-10%);
   }
-  40%,
+  40% {
+    -webkit-transform: translateX(10%);
+            transform: translateX(10%);
+  }
   80% {
     -webkit-transform: translateX(10%);
-    transform: translateX(10%);
+            transform: translateX(10%);
   }
 }
 
 @keyframes shake {
-  0%,
+  0% {
+    -webkit-transform: translateX(0);
+            transform: translateX(0);
+  }
   100% {
     -webkit-transform: translateX(0);
-    transform: translateX(0);
+            transform: translateX(0);
   }
-  20%,
+  20% {
+    -webkit-transform: translateX(-10%);
+            transform: translateX(-10%);
+  }
   60% {
     -webkit-transform: translateX(-10%);
-    transform: translateX(-10%);
+            transform: translateX(-10%);
   }
-  40%,
+  40% {
+    -webkit-transform: translateX(10%);
+            transform: translateX(10%);
+  }
   80% {
     -webkit-transform: translateX(10%);
-    transform: translateX(10%);
+            transform: translateX(10%);
   }
 }
 
 .shake {
   -webkit-animation: shake 0.4s 1 both !important;
-  animation: shake 0.4s 1 both !important;
+          animation: shake 0.4s 1 both !important;
 }
 
 .place-holder {
   height: 1.5em;
   line-height: 1.2em !important;
-  background: grey !important;
+  background: gray !important;
 }
 
 .pop-out-fade-out {
@@ -458,26 +506,63 @@ span svg svg {
   opacity: 1 !important;
 }
 
-.category-sort,
-.date-sort,
-.delete-all,
-.delete-selected,
-.confirmation-btn {
+.category-sort {
   cursor: pointer;
   font-size: 30px;
 }
 
-.no-btn {
-  font-size: 35px;
+.category-sort:active {
+  font-size: 25.6px;
 }
 
-.category-sort:active,
-.delete-all:active,
-.tutorial-btn:active,
-.delete-selected:active,
-.drop-down-entry:active,
+.date-sort {
+  cursor: pointer;
+  font-size: 30px;
+}
+
 .date-sort:active {
   font-size: 25.6px;
+}
+
+.delete-all {
+  cursor: pointer;
+  font-size: 30px;
+}
+
+.delete-all:active {
+  font-size: 25.6px;
+}
+
+.delete-selected {
+  cursor: pointer;
+  font-size: 30px;
+}
+
+.delete-selected:active {
+  font-size: 25.6px;
+}
+
+.confirmation-btn {
+  cursor: pointer;
+  font-size: 30px;
+  background-color: transparent;
+  border: none;
+  padding: 0.5rem;
+}
+
+.confirmation-btn:focus {
+  outline: none;
+}
+
+.no-btn {
+  font-size: 35px;
+  color: #212529;
+}
+
+.no-btn:active {
+  color: #c0392b;
+  -webkit-transform: scale(0.5);
+          transform: scale(0.5);
 }
 
 .confirmation-popup {
@@ -493,7 +578,7 @@ span svg svg {
           transform: translate(-50%, -50%);
   -webkit-box-shadow: 0 5px 30px rgba(0, 0, 0, 0.3);
           box-shadow: 0 5px 30px rgba(0, 0, 0, 0.3);
-  background-image: url(../../assets/img/background.png) !important;
+  background-image: url("../../assets/img/background.png") !important;
   background-repeat: repeat;
   background-color: #f7f7f7;
   visibility: hidden;
@@ -524,25 +609,14 @@ span svg svg {
   transition: 0.5s;
 }
 
-.app-container.blur > * {
-  -webkit-filter: blur(20px);
-          filter: blur(20px);
-}
-
 .negate-blur {
   -webkit-filter: blur(0) !important;
           filter: blur(0) !important;
   z-index: 2;
 }
 
-.confirmation-btn:focus {
-  outline: none;
-}
-
-.confirmation-btn {
-  background-color: transparent;
-  border: none;
-  padding: 0.5rem;
+.yes-btn {
+  color: #212529;
 }
 
 .yes-btn:active {
@@ -551,33 +625,10 @@ span svg svg {
           transform: scale(0.5);
 }
 
-.no-btn:active {
-  color: #c0392b;
-  -webkit-transform: scale(0.5);
-          transform: scale(0.5);
-}
-
-.yes-btn {
-  color: #212529;
-}
-
-.no-btn {
-  color: #212529;
-}
-
 .tutorial {
   overflow-y: auto;
   height: 40%;
   font-family: "Neucha2";
-}
-
-.tutorial-ok-btn {
-  border: none;
-  background-color: transparent;
-  border: none;
-  padding: 0.5rem;
-  border: none;
-  outline: none;
 }
 
 .instructions {
@@ -605,8 +656,9 @@ span svg svg {
           flex-direction: column;
 }
 
-/* -------------------------------------------------------------------*/
-/* -------------------------------------------------------------------*/
+/*------------------------------------------------------------------
+[Desktops and Larger]
+-------------------------------------------------------------------*/
 @media only screen and (min-width: 575.98px) {
   .app-container {
     max-width: 500px;
@@ -635,8 +687,6 @@ span svg svg {
     max-width: 750px;
     bottom: 0.2rem;
   }
-  /* -------------------------------------------------------------------*/
-  /* -------------------------------------------------------------------*/
   .confirmation-popup.active.tutorial::-webkit-scrollbar {
     width: 1em;
   }
@@ -648,7 +698,6 @@ span svg svg {
     background-color: #212529;
     outline: 1px solid slategrey;
   }
-  /* -------------------------------------------------------------------*/
   .guide {
     font-family: "Neucha2";
     line-height: 5.5vh;
@@ -666,6 +715,12 @@ span svg svg {
         -ms-flex-pack: center;
             justify-content: center;
   }
+  .tutorial-ok-btn {
+    background-color: transparent;
+    padding: 0.5rem;
+    border: none;
+    outline: none;
+  }
   .tutorial-ok-btn:focus {
     border: none;
     outline: none;
@@ -674,14 +729,14 @@ span svg svg {
     color: #2ecc71;
     font-size: 25px;
   }
-  .tutorial-ok-btn {
-    border: none;
-    background-color: transparent;
-    border: none;
-    padding: 0.5rem;
-    border: none;
-    outline: none;
-  }
 }
 
-/* -------------------------------------------------------------------*/
+tutorial-btn:active {
+  font-size: 25.6px;
+}
+
+span svg svg {
+  vertical-align: middle;
+}
+
+/*-------------------------------------------------------------------*/

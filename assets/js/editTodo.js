@@ -21,7 +21,6 @@ export function editTodo(e) {
   input.classList.add('pop-out-fade-out');
   input.placeholder = `Updating: ${originalMessage.slice(0, 16)}...📑`;
   window.scrollTo({ top: editingAreaLocation, behavior: 'smooth' });
-  input.focus();
 
   // capture original ID for todo
   const updatedTodo = {};

@@ -14,7 +14,6 @@ const failedAssets = {};
 const cacheAssets = [
   '/',
   '/index.html',
-  '/assets/js/eventListeners.js',
   '/assets/css/bootstrap.min.css',
   '/dist/css/todoapp.min.css',
   '/serviceworker.js',

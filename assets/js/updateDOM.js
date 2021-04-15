@@ -2,6 +2,7 @@ import { addTodoToDOM } from './addTodoToDOM.js';
 import { draggable } from './draggable.js';
 import { retrieveFromLocalStorage, getState } from './localStorage.js';
 import { feedbackMessage, resetLogo } from './feedbackMessage.js';
+import { loadGroups } from './loadGroups.js';
 
 export function updateDOM() {
   const list = document.querySelector('#todoList');
@@ -22,6 +23,7 @@ export function updateDOM() {
     });
     draggable();
     resetLogo();
+    loadGroups();
   } catch (error) {
     feedbackMessage(error.message);
     console.error();

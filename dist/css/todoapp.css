@@ -682,7 +682,6 @@ datalist {
   .confirmation-popup.active.tutorial {
     height: 60%;
     font-family: "Neucha2";
-    background-color: transparent;
     opacity: 0.97;
     max-width: 750px;
     bottom: 0.2rem;

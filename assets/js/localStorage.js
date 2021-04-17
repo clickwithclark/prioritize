@@ -9,7 +9,8 @@ export function saveState(state) {
 export function retrieveFromLocalStorage() {
   const state = { ...getState() };
   // wrapped in object incase state is null or undefined
-  const currentStored = { ...state?.todos };
+  let currentStored = { ...state?.todos };
+  currentStored = currentStored ?? {};
   const defaultTodos = getDefaultTodos();
 
   if (Object.keys(currentStored).length === 0) {
@@ -23,7 +24,8 @@ export function retrieveFromLocalStorage() {
 export function addToLocalStorage(givenTodo) {
   // get current stored todos first then append new todo
   const state = { ...getState() };
-  const currentStored = { ...state?.todos };
+  let currentStored = { ...state?.todos };
+  currentStored = currentStored ?? {};
   if (Object.keys(currentStored).length === 0) {
     document.querySelector('#todoList').style.opacity = '1';
   }
@@ -37,7 +39,8 @@ export function addToLocalStorage(givenTodo) {
 export function updateTodo(givenTodo) {
   // get current stored todos first then append new todo
   const state = { ...getState() };
-  const currentStored = { ...state?.todos };
+  let currentStored = { ...state?.todos };
+  currentStored = currentStored ?? {};
   Object.assign(currentStored, { [givenTodo.id]: givenTodo });
   state.todos = currentStored;
   saveState(state);
@@ -46,7 +49,8 @@ export function updateTodo(givenTodo) {
 export function deleteOneFromLocalStorage(todoID) {
   const state = { ...getState() };
   let order = [...getState()?.order];
-  const currentStored = { ...state?.todos };
+  let currentStored = { ...state?.todos };
+  currentStored = currentStored ?? {};
   order = order.filter((id) => id !== todoID);
   delete currentStored[todoID];
   state.todos = currentStored;
@@ -57,8 +61,9 @@ export function deleteOneFromLocalStorage(todoID) {
 export function updateOneInLocalStorage(partialTodo) {
   // get current stored todos first then modify new todo properties
   const state = { ...getState() };
-  const currentStored = { ...state?.todos };
 
+  let currentStored = { ...state?.todos };
+  currentStored = currentStored ?? {};
   // if no todos are stored then assume demo mode and DO NOT save;
   if (Object.keys(currentStored).length === 0) {
     return;

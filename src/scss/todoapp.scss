@@ -1,0 +1,607 @@
+/*------------------------------------------------------------------
+[Master Stylesheet]
+
+Project:		Pr1oriti23
+Version:		1.0
+Date   :		15/04/2021
+Done By:		Clark
+Primary use:	Task Management (TODOLIST)
+-------------------------------------------------------------------*/
+
+/*------------------------------------------------------------------
+[Colours]
+-------------------------------------------------------------------*/
+$black_30: rgba(0, 0, 0, 0.3);
+$color_shark_approx: #212529;
+$slate_gray: slategrey;
+$color_emerald_approx: #2ecc71;
+$white: #fff;
+$color_wild_sand_approx: #f7f7f7;
+$color_persian_red_approx: #c0392b;
+$alabaster: #fafafa;
+$black: black;
+$gray: gray;
+
+/*-------------------------------------------------------------------*/
+
+/*------------------------------------------------------------------
+[URL's]
+-------------------------------------------------------------------*/
+$url_0: url("../assets/fonts/CabinSketch.woff2");
+$url_1: url("../assets/fonts/Neucha.woff2");
+$url_2: url("../assets/fonts/Neucha2.woff2");
+$url_3: url("../assets/img/background.png");
+
+/*-------------------------------------------------------------------*/
+
+* {
+  box-sizing: border-box;
+}
+*::before {
+  box-sizing: border-box;
+}
+*::after {
+  box-sizing: border-box;
+}
+:root {
+}
+body {
+  margin: 0;
+  padding: 0;
+  font: 300 1.1em;
+}
+img {
+  max-width: 100%;
+}
+ul {
+  list-style: none;
+  list-style-type: none;
+}
+a {
+  text-decoration: none;
+}
+html {
+  font-size: 16px;
+  scroll-padding-top: 1em;
+  > body {
+    background-image: $url_3 !important;
+    background-repeat: repeat;
+    background-color: $white;
+  }
+}
+/*------------------------------------------------------------------
+[Fonts]
+-------------------------------------------------------------------*/
+
+@font-face {
+  font-family: "CabinSketch";
+  font-style: normal;
+  font-weight: 400;
+  src: $url_0 format("woff2");
+  unicode-range: U + 0000-00ff, U + 0131, U + 0152-0153, U + 02bb-02bc, U + 02c6,
+    U + 02da, U + 02dc, U + 2000-206f, U + 2074, U + 20ac, U + 2122, U + 2191,
+    U + 2193, U + 2212, U + 2215, U + FEFF, U + FFFD;
+}
+@font-face {
+  font-family: "Neucha";
+  font-style: normal;
+  font-weight: 400;
+  src: $url_1 format("woff2");
+}
+@font-face {
+  font-family: "Neucha2";
+  font-style: normal;
+  font-weight: 400;
+  src: $url_2 format("woff2");
+  unicode-range: U + 0000-00ff, U + 0131, U + 0152-0153, U + 02bb-02bc, U + 02c6,
+    U + 02da, U + 02dc, U + 2000-206f, U + 2074, U + 20ac, U + 2122, U + 2191,
+    U + 2193, U + 2212, U + 2215, U + FEFF, U + FFFD;
+}
+
+/*-------------------------------------------------------------------*/
+
+datalist {
+  max-height: 2px;
+}
+
+@-webkit-keyframes bounce-cwc {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-10%);
+  }
+}
+@keyframes bounce-cwc {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-10%);
+  }
+}
+.logo-container {
+  display: flex;
+  align-items: center;
+  min-height: 205px;
+  position: relative;
+}
+#logo {
+  margin-top: 50px;
+  height: 150px;
+  max-width: 192px;
+  animation: bounce-cwc 2.5s infinite alternate;
+  position: relative;
+  left: 10%;
+}
+.bubble {
+  align-self: start;
+  background: $color_wild_sand_approx;
+  border: 5px solid $color_shark_approx;
+  max-width: 50%;
+  padding: 20px;
+  font-family: "Neucha2";
+  font-size: 14px;
+  border-radius: 6px;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  hyphens: manual;
+  visibility: hidden;
+  white-space: pre-wrap;
+  position: relative;
+  left: 20%;
+  &:after {
+    right: 100%;
+    top: 50%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+    border-color: rgba(255, 255, 204, 0);
+    border-right-color: $color_wild_sand_approx;
+    border-width: 20px;
+    margin-top: -15px;
+  }
+  &:before {
+    right: 100%;
+    top: 50%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+    border-color: rgba(255, 204, 0, 0);
+    border-right-color: $color_shark_approx;
+    border-width: 26px;
+    margin-top: -16px;
+  }
+}
+.good {
+  color: $color_emerald_approx;
+}
+.bad {
+  color: $color_persian_red_approx;
+}
+.app-container {
+  box-sizing: border-box;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 750px;
+  background-color: transparent;
+  padding: 20px 15px;
+  position: relative;
+  h1 {
+    background-color: transparent;
+    color: $color_shark_approx;
+    font: 400 30px "CabinSketch";
+    padding: 10px 20px;
+    text-transform: uppercase;
+    width: 100%;
+    .fa-save {
+      cursor: pointer;
+      position: relative;
+      left: 100px;
+      font-size: 30px;
+      &:active {
+        font-size: 25.6px;
+      }
+    }
+    .drop-down-entry:active {
+      font-size: 25.6px;
+    }
+  }
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    li {
+      display: flex;
+      flex-direction: row;
+      font: 500 1.2rem "Neucha2";
+      min-height: 0.4rem;
+      padding: 0.4rem 0;
+      background-color: $white;
+      justify-content: flex-start;
+      align-items: center;
+      .main-message {
+        flex: 80%;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+      }
+      span {
+        height: 100%;
+        margin-right: 20px;
+      }
+      .grip {
+        color: $color_shark_approx !important;
+        opacity: 1 !important;
+        background-color: transparent !important;
+        pointer-events: all !important;
+        justify-self: flex-end;
+      }
+    }
+  }
+  .ui-sortable-helper {
+    cursor: pointer !important;
+    border: solid 1px $color_shark_approx !important;
+  }
+  input[type="text"] {
+    width: 100%;
+    margin: 0;
+    box-sizing: border-box;
+    padding: 13px 13px 13px 20px;
+    background-color: $alabaster;
+    color: $color_shark_approx;
+    font: 500 1.8rem "Neucha2";
+    height: 6rem;
+    border: none;
+    opacity: 0;
+    display: none;
+    transition: 0.2s linear;
+    margin-bottom: 20px;
+    &:focus {
+      background-color: $color_wild_sand_approx;
+      outline: none;
+      border: 2px solid $black;
+    }
+    &:-ms-input-placeholder {
+      color: $gray;
+      font-style: italic;
+    }
+  }
+  input[type="text"]::-webkit-input-placeholder {
+    color: $gray;
+    font-style: italic;
+  }
+  input[type="text"]::-ms-input-placeholder {
+    color: $gray;
+    font-style: italic;
+  }
+  input[type="text"]::placeholder {
+    color: $gray;
+    font-style: italic;
+  }
+  &.blur > * {
+    filter: blur(20px);
+  }
+}
+.drop-down-entry {
+  cursor: pointer;
+  font-size: 30px;
+  &:active {
+    font-size: 25.6px;
+  }
+}
+.tutorial-btn {
+  cursor: pointer;
+  font-size: 30px;
+  &:active {
+    font-size: 25.6px;
+  }
+}
+.tutorial-ok-btn {
+  cursor: pointer;
+  font-size: 30px;
+  background-color: transparent;
+  padding: 0.5rem;
+  border: none;
+  outline: none;
+  &:active {
+    transform: scale(0.8);
+  }
+}
+.main-btn {
+  min-width: 45%;
+  display: flex;
+  justify-content: space-between;
+  align-self: flex-start;
+}
+.special-btn {
+  min-width: 30%;
+  display: flex;
+  justify-content: space-around;
+}
+.buttons {
+  display: flex;
+  justify-content: space-between;
+}
+.edit {
+  color: $color_shark_approx !important;
+  opacity: 1 !important;
+  background-color: transparent !important;
+  pointer-events: all !important;
+  justify-self: flex-end;
+  cursor: pointer;
+}
+.grip {
+  cursor: grab;
+}
+.completed {
+  text-decoration: line-through;
+  color: $gray;
+}
+.show-checkmark {
+  width: 40px !important;
+  opacity: 1 !important;
+  pointer-events: all !important;
+  cursor: pointer !important;
+}
+.checkmark {
+  color: $color_shark_approx;
+  margin-right: 20px;
+  text-align: center;
+  padding-top: 0;
+  width: 0;
+  opacity: 0;
+  display: inline-block;
+  pointer-events: none;
+  transition: 0.2s linear;
+  .svg-inline--fa {
+    height: inherit;
+  }
+}
+@-webkit-keyframes shake {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(0);
+  }
+  20% {
+    transform: translateX(-10%);
+  }
+  60% {
+    transform: translateX(-10%);
+  }
+  40% {
+    transform: translateX(10%);
+  }
+  80% {
+    transform: translateX(10%);
+  }
+}
+@keyframes shake {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(0);
+  }
+  20% {
+    transform: translateX(-10%);
+  }
+  60% {
+    transform: translateX(-10%);
+  }
+  40% {
+    transform: translateX(10%);
+  }
+  80% {
+    transform: translateX(10%);
+  }
+}
+.shake {
+  animation: shake 0.4s 1 both !important;
+}
+.place-holder {
+  height: 1.5em;
+  line-height: 1.2em !important;
+  background: $gray !important;
+}
+.pop-out-fade-out {
+  display: block !important;
+  opacity: 1 !important;
+}
+.category-sort {
+  cursor: pointer;
+  font-size: 30px;
+  &:active {
+    font-size: 25.6px;
+  }
+}
+.date-sort {
+  cursor: pointer;
+  font-size: 30px;
+  &:active {
+    font-size: 25.6px;
+  }
+}
+.delete-all {
+  cursor: pointer;
+  font-size: 30px;
+  &:active {
+    font-size: 25.6px;
+  }
+}
+.delete-selected {
+  cursor: pointer;
+  font-size: 30px;
+  &:active {
+    font-size: 25.6px;
+  }
+}
+.confirmation-btn {
+  cursor: pointer;
+  font-size: 30px;
+  background-color: transparent;
+  border: none;
+  padding: 0.5rem;
+  &:focus {
+    outline: none;
+  }
+}
+.no-btn {
+  font-size: 35px;
+  color: $color_shark_approx;
+  &:active {
+    color: $color_persian_red_approx;
+    transform: scale(0.5);
+  }
+}
+.confirmation-popup {
+  outline: 2px solid $color_shark_approx;
+  position: fixed;
+  justify-self: center;
+  max-width: 80%;
+  width: 100%;
+  padding: 3rem;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 5px 30px $black_30;
+  background-image: $url_3 !important;
+  background-repeat: repeat;
+  background-color: $color_wild_sand_approx;
+  visibility: hidden;
+  opacity: 0;
+  z-index: 1;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+  h2 {
+    flex-basis: 100%;
+    text-align: center;
+  }
+  &.active {
+    top: 60%;
+    visibility: visible;
+    opacity: 1;
+    transition: 0.5s;
+  }
+}
+.negate-blur {
+  filter: blur(0) !important;
+  z-index: 2;
+}
+.yes-btn {
+  color: $color_shark_approx;
+  &:active {
+    color: $color_emerald_approx;
+    transform: scale(0.5);
+  }
+}
+.tutorial {
+  overflow-y: auto;
+  height: 40%;
+  font-family: "Neucha2";
+}
+.instructions {
+  display: flex;
+  flex-flow: column wrap;
+  font-size: 1rem;
+  justify-content: center;
+}
+.guide {
+  font-family: "Neucha2";
+  display: flex;
+  flex-direction: column;
+}
+
+.navbar {
+  border: none;
+  background-color: transparent !important;
+}
+#login-form {
+  display: none !important;
+}
+#logout-form {
+  display: none !important;
+}
+.confirmation-popup h2 {
+  font-family: "CabinSketch";
+}
+/*------------------------------------------------------------------
+[Desktops and Larger]
+-------------------------------------------------------------------*/
+@media only screen and(min-width: 575.98px) {
+  .app-container {
+    max-width: 500px;
+  }
+  .confirmation-popup {
+    top: 40%;
+    max-width: 400px;
+    h2 {
+      flex-basis: 100%;
+    }
+    &.active {
+      top: 60%;
+      visibility: visible;
+      opacity: 1;
+      transition: 0.5s;
+      min-width: 400px;
+      &.tutorial {
+        height: 60%;
+        font-family: "Neucha2";
+        opacity: 0.97;
+        max-width: 750px;
+        bottom: 0.2rem;
+      }
+      &.tutorial::-webkit-scrollbar {
+        width: 1em;
+      }
+      &.tutorial::-webkit-scrollbar-track {
+        box-shadow: inset 0 0 6px $black_30;
+      }
+      &.tutorial::-webkit-scrollbar-thumb {
+        background-color: $color_shark_approx;
+        outline: 1px solid $slate_gray;
+      }
+    }
+  }
+  .guide {
+    font-family: "Neucha2";
+    line-height: 5.5vh;
+  }
+  .instructions {
+    display: flex;
+    flex-flow: column wrap;
+    font-size: 1rem;
+    justify-content: center;
+  }
+  .tutorial-ok-btn {
+    background-color: transparent;
+    padding: 0.5rem;
+    border: none;
+    outline: none;
+    &:focus {
+      border: none;
+      outline: none;
+    }
+    &:active {
+      color: $color_emerald_approx;
+      font-size: 25px;
+    }
+  }
+}
+tutorial-btn:active {
+  font-size: 25.6px;
+}
+span svg svg {
+  vertical-align: middle;
+}
+
+/*-------------------------------------------------------------------*/

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Prioritize</title>
+
+</head>
+
+<body>
+  <div class="app-container mt-4">
+    <!-- #region of navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+          <form class="d-flex" id="login-form">
+            <input id="email" required class="form-control mb-2 " type="email" placeholder="email" aria-label="email">
+            <input id="password" required class="form-control ml-1 mb-2" type="password" placeholder="password"
+              aria-label="password">
+            <button id="login-btn" class="btn btn-dark ml-1  " type="submit">Login</button>
+            <button id="signup-btn" class="btn btn-dark ml-1  " type="submit">Sign Up</button>
+          </form>
+          <form class="d-flex" id="logout-form">
+            <h4><span id="username" class="badge bg-dark text-light mr-1"> </span></h4>
+            <button id="logout-btn" class="btn btn-dark ml-1" type="submit">Log Out</button>
+          </form>
+        </div>
+      </div>
+    </nav>
+
+    <!-- #endregion of navbar -->
+    <div class="logo-container">
+      <img id="logo" src="../assets/img/cwc-shades.png" alt="clickwithclark logo" />
+      <div class="bubble">
+      </div>
+    </div>
+
+    <h1 class="app-name">
+      <i class="fas fa-clipboard-list"></i>
+      Pr1oriti23
+    </h1>
+    <div class="buttons">
+      <div class="main-btn">
+        <span class="category-sort"><i class="fas fa-tags"></i></span>
+        <span class="date-sort"><i class="far fa-calendar-alt"></i></span>
+        <span class="delete-selected"><i class="fas fa-check-square"></i></span>
+        <span class="delete-all"><i class="fas fa-trash-alt"></i></i></span>
+      </div>
+      <div class="special-btn">
+        <span class="tutorial-btn"><i class="fas fa-chalkboard-teacher"></i></span>
+        <span class="drop-down-entry"><i class="fas fa-plus"></i></span>
+      </div>
+    </div>
+    <input id="todoInput" list="groups" type="text" placeholder="Add New Task...📄" />
+    <datalist id="groups">
+
+    </datalist>
+    <ul id="todoList" class="list-group" data-draggable-container></ul>
+
+    <!-- #region of confirmation popup -->
+    <div class="confirmation-popup">
+      <h2>
+        Confirm Deletion</h2>
+      <button class="confirmation-btn yes-btn"><i class="fas fa-check"></i></button>
+      <button class="confirmation-btn no-btn"><i class="fas fa-times"></i></button>
+
+    </div>
+    <!-- #endregion of confirmation popup -->
+  </div>
+
+</body>
+
+</html>

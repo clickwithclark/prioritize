@@ -34,7 +34,7 @@
     "jsdoc": "^3.6.7",
     "minami": "^1.2.3",
     "mini-css-extract-plugin": "^2.3.0",
-    "node-sass": "^6.0.1",
+    "node-sass": "^7.0.0",
     "npm-check-updates": "^11.8.5",
     "prettier": "^2.4.1",
     "sass-loader": "^12.1.0",

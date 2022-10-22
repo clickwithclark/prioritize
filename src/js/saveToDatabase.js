@@ -8,7 +8,9 @@ import { isOnline } from './checkIfOnline.js';
 /* -------------------------------------------------------------------*/
 // #region [save to Database]
 /* -------------------------------------------------------------------*/
-const remindUserToSave = debounce(() => feedbackMessage('PSSSST!\nSign in to sync your tasks across devices! ', 6));
+const remindUserToSave = debounce(() =>
+  feedbackMessage('PSSSST!\nSign in to sync your tasks across devices! ', 6)
+);
 export function saveToDatabase() {
   onAuthStateChanged(getAuth(), (user) => {
     if (user) {
@@ -20,7 +22,9 @@ export function saveToDatabase() {
           return;
         }
         const database = getDatabase(app);
-        set(ref(database, 'tasks/'), { [user.uid]: JSON.stringify(getState()) });
+        set(ref(database, 'tasks/'), {
+          [user.uid]: JSON.stringify(getState()),
+        });
       } catch (error) {
         console.log(error);
       }

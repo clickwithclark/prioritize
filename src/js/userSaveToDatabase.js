@@ -7,12 +7,16 @@ import { isOnline } from './checkIfOnline.js';
 
 export function userSaveToDatabase() {
   if (!isOnline()) {
-    return feedbackMessage('You are not connected to the internet\n, try again later...');
+    return feedbackMessage(
+      'You are not connected to the internet\n, try again later...'
+    );
   }
 
   onAuthStateChanged(getAuth(), (user) => {
     if (user) {
-      const response = window.confirm('Are you sure you want to Upload/Overwrite current tasks?');
+      const response = window.confirm(
+        'Are you sure you want to overwrite previously saved tasks?'
+      );
       try {
         if (response) {
           feedbackMessageNormal('Saving...');
@@ -22,7 +26,9 @@ export function userSaveToDatabase() {
             return;
           }
           const database = getDatabase(app);
-          set(ref(database, 'tasks/'), { [user.uid]: JSON.stringify(getState()) });
+          set(ref(database, 'tasks/'), {
+            [user.uid]: JSON.stringify(getState()),
+          });
         }
       } catch (error) {
         console.log(error);

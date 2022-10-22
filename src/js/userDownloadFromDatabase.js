@@ -17,7 +17,7 @@ export function userDownloadFromDatabase() {
   onAuthStateChanged(getAuth(), (user) => {
     if (user) {
       const response = window.confirm(
-        'Are you sure you want to Download/Overwrite current tasks?'
+        'Are you sure you want to overwrite current tasks?'
       );
       if (response) {
         const stateRef = ref(database, `tasks/${user.uid}`);

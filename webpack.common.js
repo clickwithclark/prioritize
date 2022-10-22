@@ -25,7 +25,7 @@ module.exports = {
       runtimeCaching: [
         {
           // Match any request ends with .png, .jpg, .jpeg or .svg.
-          urlPattern: /.(?:png|jpg|jpeg|svg)$/,
+          urlPattern: /\.(?:png|jpg|jpeg|svg)$/,
 
           // Apply a cache-first strategy.
           handler: 'StaleWhileRevalidate',

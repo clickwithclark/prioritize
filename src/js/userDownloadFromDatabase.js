@@ -8,13 +8,17 @@ import { feedbackMessage } from './feedbackMessage.js';
 
 export function userDownloadFromDatabase() {
   if (!isOnline()) {
-    return feedbackMessage('You are not connected to the internet\n, try again later...');
+    return feedbackMessage(
+      'You are not connected to the internet\n, try again later...'
+    );
   }
 
   const database = getDatabase(app);
   onAuthStateChanged(getAuth(), (user) => {
     if (user) {
-      const response = window.confirm('Are you sure you want to Download/Overwrite current tasks?');
+      const response = window.confirm(
+        'Are you sure you want to Download/Overwrite current tasks?'
+      );
       if (response) {
         const stateRef = ref(database, `tasks/${user.uid}`);
 

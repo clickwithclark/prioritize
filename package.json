@@ -52,9 +52,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "docs": "node_modules/.bin/jsdoc -c .eslintrc.js",
-    "build": "webpack --config webpack.prod.js && rm dist/**/*.map && rm dist/*.map && cp ./src/assets/icons/maskable_icon_x128.png ./dist/img/maskable_icon_x128.png && cp ./src/assets/icons/maskable_icon300.png ./dist/img/maskable_icon300.png && cp -r /c/Users/clickwithclark/Documents/Repositories/prioritize/dist/. /c/Users/clickwithclark/Documents/Repositories/clickwithclark/projects/prioritize",
+    "build": "webpack --config webpack.prod.js && rm dist/**/*.map && rm dist/*.map && cp ./src/assets/icons/maskable_icon_x128.png ./dist/img/maskable_icon_x128.png && cp ./src/assets/icons/maskable_icon300.png ./dist/img/maskable_icon300.png",
     "start": "webpack-dev-server --config webpack.dev.js --open",
-    "release": "standard-version"
+    "release": "standard-version && cp -r /c/Users/clickwithclark/Documents/Repositories/prioritize/dist/. /c/Users/clickwithclark/Documents/Repositories/clickwithclark.github.io/projects/prioritize"
   },
   "keywords": [],
   "author": "",

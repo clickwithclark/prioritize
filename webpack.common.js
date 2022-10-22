@@ -20,23 +20,24 @@ module.exports = {
       maximumFileSizeToCacheInBytes: 5242880,
       cleanupOutdatedCaches: true,
       mode: 'production',
-      cacheId: 'assets',
+      cacheId: 'clark-assets',
+
       // Define runtime caching rules.
       runtimeCaching: [
         {
           // Match any request ends with .png, .jpg, .jpeg or .svg.
-          urlPattern: /\.(?:png|jpg|jpeg|svg)$/,
+          urlPattern: /https?:\/\/[a-zA-Z]+\.com\/.*/,
 
           // Apply a cache-first strategy.
           handler: 'StaleWhileRevalidate',
 
           options: {
             // Use a custom cache name.
-            cacheName: 'images',
+            cacheName: 'clark-assets',
 
             // Only cache 10 images.
             expiration: {
-              maxEntries: 10,
+              maxEntries: 1000,
             },
           },
         },

@@ -2,7 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-<<<<<<< HEAD
+### 1.2.1 (2022-10-22)
+
 ### [1.1.1](https://github.com/clickwithclark/prioritize2/compare/v1.1.0...v1.1.1) (2021-04-08)
 =======
 ## 1.2.0 (2021-04-09)

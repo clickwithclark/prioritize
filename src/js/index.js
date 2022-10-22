@@ -2,7 +2,7 @@
 /** Creatinging s single entry point for all modules */
 
 // bootswatch
-import 'bootswatch/dist/sketchy/bootstrap.min.css';
+import 'bootswatch/dist/sketchy/bootstrap.css';
 
 // my scss
 import '../scss/todoapp.scss';

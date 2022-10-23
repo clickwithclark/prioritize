@@ -3,7 +3,6 @@ import { onAuthStateChanged, getAuth } from 'firebase/auth';
 import { saveState } from './localStorage.js';
 import { app } from './firebase.js';
 import { updateDOM } from './updateDOM.js';
-import { feedbackMessageNormal } from './feedbackMessage.js';
 
 export function updateFromDB() {
   const database = getDatabase(app);

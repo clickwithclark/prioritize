@@ -42,5 +42,4 @@ export function updateDOM() {
   // hide scrollbar for less than 4 tasks
   // eslint-disable-next-line no-unused-expressions
   storedOrder.length >= 4 ? showScrollBar() : hideScrollBar();
-  console.log(' storedOrder.length', storedOrder.length);
 }

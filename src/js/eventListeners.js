@@ -2,12 +2,16 @@ import { editTodo } from './editTodo.js';
 import { addTodo } from './addTodo.js';
 import { updateDOM } from './updateDOM.js';
 import { addGlobalEventListener } from './addGlobalEventListener.js';
-// import { getState, updateTodo } from './localStorage.js';
 import { dateSort } from './dateSort.js';
 import { categorySort } from './categorySort.js';
 import { feedbackMessage } from './feedbackMessage.js';
 import { processTodo } from './processTodo.js';
-import { deleteAllTodosDialog, confirmDelete, resetAppUI, cancelDelete } from './deleteAllTodos.js';
+import {
+  deleteAllTodosDialog,
+  confirmDelete,
+  resetAppUI,
+  cancelDelete,
+} from './deleteAllTodos.js';
 import { deleteSelected } from './deleteSelected.js';
 import { tutorial, tutorialOk } from './tutorial.js';
 import { processInput } from './processInput.js';
@@ -39,9 +43,8 @@ import { userSaveToDatabase } from './userSaveToDatabase.js';
 
   2. [x] [A] add date sort
 
-  3. [] [A] make pwa
+  3. [X] [A] make pwa
 
-  4. [] [C] make a bundle with parcel
 
   5. [x] [A] make draggable
 
@@ -112,7 +115,11 @@ export function initializeEventListeners() {
   window.addEventListener('load', init);
 
   // upload and download by user
-  addGlobalEventListener('pointerdown', '.download-btn', userDownloadFromDatabase);
+  addGlobalEventListener(
+    'pointerdown',
+    '.download-btn',
+    userDownloadFromDatabase
+  );
   addGlobalEventListener('pointerdown', '.save-btn', userSaveToDatabase);
   // insert new event above this line
 } // END initializeEventListeners

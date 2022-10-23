@@ -4,6 +4,7 @@ import { feedbackMessage, feedbackMessageNormal } from './feedbackMessage.js';
 import { app } from './firebase';
 import { getState } from './localStorage.js';
 import { isOnline } from './checkIfOnline.js';
+import { saveToDatabase } from './saveToDatabase.js';
 
 export function userSaveToDatabase() {
   if (!isOnline()) {
@@ -19,16 +20,12 @@ export function userSaveToDatabase() {
       );
       try {
         if (response) {
-          feedbackMessageNormal('Saving...');
           // if no todo exist DO NOT SAVE
           const todos = getState()?.todos;
           if (!todos) {
             return;
           }
-          const database = getDatabase(app);
-          set(ref(database, 'tasks/'), {
-            [user.uid]: JSON.stringify(getState()),
-          });
+          saveToDatabase();
         }
       } catch (error) {
         console.log(error);

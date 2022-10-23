@@ -5,6 +5,7 @@ import { app } from './firebase.js';
 import { updateDOM } from './updateDOM.js';
 import { isOnline } from './checkIfOnline.js';
 import { feedbackMessage } from './feedbackMessage.js';
+import { updateFromDB } from './updateFromDB.js';
 
 export function userDownloadFromDatabase() {
   if (!isOnline()) {
@@ -16,20 +17,18 @@ export function userDownloadFromDatabase() {
   const database = getDatabase(app);
   onAuthStateChanged(getAuth(), (user) => {
     if (user) {
-      const response = window.confirm(
-        'Are you sure you want to overwrite current tasks?'
-      );
-      if (response) {
-        const stateRef = ref(database, `tasks/${user.uid}`);
+      try {
+        if (
+          window.confirm('Are you sure you want to overwrite current tasks?')
+        ) {
+          updateFromDB();
 
-        onValue(stateRef, async (snapshot) => {
-          const newState = await snapshot.val();
-          saveState(JSON.parse(newState));
-          updateDOM();
-        });
-        return;
+          return;
+        }
+        return feedbackMessage('Few... !');
+      } catch (error) {
+        console.log(error);
       }
-      return feedbackMessage('Few... !');
     }
     return feedbackMessage('Please sign in to download your tasks !');
   });

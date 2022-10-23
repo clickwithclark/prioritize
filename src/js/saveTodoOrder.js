@@ -1,6 +1,5 @@
 import { getState, saveState } from './localStorage';
 
-
 export function saveTodoOrder(sortedTodos) {
   const state = { ...getState() };
   const order = [];

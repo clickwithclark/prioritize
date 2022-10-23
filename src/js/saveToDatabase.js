@@ -16,11 +16,7 @@ export function saveToDatabase() {
     if (user) {
       try {
         feedbackMessageNormal('Saving...');
-        // if no todo exist DO NOT SAVE
-        const todos = getState()?.todos;
-        if (!todos) {
-          return;
-        }
+
         const database = getDatabase(app);
         set(ref(database, 'tasks/'), {
           [user.uid]: JSON.stringify(getState()),

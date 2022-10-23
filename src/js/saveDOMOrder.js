@@ -1,6 +1,5 @@
 import { getState, saveState } from './localStorage';
 
-
 export function saveDOMOrder() {
   const listOfTodos = [...document.querySelectorAll('li')];
   const listOfIds = [];

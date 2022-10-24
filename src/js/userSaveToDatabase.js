@@ -12,26 +12,25 @@ export function userSaveToDatabase() {
       'You are not connected to the internet\n, try again later...'
     );
   }
+  const auth = getAuth();
+  const user = auth.currentUser;
 
-  onAuthStateChanged(getAuth(), (user) => {
-    if (user) {
-      const response = window.confirm(
-        'Are you sure you want to overwrite previously saved tasks?'
-      );
-      try {
-        if (response) {
-          // if no todo exist DO NOT SAVE
-          const todos = getState()?.todos;
-          if (!todos) {
-            return;
-          }
-          saveToDatabase();
+  if (user) {
+    const response = window.confirm(
+      'Are you sure you want to overwrite previously saved tasks?'
+    );
+    try {
+      if (response) {
+        // if no todo exist DO NOT SAVE
+        const todos = getState()?.todos;
+        if (!todos) {
+          return;
         }
-      } catch (error) {
-        console.log(error);
+        return saveToDatabase();
       }
-      return;
+    } catch (error) {
+      console.log(error);
     }
-    return feedbackMessage('Please register or sign in to save your tasks');
-  });
+  }
+  return feedbackMessage('Please register or sign in to save your tasks');
 }

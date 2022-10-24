@@ -20,33 +20,29 @@ export function login(event) {
   const email = document.querySelector('#email').value;
   const password = document.querySelector('#password').value;
   const auth = getAuth();
-  try {
-    (async function () {
-      /* const persistence = */ await setPersistence(
-        auth,
-        browserLocalPersistence
-      );
-      const userCredential = await signInWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-      const { user } = await userCredential;
-      await updateFromDB();
+  setPersistence(auth, browserLocalPersistence)
+    .then(() => signInWithEmailAndPassword(auth, email, password))
+
+    .then((userCredential) => {
+      // Signed in
+      const { user } = userCredential;
+
+      // update the db
+      updateFromDB();
       welcomeUser({ user, email });
-    })();
-  } catch (error) {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    console.error(
-      'An error occurred during sign up: ',
-      errorMessage,
-      'Error Code: ',
-      error.code
-    );
-    return feedbackMessage(
-      'An error occurred Logging in\n incorrect username or password',
-      6
-    );
-  }
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.error(
+        'An error occurred during log in: ',
+        errorMessage,
+        'Error Code: ',
+        error.code
+      );
+      return feedbackMessage(
+        'An error occurred Logging in\n incorrect username or password',
+        6
+      );
+    });
 }

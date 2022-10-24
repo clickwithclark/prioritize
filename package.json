@@ -50,6 +50,8 @@
     "workbox-webpack-plugin": "^6.5.4"
   },
   "scripts": {
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix ./*.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "docs": "node_modules/.bin/jsdoc -c .eslintrc.js",
     "build": "webpack --config webpack.prod.js && rm dist/**/*.map && rm dist/*.map && cp ./src/assets/icons/maskable_icon_x128.png ./dist/img/maskable_icon_x128.png && cp ./src/assets/icons/maskable_icon300.png ./dist/img/maskable_icon300.png",

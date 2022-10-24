@@ -21,7 +21,9 @@ export function processInput(event) {
           const newTask = input.value.trim();
           // complain if invalid values
           if (newTask === '') {
-            throw new Error('Woops, update cannot be blank! . . . try deleting it instead');
+            throw new Error(
+              'Whoops, update cannot be blank! . . . try deleting it instead'
+            );
           }
           const updatedTodo = processTodo(newTask);
           updatedTodo.id = config.updatedTodo.id;
@@ -40,14 +42,14 @@ export function processInput(event) {
           return updateDOM();
         } catch (error) {
           console.trace(error);
-          feedbackMessage(error.message);
+          return feedbackMessage(error.message);
         }
       }
     }
     try {
       // complain if invalid values
       if (event.target.value.trim() === '') {
-        throw new Error('Woops, you have to enter something first!');
+        throw new Error('Whoops, you have to enter something first!');
       }
       // if this is first entry replace demo todos
 
@@ -59,7 +61,7 @@ export function processInput(event) {
       debounceEmpty(input, saveToDatabase);
     } catch (error) {
       console.trace(error);
-      feedbackMessage(error.message);
+      return feedbackMessage(error.message);
     }
   }
 }

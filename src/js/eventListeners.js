@@ -29,6 +29,7 @@ import { observeUserState } from './observeUserState.js';
 import { init } from './init';
 import { userDownloadFromDatabase } from './userDownloadFromDatabase.js';
 import { userSaveToDatabase } from './userSaveToDatabase.js';
+import { hideTutorial } from './hideTutorialOnClick.js';
 // global state management
 
 // eslint-disable-next-line prefer-const
@@ -112,6 +113,9 @@ export function initializeEventListeners() {
   addGlobalEventListener('click', '#signup-btn', signup);
   addGlobalEventListener('click', '#logout-btn', logout);
   addGlobalEventListener('click', '#login-btn', login);
+  // hide tutorial when user clicks anywhere else
+  addGlobalEventListener('pointerdown', '*', hideTutorial);
+
   window.addEventListener('load', init);
 
   // upload and download by user

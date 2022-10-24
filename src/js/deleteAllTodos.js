@@ -1,6 +1,10 @@
 import { updateDOM } from './updateDOM.js';
 import { getState, saveState } from './localStorage.js';
-import { feedbackMessage, resetLogo, feedbackMessageNormal } from './feedbackMessage.js';
+import {
+  feedbackMessage,
+  resetLogo,
+  feedbackMessageNormal,
+} from './feedbackMessage.js';
 
 const appContainer = document.querySelector('.app-container');
 const logo = document.querySelector('#logo');
@@ -13,7 +17,9 @@ export function deleteAllTodosDialog() {
     let todos = { ...getState()?.todos };
     todos = todos ?? {};
     if (Object.keys(todos).length === 0) {
-      throw new Error(`You Dont have any tasks to delete yet , That's just a demonstration`);
+      throw new Error(
+        `You Dont have any tasks to delete yet , That's just a demonstration`
+      );
     }
     appContainer.classList.add('blur');
     logo.classList.add('negate-blur');

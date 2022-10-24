@@ -112,6 +112,7 @@ export function initializeEventListeners() {
   addGlobalEventListener('click', '#signup-btn', signup);
   addGlobalEventListener('click', '#logout-btn', logout);
   addGlobalEventListener('click', '#login-btn', login);
+
   window.addEventListener('load', init);
 
   // upload and download by user

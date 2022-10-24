@@ -4,17 +4,17 @@ import { saveState } from './localStorage.js';
 import { app } from './firebase.js';
 import { updateDOM } from './updateDOM.js';
 
-export function updateFromDB() {
+export async function updateFromDB() {
   const database = getDatabase(app);
-  onAuthStateChanged(getAuth(), (user) => {
-    if (user) {
-      const stateRef = ref(database, `tasks/${user.uid}`);
+  const auth = getAuth();
+  const user = auth.currentUser;
+  if (user) {
+    const stateRef = ref(database, `tasks/${user.uid}`);
 
-      onValue(stateRef, async (snapshot) => {
-        const newState = await snapshot.val();
-        saveState(JSON.parse(newState));
-        updateDOM();
-      });
-    }
-  });
+    onValue(stateRef, async (snapshot) => {
+      const newState = await snapshot.val();
+      await saveState(JSON.parse(newState));
+      updateDOM();
+    });
+  }
 }

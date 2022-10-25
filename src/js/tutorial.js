@@ -64,6 +64,25 @@ you don't have to write... </br><span class="bad">(Grocerylist) eggs , (Groceryl
 
   popUp.appendChild(instructions);
   popUp.scrollTo({ top: 0, behavior: 'smooth' });
+
+  // add close on focus out
+
+  document.addEventListener('pointerdown', (event) => {
+    const isClickedInside = popUp.contains(event.target);
+    // the tutorial button itself registers as an outside click so
+    // ignore it
+    console.log(event.target);
+    if (event.target.closest('.tutorial-btn')) {
+      return;
+    }
+    // ignore clicks if tutorial is not up contain the tutorial's classes
+    if (!popUp.classList.contains('active')) {
+      return;
+    }
+    if (!isClickedInside) {
+      tutorialOk(event);
+    }
+  });
 }
 
 export function tutorialOk(event) {

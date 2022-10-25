@@ -113,8 +113,6 @@ export function initializeEventListeners() {
   addGlobalEventListener('click', '#signup-btn', signup);
   addGlobalEventListener('click', '#logout-btn', logout);
   addGlobalEventListener('click', '#login-btn', login);
-  // hide tutorial when user clicks anywhere else
-  addGlobalEventListener('pointerdown', '*', hideTutorial);
 
   window.addEventListener('load', init);
 

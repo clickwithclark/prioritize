@@ -29,7 +29,6 @@ import { observeUserState } from './observeUserState.js';
 import { init } from './init';
 import { userDownloadFromDatabase } from './userDownloadFromDatabase.js';
 import { userSaveToDatabase } from './userSaveToDatabase.js';
-import { hideTutorial } from './hideTutorialOnClick.js';
 // global state management
 
 // eslint-disable-next-line prefer-const

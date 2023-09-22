@@ -3,9 +3,9 @@ import { draggable } from './draggable.js';
 import { retrieveFromLocalStorage, getState } from './localStorage.js';
 import { feedbackMessage, resetLogo } from './feedbackMessage.js';
 import { loadGroups } from './loadGroups.js';
-import { isOnline } from './checkIfOnline.js';
-import { hideNetworkBtns } from './hideNetworkBtns';
-import { showNetworkBtns } from './showNetworkBtns';
+// import { isOnline } from './checkIfOnline.js';
+// import { hideNetworkBtns } from './hideNetworkBtns';
+// import { showNetworkBtns } from './showNetworkBtns';
 import { showScrollBar } from './showScrollBar';
 import { hideScrollBar } from './hideScrollBar';
 
@@ -14,7 +14,7 @@ export function updateDOM() {
 
   // hide buttons if no internet available
   // eslint-disable-next-line no-unused-expressions
-  isOnline() ? showNetworkBtns() : hideNetworkBtns();
+  // isOnline() ? showNetworkBtns() : hideNetworkBtns();
 
   list.innerHTML = '';
   const storedTodos = retrieveFromLocalStorage();

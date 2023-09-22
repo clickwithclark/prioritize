@@ -1,0 +1,56 @@
+  <!-- #region of orignal code -->
+    <div class="buttons">
+      <div class="main-btn">
+        <span class="category-sort"><i class="fas fa-tags"></i></span>
+        <span class="date-sort"><i class="fas fa-calendar-alt"></i></span>
+        <span class="delete-selected"><i class="fas fa-check-square"></i></span>
+        <span class="delete-all"><i class="fas fa-trash-alt"></i></i></span>
+      </div>
+       <div class="special-btn">
+         <span class="drop-down-entry"><i class="fas fa-plus"></i></span>
+       
+      </div>
+      <div class="network-btns">
+        <!-- <span class="download-btn"><i class="fas fa-cloud-download-alt"></i></span> -->
+        <span class="save-btn"><i class="fas fa-cloud-upload-alt"></i></span>
+         <span class="tutorial-btn"><i class="fas fa-chalkboard-teacher"></i></span>
+       
+      </div>
+     
+    </div>
+  <!-- #endregion of orignal code -->
+
+<!-- <i class="fas fa-sort-down"></i>  <i class="fas fa-minus"></i> -->
+  <div class="buttons">
+    
+         <div class="button-type-delete">
+            <div class="btn-collection">
+               <div class="btn-collection__top">
+                  <span class="delete-selected"><i class="fas fa-check-square"></i></span>
+        <span class="delete-all"><i class="fas fa-trash-alt"></i></i></span>
+               </div>     
+               <div class="btn-collection__bottom">
+                <span class="fa-btn"> <i class="fas fa-sort-down"></i></span>
+               </div>     
+            </div>
+            <span class="remove-main-btn fa-btn"><i class="fas fa-minus"></i></span>
+         </div>
+      
+        <div class="button-type-add">
+             <span class="drop-down-entry"><i class="fas fa-plus"></i></span>
+        </div>
+       
+
+          <div class="button-type-sort">
+                  <div class="btn-collection">
+               <div class="btn-collection__top">
+                        <span class="category-sort"><i class="fas fa-tags"></i></span>
+        <span class="date-sort"><i class="fas fa-calendar-alt"></i></span>
+               </div>     
+               <div class="btn-collection__bottom">
+                <span class="fa-btn"> <i class="fas fa-sort-down"></i></span>
+               </div>     
+            </div>
+             <span class="sort-main-btn fa-btn"><i class="fas fa-sort-amount-down"></i></span>
+        </div>
+    </div>

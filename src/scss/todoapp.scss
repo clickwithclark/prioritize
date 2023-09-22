@@ -327,7 +327,8 @@ datalist {
 }
 .tutorial-btn,
 .save-btn,
-.download-btn {
+.download-btn,
+.fa-btn {
   cursor: pointer;
   font-size: 30px;
   &:active {
@@ -356,16 +357,50 @@ datalist {
   display: flex;
   justify-content: space-between;
   align-self: flex-start;
+  outline: 2px solid lime;
+  position: relative;
 }
 .special-btn {
   min-width: 20%;
   display: flex;
   justify-content: space-around;
+  justify-self: center;
+  outline: 2px solid yellow;
 }
 .buttons {
   display: flex;
   justify-content: space-between;
+  
 }
+.button-type-add,.button-type-delete,.button-type-sort{
+  position: relative;
+}
+//remove
+// body > iframe {
+//   display: none;
+// }
+
+.btn-collection{
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  & *{
+    margin: 0 .5rem;
+  }
+}
+.remove-main-btn{
+  display: inherit;
+  text-align: center;
+}
+
+.btn-collection__top{
+  display: flex;
+  justify-content: space-between;
+  padding: .5rem;
+}
+
+
+
 .edit {
   color: $color_shark_approx !important;
   opacity: 1 !important;
@@ -601,7 +636,7 @@ datalist {
 /*------------------------------------------------------------------
 [Desktops and Larger]
 -------------------------------------------------------------------*/
-@media only screen and(min-width: 575.98px) {
+@media only screen and (min-width: 575.98px) {
   .grip {
     color: $color_shark_approx !important;
     opacity: 1 !important;

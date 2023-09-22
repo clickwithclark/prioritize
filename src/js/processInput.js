@@ -7,7 +7,7 @@ import { updateTodo } from './updateTodo';
 import { clearUpdateConfig } from './clearUpdateConfig';
 import { processTodo } from './processTodo.js';
 import { updateDOM } from './updateDOM.js';
-import { saveToDatabase } from './saveToDatabase.js';
+import { writeToDatabase } from './writeToDatabase.js';
 
 export function processInput(event) {
   // when enter is pressed
@@ -33,7 +33,7 @@ export function processInput(event) {
 
           endUpdate(input);
           clearUpdateConfig();
-          debounceEmpty(input, saveToDatabase);
+          debounceEmpty(input, writeToDatabase);
 
           // scroll back to original todo position in list
 
@@ -58,7 +58,7 @@ export function processInput(event) {
       endUpdate(event.target); // for times when editing event lead to adding a new todo
       updateDOM();
       // save to database
-      debounceEmpty(input, saveToDatabase);
+      debounceEmpty(input, writeToDatabase);
     } catch (error) {
       console.trace(error);
       return feedbackMessage(error.message);

@@ -5,7 +5,8 @@
   "main": "index.js",
   "dependencies": {
     "bootswatch": "^5.2.2",
-    "firebase": "^9.12.1"
+    "firebase": "^9.12.1",
+    "node-sass": "^8.0.0"
   },
   "devDependencies": {
     "@popperjs/core": "^2.11.6",
@@ -34,7 +35,6 @@
     "jsdoc": "^3.6.11",
     "minami": "^1.2.3",
     "mini-css-extract-plugin": "^2.6.1",
-    "node-sass": "^7.0.3",
     "npm-check-updates": "^16.3.15",
     "prettier": "^2.7.1",
     "sass-loader": "^13.1.0",

@@ -27,7 +27,6 @@ import { login } from './login.js';
 import { logout } from './logout.js';
 import { observeUserState } from './observeUserState.js';
 import { init } from './init';
-import { userDownloadFromDatabase } from './userDownloadFromDatabase.js';
 import { userSaveToDatabase } from './userSaveToDatabase.js';
 // global state management
 
@@ -115,12 +114,8 @@ export function initializeEventListeners() {
 
   window.addEventListener('load', init);
 
-  // upload and download by user
-  addGlobalEventListener(
-    'pointerdown',
-    '.download-btn',
-    userDownloadFromDatabase
-  );
+  // upload by user
+
   addGlobalEventListener('pointerdown', '.save-btn', userSaveToDatabase);
   // insert new event above this line
 } // END initializeEventListeners

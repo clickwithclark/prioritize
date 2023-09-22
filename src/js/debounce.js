@@ -1,7 +1,13 @@
 /**
+ * Callback function
+ * @callback debounceFunction
+ * 
+ */
+
+/**
  * @function debounce
- * @param  {type} callback function to execute
- * @param  {type} timeout  delay time in seconds
+ * @param  {debounceFunction} callback function to execute
+ * @param  {type} timeout delay time in seconds
  */
 export function debounce(callback, timeout = 3) {
   let timer;

@@ -53,4 +53,13 @@
             </div>
              <span class="sort-main-btn fa-btn"><i class="fas fa-sort-amount-down"></i></span>
         </div>
-    </div>
+    </div> 
+    <!-- dd -->
+              <div class="btn-collection btn-collection--active">
+               <div class="btn-collection__top">
+                  <span class="tutorial-btn"><i class="fas fa-chalkboard-teacher"></i></span>
+               </div>     
+               <div class="btn-collection__bottom">
+                <span class="drop-down-entry"><i class="fas fa-plus"></i></span>
+               </div>     
+            </div>

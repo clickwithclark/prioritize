@@ -332,7 +332,7 @@ datalist {
   cursor: pointer;
   font-size: 30px;
   &:active {
-    font-size: 25.6px;
+    scale: 0.853;
   }
 }
 .network-btns {
@@ -341,6 +341,7 @@ datalist {
   justify-content: space-between;
   align-self: flex-start;
 }
+
 .tutorial-ok-btn {
   cursor: pointer;
   font-size: 30px;
@@ -370,36 +371,62 @@ datalist {
 .buttons {
   display: flex;
   justify-content: space-between;
-  
+  position: relative;
+  align-items: flex-end;
+  // outline: 2px solid tomato;
+  margin-bottom: 1rem;
 }
-.button-type-add,.button-type-delete,.button-type-sort{
+.button-type-add,
+.button-type-delete,
+.button-type-sort {
   position: relative;
 }
+// *{outline:1px solid tomato;}
 //remove
 // body > iframe {
 //   display: none;
 // }
 
-.btn-collection{
-  display: none;
+.fa-btn-mini {
+  font-size: 0.8rem;
+  position: relative;
+  // top: -10px;
+  margin: 0 auto;
+}
+.btn-collection {
+  position: relative;
+  visibility: hidden;
+  margin: 0 0.2rem;
+}
+
+.btn-collection--active {
+  transition: all 0.4s ease;
+  display: flex;
   flex-direction: column;
-  align-items: center;
-  & *{
-    margin: 0 .5rem;
+  visibility: visible;
+
+  & * {
+    margin: 0 .4rem;
+    // outline: 1px solid lime;
   }
 }
-.remove-main-btn{
+
+.btn-collection__bottom {
+  display: flex;
+  justify-content: center;
+}
+
+.remove-main-btn,
+.sort-main-btn {
   display: inherit;
   text-align: center;
 }
 
-.btn-collection__top{
+.btn-collection__top {
   display: flex;
   justify-content: space-between;
-  padding: .5rem;
+  padding: 0.5rem;
 }
-
-
 
 .edit {
   color: $color_shark_approx !important;

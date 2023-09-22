@@ -9,7 +9,18 @@
 export function addGlobalEventListener(type, selector, callback) {
   document.addEventListener(type, (event) => {
     if (event.target.closest(selector)) {
-      callback(event);
+     try {
+       callback(event);
+     } catch (error) {
+       const errorCode = error.code;
+       const errorMessage = error.message;
+       console.error(
+         "An error occurred in eventlistener: ",
+         errorMessage,
+         "Error Code: ",
+         errorCode
+       );
+     }
     }
   });
 }

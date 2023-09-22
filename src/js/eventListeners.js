@@ -1,33 +1,35 @@
-import { editTodo } from './editTodo.js';
-import { addTodo } from './addTodo.js';
-import { updateDOM } from './updateDOM.js';
-import { addGlobalEventListener } from './addGlobalEventListener.js';
-import { dateSort } from './dateSort.js';
-import { categorySort } from './categorySort.js';
-import { feedbackMessage } from './feedbackMessage.js';
-import { processTodo } from './processTodo.js';
+import { editTodo } from "./editTodo.js";
+import { addTodo } from "./addTodo.js";
+import { updateDOM } from "./updateDOM.js";
+import { addGlobalEventListener } from "./addGlobalEventListener.js";
+import { dateSort } from "./dateSort.js";
+import { categorySort } from "./categorySort.js";
+import { feedbackMessage } from "./feedbackMessage.js";
+import { processTodo } from "./processTodo.js";
 import {
   deleteAllTodosDialog,
   confirmDelete,
   resetAppUI,
   cancelDelete,
-} from './deleteAllTodos.js';
-import { deleteSelected } from './deleteSelected.js';
-import { tutorial, tutorialOk } from './tutorial.js';
-import { processInput } from './processInput.js';
-import { focusOut } from './focusOut.js';
-import { deleteCompletedTask } from './deleteCompletedTask.js';
-import { markTaskComplete } from './markTaskComplete.js';
-import { addGrabCursor } from './addGrabCursor.js';
-import { dropDownToggle } from './dropDownToggle.js';
-import { addGrabbingCursor } from './addGrabbingCursor.js';
-import { exportTask } from './exportTasks.js';
-import { signup } from './signup.js';
-import { login } from './login.js';
-import { logout } from './logout.js';
-import { observeUserState } from './observeUserState.js';
-import { init } from './init';
-import { userSaveToDatabase } from './userSaveToDatabase.js';
+} from "./deleteAllTodos.js";
+import { deleteSelected } from "./deleteSelected.js";
+import { tutorial, tutorialOk } from "./tutorial.js";
+import { processInput } from "./processInput.js";
+import { focusOut } from "./focusOut.js";
+import { deleteCompletedTask } from "./deleteCompletedTask.js";
+import { markTaskComplete } from "./markTaskComplete.js";
+import { addGrabCursor } from "./addGrabCursor.js";
+import { dropDownToggle } from "./dropDownToggle.js";
+import { addGrabbingCursor } from "./addGrabbingCursor.js";
+import { exportTask } from "./exportTasks.js";
+import { signup } from "./signup.js";
+import { login } from "./login.js";
+import { logout } from "./logout.js";
+import { observeUserState } from "./observeUserState.js";
+import { init } from "./init";
+import { userSaveToDatabase } from "./userSaveToDatabase.js";
+import { showMoreDeleteOptions } from "./showMoreDeleteOptions.js";
+import { showMoreSortOptions } from "./showMoreSortOptions.js";
 // global state management
 
 // eslint-disable-next-line prefer-const
@@ -68,59 +70,65 @@ import { userSaveToDatabase } from './userSaveToDatabase.js';
 
 export function initializeEventListeners() {
   // entering todo info
-  addGlobalEventListener('keyup', '#todoInput', processInput);
+  addGlobalEventListener("keyup", "#todoInput", processInput);
   // cancel editing if focus lost
-  addGlobalEventListener('focusout', '#todoInput', focusOut);
+  addGlobalEventListener("focusout", "#todoInput", focusOut);
 
   // edit/update existing todo
   // NOTICE: updating is also done in processInput function
-  addGlobalEventListener('pointerup', '.edit', editTodo);
+  addGlobalEventListener("pointerup", ".edit", editTodo);
 
   // adding new todo
-  addGlobalEventListener('pointerup', '.drop-down-entry', dropDownToggle);
+  addGlobalEventListener("pointerup", ".drop-down-entry", dropDownToggle);
 
   // manually sort todo
-  addGlobalEventListener('pointerdown', '.grip', addGrabbingCursor);
-  addGlobalEventListener('pointerup', '#todoList', addGrabCursor);
+  addGlobalEventListener("pointerdown", ".grip", addGrabbingCursor);
+  addGlobalEventListener("pointerup", "#todoList", addGrabCursor);
 
   // selecting completed todos
-  addGlobalEventListener('pointerdown', '.main-message', markTaskComplete);
+  addGlobalEventListener("pointerdown", ".main-message", markTaskComplete);
 
   // delete todo & fade out
-  addGlobalEventListener('pointerdown', '.checkmark', deleteCompletedTask);
+  addGlobalEventListener("pointerdown", ".checkmark", deleteCompletedTask);
+  addGlobalEventListener(
+    "pointerdown",
+    ".remove-main-btn",
+    showMoreDeleteOptions
+  );
+  addGlobalEventListener("pointerdown", ".sort-main-btn", showMoreSortOptions);
 
   // date sort
 
-  addGlobalEventListener('pointerdown', '.date-sort', dateSort.sort);
+  addGlobalEventListener("pointerdown", ".date-sort", dateSort.sort);
   // category sort
 
-  addGlobalEventListener('pointerdown', '.category-sort', categorySort.sort);
+  addGlobalEventListener("pointerdown", ".category-sort", categorySort.sort);
   // delete all
   // pointerup selected to allow user to move away on pointerdown
   // if pressed by accident
-  addGlobalEventListener('pointerup', '.delete-all', deleteAllTodosDialog);
-  addGlobalEventListener('pointerup', '.yes-btn', confirmDelete);
-  addGlobalEventListener('pointerup', '.no-btn', cancelDelete);
+  addGlobalEventListener("pointerup", ".delete-all", deleteAllTodosDialog);
+  addGlobalEventListener("pointerup", ".yes-btn", confirmDelete);
+  addGlobalEventListener("pointerup", ".no-btn", cancelDelete);
 
-  addGlobalEventListener('pointerup', '.delete-selected', deleteSelected);
-  addGlobalEventListener('pointerdown', '.tutorial-btn', tutorial);
-  addGlobalEventListener('pointerdown', '.tutorial-ok-btn', tutorialOk);
+  addGlobalEventListener("pointerup", ".delete-selected", deleteSelected);
+  addGlobalEventListener("pointerdown", ".tutorial-btn", tutorial);
+  addGlobalEventListener("pointerdown", ".tutorial-ok-btn", tutorialOk);
 
-  addGlobalEventListener('pointerdown', '#logo', exportTask);
+  addGlobalEventListener("pointerdown", "#logo", exportTask);
 
-  addGlobalEventListener('click', '#signup-btn', signup);
-  addGlobalEventListener('click', '#logout-btn', logout);
-  addGlobalEventListener('click', '#login-btn', login);
+  addGlobalEventListener("click", "#signup-btn", signup);
+  addGlobalEventListener("click", "#logout-btn", logout);
+  addGlobalEventListener("click", "#login-btn", login);
 
-  window.addEventListener('load', init);
+  window.addEventListener("load", init);
 
   // upload by user
 
-  addGlobalEventListener('pointerdown', '.save-btn', userSaveToDatabase);
+  // addGlobalEventListener("pointerdown", ".save-btn", userSaveToDatabase);
   // insert new event above this line
 } // END initializeEventListeners
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initializeEventListeners);
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", initializeEventListeners);
 } else {
   initializeEventListeners();
 }

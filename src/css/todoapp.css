@@ -344,22 +344,44 @@ datalist {
 .buttons {
   display: flex;
   justify-content: space-between;
+  position: relative;
+  align-items: flex-end;
+  outline: 2px solid tomato;
+  margin-bottom: 1rem;
 }
 
-.button-type-add, .button-type-delete, .button-type-sort {
+.button-type-add,
+.button-type-delete,
+.button-type-sort {
   position: relative;
+}
+
+.fa-btn-mini {
+  font-size: 0.8rem;
+  position: relative;
+  margin: 0 auto;
 }
 
 .btn-collection {
   display: none;
-  flex-direction: column;
-  align-items: center;
-}
-.btn-collection * {
-  margin: 0 0.5rem;
+  position: relative;
 }
 
-.remove-main-btn {
+.btn-collection__bottom {
+  display: flex;
+  justify-content: center;
+}
+
+.btn-collection--active {
+  transition: all 0.4s ease;
+  display: flex;
+  flex-direction: column;
+}
+.btn-collection--active * {
+  margin: 0 0.2rem;
+}
+
+.remove-main-btn, .sort-main-btn {
   display: inherit;
   text-align: center;
 }

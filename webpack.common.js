@@ -12,37 +12,37 @@ module.exports = {
       minify: false,
     }),
 
-    // new WorkboxPlugin.GenerateSW({
-    //   // these options encourage the ServiceWorkers to get in there fast
-    //   // and not allow any straggling "old" SWs to hang around
-    //   clientsClaim: true,
-    //   skipWaiting: true,
-    //   maximumFileSizeToCacheInBytes: 5242880,
-    //   cleanupOutdatedCaches: true,
-    //   mode: 'production',
-    //   cacheId: 'clark-assets',
+    new WorkboxPlugin.GenerateSW({
+      // these options encourage the ServiceWorkers to get in there fast
+      // and not allow any straggling "old" SWs to hang around
+      clientsClaim: true,
+      skipWaiting: true,
+      maximumFileSizeToCacheInBytes: 5242880,
+      cleanupOutdatedCaches: true,
+      mode: 'production',
+      cacheId: 'clark-assets',
 
-    //   // Define runtime caching rules.
-    //   runtimeCaching: [
-    //     {
-    //       // Match any request ends with .png, .jpg, .jpeg or .svg.
-    //       urlPattern: /https?:\/\/[a-zA-Z]+\.com\/.*/,
+      // Define runtime caching rules.
+      runtimeCaching: [
+        {
+          // Match any request ends with .png, .jpg, .jpeg or .svg.
+          urlPattern: /https?:\/\/[a-zA-Z]+\.com\/.*/,
 
-    //       // Apply a cache-first strategy.
-    //       handler: 'StaleWhileRevalidate',
+          // Apply a cache-first strategy.
+          handler: 'StaleWhileRevalidate',
 
-    //       options: {
-    //         // Use a custom cache name.
-    //         cacheName: 'clark-assets',
+          options: {
+            // Use a custom cache name.
+            cacheName: 'clark-assets',
 
-    //         // Only cache 10 images.
-    //         expiration: {
-    //           maxEntries: 1000,
-    //         },
-    //       },
-    //     },
-    //   ],
-    // }),
+            // Only cache 10 images.
+            expiration: {
+              maxEntries: 1000,
+            },
+          },
+        },
+      ],
+    }),
   ],
   module: {
     rules: [

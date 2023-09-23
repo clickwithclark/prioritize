@@ -322,7 +322,7 @@ datalist {
   cursor: pointer;
   font-size: 30px;
   &:active {
-    font-size: 25.6px;
+    scale: 0.853;
   }
 }
 .tutorial-btn,
@@ -406,7 +406,7 @@ datalist {
   visibility: visible;
 
   & * {
-    margin: 0 .4rem;
+    margin: 0 0.4rem;
     // outline: 1px solid lime;
   }
 }
@@ -733,8 +733,13 @@ datalist {
     }
   }
 }
-tutorial-btn:active {
-  font-size: 25.6px;
+
+
+.tutorial-btn{
+  visibility: hidden;
+}
+.btn-collection__top .tutorial-btn-show{
+  visibility: visible;
 }
 span svg svg {
   vertical-align: middle;

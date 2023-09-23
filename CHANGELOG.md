@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.4.1](https://github.com/clickwithclark/prioritize/compare/v1.4.0...v1.4.1) (2023-09-23)
+
+## [1.3.0](https://github.com/clickwithclark/prioritize/compare/v1.2.4...v1.3.0) (2023-09-23)
+
+## [1.4.0](https://github.com/clickwithclark/prioritize/compare/v1.2.4...v1.4.0) (2023-09-23)
+
+
+### Features
+
+* add expandable buttons for sorting and deleting ([650c7fa](https://github.com/clickwithclark/prioritize/commit/650c7faa7d1d318219a0c080e711f740fe09e0e8))
+* add multiple user support ([5b0c18f](https://github.com/clickwithclark/prioritize/commit/5b0c18f9fb2aa097ad3f0b0f33e94564f341b227))
+* simplify UI, automate sync ([477cf3a](https://github.com/clickwithclark/prioritize/commit/477cf3adbab8df0846e3dcbd623f434125431673))
+
+## [1.3.0](https://github.com/clickwithclark/prioritize/compare/v1.2.4...v1.3.0) (2023-09-23)
+
+
+### Features
+
+* add expandable buttons for sorting and deleting ([650c7fa](https://github.com/clickwithclark/prioritize/commit/650c7faa7d1d318219a0c080e711f740fe09e0e8))
+* add multiple user support ([5b0c18f](https://github.com/clickwithclark/prioritize/commit/5b0c18f9fb2aa097ad3f0b0f33e94564f341b227))
+* simplify UI, automate sync ([477cf3a](https://github.com/clickwithclark/prioritize/commit/477cf3adbab8df0846e3dcbd623f434125431673))
+
 ### [1.2.4](https://github.com/clickwithclark/prioritize/compare/v1.2.3...v1.2.4) (2022-10-23)
 
 ### [1.2.3](https://github.com/clickwithclark/prioritize/compare/v1.2.2...v1.2.3) (2022-10-22)

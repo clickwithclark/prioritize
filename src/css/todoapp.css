@@ -288,7 +288,7 @@ datalist {
   font-size: 30px;
 }
 .drop-down-entry:active {
-  font-size: 25.6px;
+  scale: 0.853;
 }
 
 .tutorial-btn,
@@ -302,7 +302,7 @@ datalist {
 .save-btn:active,
 .download-btn:active,
 .fa-btn:active {
-  font-size: 25.6px;
+  scale: 0.853;
 }
 
 .network-btns {
@@ -346,7 +346,6 @@ datalist {
   justify-content: space-between;
   position: relative;
   align-items: flex-end;
-  outline: 2px solid tomato;
   margin-bottom: 1rem;
 }
 
@@ -363,8 +362,19 @@ datalist {
 }
 
 .btn-collection {
-  display: none;
   position: relative;
+  visibility: hidden;
+  margin: 0 0.2rem;
+}
+
+.btn-collection--active {
+  transition: all 0.4s ease;
+  display: flex;
+  flex-direction: column;
+  visibility: visible;
+}
+.btn-collection--active * {
+  margin: 0 0.4rem;
 }
 
 .btn-collection__bottom {
@@ -372,16 +382,8 @@ datalist {
   justify-content: center;
 }
 
-.btn-collection--active {
-  transition: all 0.4s ease;
-  display: flex;
-  flex-direction: column;
-}
-.btn-collection--active * {
-  margin: 0 0.2rem;
-}
-
-.remove-main-btn, .sort-main-btn {
+.remove-main-btn,
+.sort-main-btn {
   display: inherit;
   text-align: center;
 }
@@ -681,8 +683,12 @@ datalist {
     font-size: 25px;
   }
 }
-tutorial-btn:active {
-  font-size: 25.6px;
+.tutorial-btn {
+  visibility: hidden;
+}
+
+.btn-collection__top .tutorial-btn-show {
+  visibility: visible;
 }
 
 span svg svg {

@@ -71,7 +71,6 @@ you don't have to write... </br><span class="bad">(Grocerylist) eggs , (Groceryl
     const isClickedInside = popUp.contains(event.target);
     // the tutorial button itself registers as an outside click so
     // ignore it
-    console.log(event.target);
     if (event.target.closest('.tutorial-btn')) {
       return;
     }

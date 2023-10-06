@@ -1,15 +1,10 @@
 import { editTodo } from "./editTodo.js";
-import { addTodo } from "./addTodo.js";
-import { updateDOM } from "./updateDOM.js";
 import { addGlobalEventListener } from "./addGlobalEventListener.js";
 import { dateSort } from "./dateSort.js";
 import { categorySort } from "./categorySort.js";
-import { feedbackMessage } from "./feedbackMessage.js";
-import { processTodo } from "./processTodo.js";
 import {
   deleteAllTodosDialog,
   confirmDelete,
-  resetAppUI,
   cancelDelete,
 } from "./deleteAllTodos.js";
 import { deleteSelected } from "./deleteSelected.js";
@@ -25,9 +20,7 @@ import { exportTask } from "./exportTasks.js";
 import { signup } from "./signup.js";
 import { login } from "./login.js";
 import { logout } from "./logout.js";
-import { observeUserState } from "./observeUserState.js";
 import { init } from "./init";
-import { userSaveToDatabase } from "./userSaveToDatabase.js";
 import { showMoreDeleteOptions } from "./showMoreDeleteOptions.js";
 import { showMoreSortOptions } from "./showMoreSortOptions.js";
 // global state management

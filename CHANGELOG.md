@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.5.1](https://github.com/clickwithclark/prioritize/compare/v1.5.0...v1.5.1) (2023-10-06)
+
+## [1.5.0](https://github.com/clickwithclark/prioritize/compare/v1.4.1...v1.5.0) (2023-10-06)
+
+
+### Features
+
+* add autosaving to task creation & editing ([1b939a5](https://github.com/clickwithclark/prioritize/commit/1b939a5b6eb02d5eb296dce5338f0a5c8b6d5076))
+* add autosaving to task creation & editing ([5eb3dc1](https://github.com/clickwithclark/prioritize/commit/5eb3dc1a1f5ee357e6429aadb6d6fd72be0c997a))
+
 ### [1.4.1](https://github.com/clickwithclark/prioritize/compare/v1.4.0...v1.4.1) (2023-09-23)
 
 ## [1.3.0](https://github.com/clickwithclark/prioritize/compare/v1.2.4...v1.3.0) (2023-09-23)

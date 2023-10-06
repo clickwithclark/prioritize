@@ -1,6 +1,6 @@
 import { getDatabase, ref, set } from "firebase/database";
 import { getAuth } from "firebase/auth";
-import { feedbackMessageNormal } from "./feedbackMessage.js";
+import { feedbackMessage, feedbackMessageNormal } from "./feedbackMessage.js";
 import { app } from "./firebase.js";
 import { getState } from "./localStorage.js";
 
@@ -19,4 +19,8 @@ export function writeToDatabase() {
       console.log(error);
     }
   }
+  return feedbackMessage(
+    "PSSSST!\nRegister or Sign in to sync your tasks across devices! ",
+    6
+  );
 }

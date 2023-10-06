@@ -16,7 +16,7 @@ import { markTaskComplete } from "./markTaskComplete.js";
 import { addGrabCursor } from "./addGrabCursor.js";
 import { dropDownToggle } from "./dropDownToggle.js";
 import { addGrabbingCursor } from "./addGrabbingCursor.js";
-import { exportTask } from "./exportTasks.js";
+import { exportTask, todoExportString } from "./exportTasks.js";
 import { signup } from "./signup.js";
 import { login } from "./login.js";
 import { logout } from "./logout.js";
@@ -115,9 +115,8 @@ export function initializeEventListeners() {
 
   window.addEventListener("load", init);
 
-  // upload by user
+  addGlobalEventListener("click", "#logo", exportTask);
 
-  // addGlobalEventListener("pointerdown", ".save-btn", userSaveToDatabase);
   // insert new event above this line
 } // END initializeEventListeners
 if (document.readyState === "loading") {

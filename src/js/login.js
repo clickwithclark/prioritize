@@ -5,9 +5,9 @@ import {
   browserLocalPersistence,
 } from "firebase/auth";
 import { isOnline } from "./checkIfOnline.js";
-import { feedbackMessage } from "./feedbackMessage.js";
+import { feedbackMessageNormal } from "./feedbackMessage.js";
 import { readFromDatabase } from "./readFromDatabase.js";
-import { welcomeUser } from "./welcomeUser";
+
 
 export async function login(event) {
   event.preventDefault();
@@ -32,7 +32,7 @@ export async function login(event) {
 
     // update the db
     await readFromDatabase();
-    await welcomeUser(user);
+    feedbackMessageNormal(`Welcome ${user.email.split("@")[0]}`);
   } catch (error) {
     const errorCode = error.code;
     const errorMessage = error.message;

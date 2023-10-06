@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.5.3](https://github.com/clickwithclark/prioritize/compare/v1.5.2...v1.5.3) (2023-10-08)
+
+### [1.5.2](https://github.com/clickwithclark/prioritize/compare/v1.5.1...v1.5.2) (2023-10-07)
+
+
+### Bug Fixes
+
+* export tasks on logo click ([63d78ec](https://github.com/clickwithclark/prioritize/commit/63d78ec955eb08977d1d5319c4071022af8b24af))
+
 ### [1.5.1](https://github.com/clickwithclark/prioritize/compare/v1.5.0...v1.5.1) (2023-10-06)
 
 ## [1.5.0](https://github.com/clickwithclark/prioritize/compare/v1.4.1...v1.5.0) (2023-10-06)

@@ -23,7 +23,7 @@ export function resetLogo() {
 
 export function feedbackMessage(message, seconds = 3) {
   resetLogo();
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  // window.scrollTo({ top: 0, behavior: 'smooth' });
   logo.src = oopsSource;
   speechBubble.style.visibility = 'visible';
   speechBubble.innerHTML = message;
@@ -35,7 +35,7 @@ export function feedbackMessage(message, seconds = 3) {
 
 export function feedbackMessageNormal(message, seconds = 3) {
   resetLogo();
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  // window.scrollTo({ top: 0, behavior: 'smooth' });
   speechBubble.style.visibility = 'visible';
   speechBubble.textContent = message;
 

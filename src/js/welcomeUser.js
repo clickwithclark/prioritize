@@ -17,5 +17,5 @@ export async function welcomeUser(user, greet = true) {
   if (greet) {
     return feedbackMessageNormal(`Welcome ${username}`);
   }
-  return;
+  
 }

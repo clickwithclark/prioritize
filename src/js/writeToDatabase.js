@@ -8,19 +8,20 @@ export function writeToDatabase() {
   const auth = getAuth();
   const user = auth.currentUser;
 
-  if (user) {
-    try {
-      feedbackMessageNormal("Saving...");
-      const database = getDatabase(app);
-      return set(ref(database, `users/${user.uid}`), {
-        tasks: JSON.stringify(getState()),
-      });
-    } catch (error) {
-      console.log(error);
-    }
+  if (!user) {
+    return feedbackMessage(
+      "PSSSST!\nRegister or Sign in to sync your tasks across devices! ",
+      6
+    );
   }
-  return feedbackMessage(
-    "PSSSST!\nRegister or Sign in to sync your tasks across devices! ",
-    6
-  );
+  try {
+    const database = getDatabase(app);
+    set(ref(database, `users/${user.uid}`), {
+      tasks: JSON.stringify(getState()),
+    });
+    return feedbackMessageNormal("Saved....");
+  } catch (error) {
+    console.log(error);
+    feedbackMessage("Database Error: Task Not Saved");
+  }
 }

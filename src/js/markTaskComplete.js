@@ -15,4 +15,4 @@ export function markTaskComplete(event) {
   debouncedSaveToDatabase();
 }
 
-const debouncedSaveToDatabase = debounce(writeToDatabase, 15);
+const debouncedSaveToDatabase = debounce(writeToDatabase, 5);

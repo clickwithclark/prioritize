@@ -13,14 +13,10 @@
  * @param  {type} doneTypingInterval delay time in seconds
  *
  */
-export function debounceEmpty(
-  inputElement,
-  callback,
-  doneTypingInterval = 3000
-) {
+export function debounceEmpty(inputElement, callback, doneTypingInterval = 3) {
   let typingTimer;
   clearTimeout(typingTimer);
   if (!inputElement.value) {
-    typingTimer = setTimeout(callback, doneTypingInterval);
+    typingTimer = setTimeout(callback, doneTypingInterval * 1000);
   }
 }

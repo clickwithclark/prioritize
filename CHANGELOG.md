@@ -2,6 +2,30 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## 1.6.0 (2024-04-16)
+
+
+### Features
+
+* add autosaving to task creation & editing ([a6048ec](https://github.com/clickwithclark/prioritize/commit/a6048ecfd22a41aa22d9527aa1677fbd41901bf8))
+* add close tutorial on unfocused click ([591159e](https://github.com/clickwithclark/prioritize/commit/591159e012ba56dd2197ff54fdf98189a68b8d7b))
+* add expandable buttons for sorting and deleting ([b258b04](https://github.com/clickwithclark/prioritize/commit/b258b043c84ecfa852a96eb93738359ef04a7259))
+* add login and db logic ([3d5d6ad](https://github.com/clickwithclark/prioritize/commit/3d5d6ad13de33ffbd2f35276c5598536338dbec1))
+* add multiple user support ([929aca8](https://github.com/clickwithclark/prioritize/commit/929aca8b9fcbd067c93544ca2d518bac7f39fdab))
+* export tasks on logo click ([1d4df99](https://github.com/clickwithclark/prioritize/commit/1d4df99b2a58bfcfafdbcec9810bc57bd180ccc4))
+* hide tutorial until button clicked ([f63277e](https://github.com/clickwithclark/prioritize/commit/f63277e4d207c09d5a096f19a9c8757b50526ab7))
+* load tasks on login ([a790f86](https://github.com/clickwithclark/prioritize/commit/a790f86173fadcb2e16cdc4495bdec245c5486ce))
+* mobile menu visible offline ([d9843e9](https://github.com/clickwithclark/prioritize/commit/d9843e90b632b5d547112a616bd5e2f715304186))
+* remove scroll to top for feedback messages ([8e4f94b](https://github.com/clickwithclark/prioritize/commit/8e4f94b3cd1594fe6fae97fac9892dd86027bd1f))
+* simplify UI, automate sync ([650e26c](https://github.com/clickwithclark/prioritize/commit/650e26c2affbff6343b4b7a7603723511ad96a6c))
+
+
+### Bug Fixes
+
+* assets not available in offline mode ([429f703](https://github.com/clickwithclark/prioritize/commit/429f70351da24efc1b489a4b8eceb782a8972f71))
+* save notification not showing ([fcdf22d](https://github.com/clickwithclark/prioritize/commit/fcdf22dfa725519baeaf9cd1dea7a2cba09aea4e))
+* update/save feedback messages not showing ([c925a91](https://github.com/clickwithclark/prioritize/commit/c925a91dce323e019be339f822999cf0d684f059))
+
 ### [1.5.3](https://github.com/clickwithclark/prioritize/compare/v1.5.2...v1.5.3) (2023-10-08)
 
 ### [1.5.2](https://github.com/clickwithclark/prioritize/compare/v1.5.1...v1.5.2) (2023-10-07)

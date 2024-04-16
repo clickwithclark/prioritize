@@ -44,6 +44,14 @@ native web app with a mobile icon.
 implemented to respond to the request as quickly as possible with a cached response if available, falling back to the network request if it's not cached. This allows the app to still run even when there is no internet access and will automatically synchronize
 when internet becomes available.
 
+* You can sort by date entered first or last (calendar icon) Or alphabetically based on Category name (tag icon)
+* You can also mark tasks as completed by pressing on them to cross them out but leave them in the que if its a recurring task
+* You can delete all groups of completed tasks at once or delete them one by one
+* If you want to copy your task list to carry over to another account, you can
+click on the floating head to export your task list and it will be copied to your clipboard.
+* Every entry or update is saved automatically after a few seconds.
+* Manual re-odering is not implemented on mobile-view but is available on a desktop.
+
 <h2>Technologies Used</h2>
 
 * HTML5

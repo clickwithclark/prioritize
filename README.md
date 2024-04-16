@@ -8,7 +8,7 @@ between our devices as well as any todo's chores or errands we wanted each
 other to see. My sister would also use it to assign chores to each of her kids if
 she is working late.
 
-
+![Screenshot of PR1ORITI23 .](/images/clarkfamily.png "Screenshot of PR1ORITI23")
 
 <h2>Instructions</h2>
  

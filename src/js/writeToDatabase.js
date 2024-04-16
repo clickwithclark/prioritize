@@ -10,7 +10,7 @@ export function writeToDatabase() {
 
   if (!user) {
     return feedbackMessage(
-      "PSSSST!\nRegister or Sign in to sync your tasks across devices! ",
+      "PSSSST!\nRegister or Sign in to sync your tasks across devices!",
       6
     );
   }

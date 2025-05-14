@@ -43,13 +43,4 @@ export * from "./tutorial.js";
 export * from "./updateDOM.js";
 export * from "./updateTodoStatus.js";
 
-if ("serviceWorker" in navigator) {
-  window.addEventListener("load", () => {
-    navigator.serviceWorker
-      .register("./service-worker.js")
-      .then((registration) =>
-        console.log(`Service Worker Registered!😁 \n ${registration.scope}`)
-      )
-      .catch((error) => console.error(`service worker error:😭${error}`));
-  });
-}
+

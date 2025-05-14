@@ -5,7 +5,7 @@ import {
   browserLocalPersistence,
 } from "firebase/auth";
 import { isOnline } from "./checkIfOnline.js";
-import { feedbackMessageNormal } from "./feedbackMessage.js";
+import { feedbackMessageNormal,feedbackMessage } from "./feedbackMessage.js";
 import { readFromDatabase } from "./readFromDatabase.js";
 
 

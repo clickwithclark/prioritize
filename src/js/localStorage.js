@@ -1,6 +1,14 @@
 import { clearUpdateConfig } from './clearUpdateConfig';
 import { getDefaultTodos } from './defaultTodos.js';
 
+export function clearUpdateConfig() {
+  let state = getState();
+  state = state ?? {};
+  state.updateConfig = null;
+  saveState(state);
+}
+
+
 export function getState() {
   return JSON.parse(localStorage.getItem('state'));
 }

@@ -4,7 +4,7 @@ import { endUpdate } from "./endUpdate.js";
 import { feedbackMessage } from "./feedbackMessage.js";
 import { getState } from "./localStorage.js";
 import { updateTodo } from "./updateTodo";
-import { clearUpdateConfig } from "./clearUpdateConfig";
+import { clearUpdateConfig } from "./localStorage.js";
 import { processTodo } from "./processTodo.js";
 import { updateDOM } from "./updateDOM.js";
 import { writeToDatabase } from "./writeToDatabase.js";

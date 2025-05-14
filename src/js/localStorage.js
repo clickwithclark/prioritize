@@ -1,4 +1,3 @@
-import { clearUpdateConfig } from './clearUpdateConfig';
 import { getDefaultTodos } from './defaultTodos.js';
 
 export function clearUpdateConfig() {

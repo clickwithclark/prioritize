@@ -1,6 +1,5 @@
-import { observeUserState } from './observeUserState.js';
-import { updateDOM } from './updateDOM.js';
-import { readFromDatabase } from './readFromDatabase.js';
+import { observeUserState } from './firebase/observeUserState.js';
+import { updateDOM } from './ui/updateDOM.js';
 
 export function init() {
   observeUserState();

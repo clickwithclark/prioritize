@@ -4,49 +4,74 @@ import { saveTodoOrder } from "./saveTodoOrder.js";
 import { updateDOM } from './updateDOM.js';
 import { dateSort } from '../ui/dateSort.js';
 
-export const categorySort = (function (event) {
-  let toSort = null;
-  let flip = 1;
-  /** Change the direction of the sort on each function call
+/**
+ * Provides functionality to sort todos by category.
+ * Categorized tasks are sorted alphabetically, while uncategorized tasks are sorted by date.
+ * Allows toggling the sort direction and integrates with the DOM and localStorage.
+ *
+ * @namespace categorySort
+ */
+export const categorySort = (function () {
+  let toSort = null; // Stores the list of todos to sort
+  let flip = 1; // Determines the sort direction (1 for ascending, -1 for descending)
+
+  /**
+   * Changes the direction of the sort on each function call.
+   *
    * @function flipSort
-   * @param  {Element} a first element for comparison
-   * @param  {Element} b second  element for comparison
-   * @return {Number} Decision on whether [1] or not [-1] the element is correctly sorted
+   * @param {string} a - The first element for comparison.
+   * @param {string} b - The second element for comparison.
+   * @returns {number} Returns 1 or -1 based on the comparison and sort direction.
    */
   function flipSort(a, b) {
-    // flip bool value for different sort on same button click
-    return (b > a ? 1 : -1) * flip;
+    return (b > a ? 1 : -1) * flip; // Flip the sort direction on each call
   }
 
   return {
+    /**
+     * Sorts the todos by category and updates the DOM.
+     * Categorized tasks are sorted alphabetically, while uncategorized tasks are sorted by date.
+     *
+     * @method sort
+     * @returns {void}
+     */
     sort() {
-      let unCategorized;
-      let categorized;
+      let unCategorized; // Stores uncategorized tasks
+      let categorized; // Stores categorized tasks
+
+      // Retrieve todos from localStorage
       toSort = Object.entries(retrieveFromLocalStorage());
+
       try {
         if (toSort.length === 0) {
-          return;
+          return; // Exit if there are no todos to sort
         }
+
+        // Separate categorized and uncategorized tasks
         categorized = toSort.filter((item) => item[1].category !== null);
         unCategorized = toSort.filter((item) => item[1].category === null);
+
+        // Sort uncategorized tasks by date
         dateSort.setSort(unCategorized);
         dateSort.sort();
+
+        // Sort categorized tasks alphabetically by category
         categorized.sort((x, y) => {
           const a = x[1].category;
           const b = y[1].category;
           return flipSort(a, b);
         });
-        // toggle sort direction
+
+        // Toggle the sort direction
         flip *= -1;
       } catch (error) {
-        console.error(error);
+        console.error(error); // Log any errors that occur during sorting
       }
 
-      // after all sorting merge sorted categories with date sorted non categorized tasks
-
-      saveTodoOrder([...categorized, ...dateSort.getEtries()]);
-      updateDOM();
-      draggable();
+      // Merge sorted categorized tasks with date-sorted uncategorized tasks
+      saveTodoOrder([...categorized, ...dateSort.getEntries()]);
+      updateDOM(); // Refresh the DOM to reflect the changes
+      draggable(); // Enable drag-and-drop functionality
     },
   };
 })();

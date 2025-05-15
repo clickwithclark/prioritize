@@ -56,6 +56,7 @@ module.exports = {
 
     // Generate a service worker for PWA support
     new WorkboxPlugin.GenerateSW({
+      maximumFileSizeToCacheInBytes: 4 * 1024 * 1024, // Set limit to 4 MB
       clientsClaim: true,           // Take control of pages as soon as SW activates
       skipWaiting: true,            // Immediately activate SW instead of waiting
       cleanupOutdatedCaches: true,  // Remove old caches

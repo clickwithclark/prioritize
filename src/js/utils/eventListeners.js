@@ -61,64 +61,85 @@ import { dropDownToggle } from "../ui/dropDownToggle.js";
 /* -------------------------------------------------------------------*/
 // #endregion of TODO
 
+/**
+ * Initializes all event listeners for the application.
+ * This function sets up global event listeners for various user interactions,
+ * such as adding todos, editing todos, sorting, deleting, and authentication actions.
+ *
+ * @function initializeEventListeners
+ * @returns {void}
+ */
 export function initializeEventListeners() {
-  // entering todo info
+  // Entering todo info
   addGlobalEventListener("keyup", "#todoInput", processInput);
-  // cancel editing if focus lost
+
+  // Cancel editing if focus is lost
   addGlobalEventListener("focusout", "#todoInput", focusOut);
 
-  // edit/update existing todo
-  // NOTICE: updating is also done in processInput function
+  // Edit/update existing todo
+  // NOTICE: Updating is also done in the processInput function
   addGlobalEventListener("pointerup", ".edit", editTodo);
 
-  // adding new todo
+  // Adding new todo
   addGlobalEventListener("pointerup", ".drop-down-entry", dropDownToggle);
 
-  // manually sort todo
+  // Manually sort todos
   addGlobalEventListener("pointerdown", ".grip", addGrabbingCursor);
   addGlobalEventListener("pointerup", "#todoList", addGrabCursor);
 
-  // selecting completed todos
+  // Mark task as complete
   addGlobalEventListener("pointerdown", ".main-message", markTaskComplete);
 
-  // delete todo & fade out
+  // Delete completed todo
   addGlobalEventListener("pointerdown", ".checkmark", deleteCompletedTask);
+
+  // Show delete options
   addGlobalEventListener(
     "pointerdown",
     ".remove-main-btn",
     showMoreDeleteOptions
   );
+
+  // Show sort options
   addGlobalEventListener("pointerdown", ".sort-main-btn", showMoreSortOptions);
 
-  // date sort
-
+  // Sort by date
   addGlobalEventListener("pointerdown", ".date-sort", dateSort.sort);
-  // category sort
 
+  // Sort by category
   addGlobalEventListener("pointerdown", ".category-sort", categorySort.sort);
-  // delete all
-  // pointerup selected to allow user to move away on pointerdown
+
+  // Delete all todos
+  // Pointerup is selected to allow the user to move away on pointerdown
   // if pressed by accident
   addGlobalEventListener("pointerup", ".delete-all", deleteAllTodosDialog);
   addGlobalEventListener("pointerup", ".yes-btn", confirmDelete);
   addGlobalEventListener("pointerup", ".no-btn", cancelDelete);
 
+  // Delete selected todos
   addGlobalEventListener("pointerup", ".delete-selected", deleteSelected);
+
+  // Tutorial actions
   addGlobalEventListener("pointerdown", ".tutorial-btn", tutorial);
   addGlobalEventListener("pointerdown", ".tutorial-ok-btn", tutorialOk);
 
+  // Export tasks
   addGlobalEventListener("pointerdown", "#logo", exportTask);
 
+  // Authentication actions
   addGlobalEventListener("click", "#signup-btn", signup);
   addGlobalEventListener("click", "#logout-btn", logout);
   addGlobalEventListener("click", "#login-btn", login);
 
+  // Initialize the app on window load
   window.addEventListener("load", init);
 
-  addGlobalEventListener("click", "#logo", exportTask);
-
-  // insert new event above this line
+  // Insert new event above this line
 } // END initializeEventListeners
+
+/**
+ * Automatically initializes event listeners when the DOM is fully loaded.
+ */
 if (document.readyState === "loading") {
   document.addEventListener("DOMContentLoaded", initializeEventListeners);
 } else {

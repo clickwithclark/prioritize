@@ -1,14 +1,14 @@
 {
     "source": {
-        "include":["./assets/js"],
-        "includePattern":"js$",
-        "excludePattern":"(node_modules/|docs)"
+        "include": ["./src/js"],
+        "includePattern": "\\.js$",
+        "excludePattern": "(node_modules/|docs)"
     },
-    "plugins":["plugins/markdown"],
-    "opts":{
-        "encoding":"utf8",
-        "destination":"docs/np,",
-        "recurse":true,
-        "verbose":true
+    "plugins": ["plugins/markdown"],
+    "opts": {
+        "encoding": "utf8",
+        "destination": "docs/np",
+        "recurse": true,
+        "verbose": true
     }
 }

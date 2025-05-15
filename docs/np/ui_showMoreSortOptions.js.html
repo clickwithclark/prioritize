@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: ui/showMoreSortOptions.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: ui/showMoreSortOptions.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * Toggles the visibility of the sort options menu.
+ * Activates or deactivates the `btn-collection--active` class to show or hide the menu.
+ *
+ * @function showMoreSortOptions
+ * @param {Event} event - The event object triggered by the sort button click.
+ * @returns {void}
+ */
+export function showMoreSortOptions(event) {
+  const sortToggle = document.querySelector(".sort-main-btn"); // The sort button
+  const sortMenu = document.querySelector(
+    ".button-type-sort > .btn-collection"
+  ); // The sort options menu
+
+  // Toggle the active class to show or hide the menu
+  sortMenu.classList.toggle("btn-collection--active");
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="categorySort.html">categorySort</a></li><li><a href="dateSort.html">dateSort</a></li></ul><h3>Global</h3><ul><li><a href="global.html#addGlobalEventListener">addGlobalEventListener</a></li><li><a href="global.html#addGrabCursor">addGrabCursor</a></li><li><a href="global.html#addGrabbingCursor">addGrabbingCursor</a></li><li><a href="global.html#addToLocalStorage">addToLocalStorage</a></li><li><a href="global.html#addTodo">addTodo</a></li><li><a href="global.html#addTodoToDOM">addTodoToDOM</a></li><li><a href="global.html#app">app</a></li><li><a href="global.html#cancelDelete">cancelDelete</a></li><li><a href="global.html#capitalizeFirstLetter">capitalizeFirstLetter</a></li><li><a href="global.html#clearUpdateConfig">clearUpdateConfig</a></li><li><a href="global.html#confirmDelete">confirmDelete</a></li><li><a href="global.html#createManyTodos">createManyTodos</a></li><li><a href="global.html#createOneTodo">createOneTodo</a></li><li><a href="global.html#debounce">debounce</a></li><li><a href="global.html#debounceEmpty">debounceEmpty</a></li><li><a href="global.html#deleteAllTodosDialog">deleteAllTodosDialog</a></li><li><a href="global.html#deleteCompletedTask">deleteCompletedTask</a></li><li><a href="global.html#deleteOneFromLocalStorage">deleteOneFromLocalStorage</a></li><li><a href="global.html#deleteSelected">deleteSelected</a></li><li><a href="global.html#draggable">draggable</a></li><li><a href="global.html#dropDownToggle">dropDownToggle</a></li><li><a href="global.html#editTodo">editTodo</a></li><li><a href="global.html#endUpdate">endUpdate</a></li><li><a href="global.html#exportTask">exportTask</a></li><li><a href="global.html#feedbackMessage">feedbackMessage</a></li><li><a href="global.html#feedbackMessageNormal">feedbackMessageNormal</a></li><li><a href="global.html#flipSort">flipSort</a></li><li><a href="global.html#focusOut">focusOut</a></li><li><a href="global.html#generateID">generateID</a></li><li><a href="global.html#getDefaultTodos">getDefaultTodos</a></li><li><a href="global.html#getDragAfterElement">getDragAfterElement</a></li><li><a href="global.html#getEntries">getEntries</a></li><li><a href="global.html#getState">getState</a></li><li><a href="global.html#hideScrollBar">hideScrollBar</a></li><li><a href="global.html#initializeEventListeners">initializeEventListeners</a></li><li><a href="global.html#isOnline">isOnline</a></li><li><a href="global.html#loadGroups">loadGroups</a></li><li><a href="global.html#login">login</a></li><li><a href="global.html#logout">logout</a></li><li><a href="global.html#markTaskComplete">markTaskComplete</a></li><li><a href="global.html#observeUserState">observeUserState</a></li><li><a href="global.html#processGroupedTodos">processGroupedTodos</a></li><li><a href="global.html#processInput">processInput</a></li><li><a href="global.html#processTodo">processTodo</a></li><li><a href="global.html#readFromDatabase">readFromDatabase</a></li><li><a href="global.html#remindUserToSave">remindUserToSave</a></li><li><a href="global.html#removeTodo">removeTodo</a></li><li><a href="global.html#resetAppUI">resetAppUI</a></li><li><a href="global.html#resetLogo">resetLogo</a></li><li><a href="global.html#resetModalUI">resetModalUI</a></li><li><a href="global.html#retrieveFromLocalStorage">retrieveFromLocalStorage</a></li><li><a href="global.html#saveDOMOrder">saveDOMOrder</a></li><li><a href="global.html#saveState">saveState</a></li><li><a href="global.html#saveTodoOrder">saveTodoOrder</a></li><li><a href="global.html#saveUpdateConfig">saveUpdateConfig</a></li><li><a href="global.html#setSort">setSort</a></li><li><a href="global.html#showLogOut">showLogOut</a></li><li><a href="global.html#showLogin">showLogin</a></li><li><a href="global.html#showMoreDeleteOptions">showMoreDeleteOptions</a></li><li><a href="global.html#showMoreSortOptions">showMoreSortOptions</a></li><li><a href="global.html#showScrollBar">showScrollBar</a></li><li><a href="global.html#signup">signup</a></li><li><a href="global.html#sort">sort</a></li><li><a href="global.html#throttle">throttle</a></li><li><a href="global.html#todoExportString">todoExportString</a></li><li><a href="global.html#tutorial">tutorial</a></li><li><a href="global.html#tutorialOk">tutorialOk</a></li><li><a href="global.html#updateCompletedStatus">updateCompletedStatus</a></li><li><a href="global.html#updateDOM">updateDOM</a></li><li><a href="global.html#updateOneInLocalStorage">updateOneInLocalStorage</a></li><li><a href="global.html#updateTodo">updateTodo</a></li><li><a href="global.html#userSaveToDatabase">userSaveToDatabase</a></li><li><a href="global.html#writeToDatabase">writeToDatabase</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Wed May 14 2025 21:00:53 GMT-0400 (Atlantic Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

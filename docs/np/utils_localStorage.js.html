@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: utils/localStorage.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: utils/localStorage.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { getDefaultTodos } from '../todos/defaultTodos.js';
+
+/**
+ * Clears the update configuration from the state.
+ * Sets `updateConfig` to null and saves the updated state.
+ *
+ * @function clearUpdateConfig
+ */
+export function clearUpdateConfig() {
+  let state = getState();
+  state = state ?? {};
+  state.updateConfig = null;
+  saveState(state);
+}
+
+/**
+ * Retrieves the current application state from localStorage.
+ *
+ * @function getState
+ * @returns {Object|null} The parsed state object or null if no state exists.
+ */
+export function getState() {
+  return JSON.parse(localStorage.getItem('state'));
+}
+
+/**
+ * Saves the provided state object to localStorage.
+ *
+ * @function saveState
+ * @param {Object} state - The state object to save.
+ */
+export function saveState(state) {
+  localStorage.setItem('state', JSON.stringify(state));
+}
+
+/**
+ * Retrieves todos from localStorage or returns default todos if none exist.
+ * If no todos are found, the demo todos are displayed with reduced opacity.
+ *
+ * @function retrieveFromLocalStorage
+ * @returns {Object} The current todos or default todos.
+ */
+export function retrieveFromLocalStorage() {
+  const state = { ...getState() };
+  // Wrapped in object in case state is null or undefined
+  let currentStored = { ...state?.todos };
+  currentStored = currentStored ?? {};
+  const defaultTodos = getDefaultTodos();
+
+  if (Object.keys(currentStored).length === 0) {
+    // If no todos exist, show demo todos
+    document.querySelector('#todoList').style.opacity = '0.5';
+    return defaultTodos;
+  }
+  return currentStored;
+}
+
+/**
+ * Adds a new todo to localStorage.
+ * Updates the order to place the new todo at the top of the list.
+ *
+ * @function addToLocalStorage
+ * @param {Object} givenTodo - The todo object to add.
+ */
+export function addToLocalStorage(givenTodo) {
+  // Get current stored todos first, then append new todo
+  const state = { ...getState() };
+  let currentStored = { ...state?.todos };
+  currentStored = currentStored ?? {};
+  if (Object.keys(currentStored).length === 0) {
+    document.querySelector('#todoList').style.opacity = '1';
+  }
+  Object.assign(currentStored, { [givenTodo.id]: givenTodo });
+  // Latest todo gets first index to be at the top of the list
+  state.order = state?.order ?? [];
+  state.order = [givenTodo.id, ...state.order];
+  state.todos = currentStored;
+  saveState(state);
+}
+
+/**
+ * Deletes a specific todo from localStorage by its ID.
+ * Updates the order and removes the todo from the stored list.
+ *
+ * @function deleteOneFromLocalStorage
+ * @param {String} todoID - The ID of the todo to delete.
+ */
+export function deleteOneFromLocalStorage(todoID) {
+  const state = { ...getState() };
+  let order = [...getState()?.order];
+  let currentStored = { ...state?.todos };
+  currentStored = currentStored ?? {};
+  order = order.filter((id) => id !== todoID);
+  delete currentStored[todoID];
+  state.todos = currentStored;
+  state.order = order;
+  saveState(state);
+}
+
+/**
+ * Updates a specific todo in localStorage with new properties.
+ * If no todos are stored, assumes demo mode and does not save.
+ *
+ * @function updateOneInLocalStorage
+ * @param {Object} partialTodo - The todo object with updated properties.
+ */
+export function updateOneInLocalStorage(partialTodo) {
+  // Get current stored todos first, then modify new todo properties
+  const state = { ...getState() };
+
+  let currentStored = { ...state?.todos };
+  currentStored = currentStored ?? {};
+  // If no todos are stored, assume demo mode and DO NOT save
+  if (Object.keys(currentStored).length === 0) {
+    return;
+  }
+
+  let todoToUpdate = currentStored[partialTodo.id];
+  todoToUpdate = { ...todoToUpdate, ...partialTodo };
+  Object.assign(currentStored, { [todoToUpdate.id]: todoToUpdate });
+  state.todos = currentStored;
+  saveState(state);
+}
+
+/**
+ * Saves the update configuration to the state.
+ * If the todo being updated does not exist, clears the update configuration.
+ *
+ * @function saveUpdateConfig
+ * @param {Object} config - The update configuration object.
+ */
+export function saveUpdateConfig(config) {
+  const state = getState();
+  /*
+   * It is possible the user may want to try editing one of the demo tasks,
+   * so if the user is trying to update a todo that does not exist,
+   * create a new one from the contents of user input.
+   *
+   * Since the input event listener checks for the presence of a config file to
+   * distinguish an update event from a create event, nullify the config file passed.
+   */
+  if (state?.todos?.[config.updatedTodo.id]) {
+    state.updateConfig = config;
+    return saveState(state);
+  }
+  clearUpdateConfig();
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="categorySort.html">categorySort</a></li><li><a href="dateSort.html">dateSort</a></li></ul><h3>Global</h3><ul><li><a href="global.html#addGlobalEventListener">addGlobalEventListener</a></li><li><a href="global.html#addGrabCursor">addGrabCursor</a></li><li><a href="global.html#addGrabbingCursor">addGrabbingCursor</a></li><li><a href="global.html#addToLocalStorage">addToLocalStorage</a></li><li><a href="global.html#addTodo">addTodo</a></li><li><a href="global.html#addTodoToDOM">addTodoToDOM</a></li><li><a href="global.html#app">app</a></li><li><a href="global.html#cancelDelete">cancelDelete</a></li><li><a href="global.html#capitalizeFirstLetter">capitalizeFirstLetter</a></li><li><a href="global.html#clearUpdateConfig">clearUpdateConfig</a></li><li><a href="global.html#confirmDelete">confirmDelete</a></li><li><a href="global.html#createManyTodos">createManyTodos</a></li><li><a href="global.html#createOneTodo">createOneTodo</a></li><li><a href="global.html#debounce">debounce</a></li><li><a href="global.html#debounceEmpty">debounceEmpty</a></li><li><a href="global.html#deleteAllTodosDialog">deleteAllTodosDialog</a></li><li><a href="global.html#deleteCompletedTask">deleteCompletedTask</a></li><li><a href="global.html#deleteOneFromLocalStorage">deleteOneFromLocalStorage</a></li><li><a href="global.html#deleteSelected">deleteSelected</a></li><li><a href="global.html#draggable">draggable</a></li><li><a href="global.html#dropDownToggle">dropDownToggle</a></li><li><a href="global.html#editTodo">editTodo</a></li><li><a href="global.html#endUpdate">endUpdate</a></li><li><a href="global.html#exportTask">exportTask</a></li><li><a href="global.html#feedbackMessage">feedbackMessage</a></li><li><a href="global.html#feedbackMessageNormal">feedbackMessageNormal</a></li><li><a href="global.html#flipSort">flipSort</a></li><li><a href="global.html#focusOut">focusOut</a></li><li><a href="global.html#generateID">generateID</a></li><li><a href="global.html#getDefaultTodos">getDefaultTodos</a></li><li><a href="global.html#getDragAfterElement">getDragAfterElement</a></li><li><a href="global.html#getEntries">getEntries</a></li><li><a href="global.html#getState">getState</a></li><li><a href="global.html#hideScrollBar">hideScrollBar</a></li><li><a href="global.html#initializeEventListeners">initializeEventListeners</a></li><li><a href="global.html#isOnline">isOnline</a></li><li><a href="global.html#loadGroups">loadGroups</a></li><li><a href="global.html#login">login</a></li><li><a href="global.html#logout">logout</a></li><li><a href="global.html#markTaskComplete">markTaskComplete</a></li><li><a href="global.html#observeUserState">observeUserState</a></li><li><a href="global.html#processGroupedTodos">processGroupedTodos</a></li><li><a href="global.html#processInput">processInput</a></li><li><a href="global.html#processTodo">processTodo</a></li><li><a href="global.html#readFromDatabase">readFromDatabase</a></li><li><a href="global.html#remindUserToSave">remindUserToSave</a></li><li><a href="global.html#removeTodo">removeTodo</a></li><li><a href="global.html#resetAppUI">resetAppUI</a></li><li><a href="global.html#resetLogo">resetLogo</a></li><li><a href="global.html#resetModalUI">resetModalUI</a></li><li><a href="global.html#retrieveFromLocalStorage">retrieveFromLocalStorage</a></li><li><a href="global.html#saveDOMOrder">saveDOMOrder</a></li><li><a href="global.html#saveState">saveState</a></li><li><a href="global.html#saveTodoOrder">saveTodoOrder</a></li><li><a href="global.html#saveUpdateConfig">saveUpdateConfig</a></li><li><a href="global.html#setSort">setSort</a></li><li><a href="global.html#showLogOut">showLogOut</a></li><li><a href="global.html#showLogin">showLogin</a></li><li><a href="global.html#showMoreDeleteOptions">showMoreDeleteOptions</a></li><li><a href="global.html#showMoreSortOptions">showMoreSortOptions</a></li><li><a href="global.html#showScrollBar">showScrollBar</a></li><li><a href="global.html#signup">signup</a></li><li><a href="global.html#sort">sort</a></li><li><a href="global.html#throttle">throttle</a></li><li><a href="global.html#todoExportString">todoExportString</a></li><li><a href="global.html#tutorial">tutorial</a></li><li><a href="global.html#tutorialOk">tutorialOk</a></li><li><a href="global.html#updateCompletedStatus">updateCompletedStatus</a></li><li><a href="global.html#updateDOM">updateDOM</a></li><li><a href="global.html#updateOneInLocalStorage">updateOneInLocalStorage</a></li><li><a href="global.html#updateTodo">updateTodo</a></li><li><a href="global.html#userSaveToDatabase">userSaveToDatabase</a></li><li><a href="global.html#writeToDatabase">writeToDatabase</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Wed May 14 2025 21:00:53 GMT-0400 (Atlantic Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

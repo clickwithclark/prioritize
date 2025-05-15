@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: todos/processTodo.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: todos/processTodo.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { generateID } from '../utils/generateID.js';
+import { capitalizeFirstLetter } from '../utils/capitalizeFirstLetter.js';
+import { feedbackMessage } from '../utils/feedbackMessage.js';
+
+/**
+ * Processes a todo message into a todo object.
+ * Extracts and formats categories if present, validates the input,
+ * and generates a todo object with a unique ID.
+ *
+ * @function processTodo
+ * @param {String} message - The message to process into a todo.
+ * @returns {Object|null} A todo object with the processed data, or null if an error occurs.
+ */
+export function processTodo(message) {
+  let category = null; // Initialize the category as null
+  let note = message; // Initialize the note with the input message
+
+  // Check for the presence of categories by looking for parentheses
+  if (message.indexOf('(') !== -1) {
+    // An attempt to set up a category is being made
+    try {
+      category = message.match(/(\(.*?\))/).pop(); // Extract the category
+      note = message.replace(category, '').trim(); // Remove the category from the message
+      category = category.replace('(', '').replace(')', '').trim(); // Clean up the category
+      category = capitalizeFirstLetter(category); // Capitalize the first letter of the category
+    } catch (error) {
+      // Handle invalid category format
+      error.message = `Invalid format trying to create a category
+
+Good Example: (Category) task, (Category) other task 
+            
+or 
+            
+(Category): task, other task, . . .  `;
+      feedbackMessage(error.message, 6); // Display an error message
+    }
+  }
+
+  try {
+    // Validate the note to ensure it is not blank
+    if (note.length === 0) {
+      throw new Error(`Task left blank during multi-entry mode
+      Bad Example: task1&lt;span class="bad">, ,&lt;/span>task2
+
+      Good Example: task1&lt;span class="good">,&lt;/span>task2
+      `);
+    }
+
+    note = capitalizeFirstLetter(note); // Capitalize the first letter of the note
+
+    // Create the todo object
+    const TODO = {
+      id: generateID(), // Generate a unique ID for the todo
+      message: note, // Set the note as the message
+      date: new Date(), // Set the current date
+      category, // Include the category (if any)
+      completed: false, // Mark the todo as not completed
+    };
+
+    return TODO; // Return the processed todo object
+  } catch (error) {
+    console.error(error); // Log the error
+    feedbackMessage(error.message, 12); // Display an error message
+    return null; // Return null if an error occurs
+  }
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="categorySort.html">categorySort</a></li><li><a href="dateSort.html">dateSort</a></li></ul><h3>Global</h3><ul><li><a href="global.html#addGlobalEventListener">addGlobalEventListener</a></li><li><a href="global.html#addGrabCursor">addGrabCursor</a></li><li><a href="global.html#addGrabbingCursor">addGrabbingCursor</a></li><li><a href="global.html#addToLocalStorage">addToLocalStorage</a></li><li><a href="global.html#addTodo">addTodo</a></li><li><a href="global.html#addTodoToDOM">addTodoToDOM</a></li><li><a href="global.html#app">app</a></li><li><a href="global.html#cancelDelete">cancelDelete</a></li><li><a href="global.html#capitalizeFirstLetter">capitalizeFirstLetter</a></li><li><a href="global.html#clearUpdateConfig">clearUpdateConfig</a></li><li><a href="global.html#confirmDelete">confirmDelete</a></li><li><a href="global.html#createManyTodos">createManyTodos</a></li><li><a href="global.html#createOneTodo">createOneTodo</a></li><li><a href="global.html#debounce">debounce</a></li><li><a href="global.html#debounceEmpty">debounceEmpty</a></li><li><a href="global.html#deleteAllTodosDialog">deleteAllTodosDialog</a></li><li><a href="global.html#deleteCompletedTask">deleteCompletedTask</a></li><li><a href="global.html#deleteOneFromLocalStorage">deleteOneFromLocalStorage</a></li><li><a href="global.html#deleteSelected">deleteSelected</a></li><li><a href="global.html#draggable">draggable</a></li><li><a href="global.html#dropDownToggle">dropDownToggle</a></li><li><a href="global.html#editTodo">editTodo</a></li><li><a href="global.html#endUpdate">endUpdate</a></li><li><a href="global.html#exportTask">exportTask</a></li><li><a href="global.html#feedbackMessage">feedbackMessage</a></li><li><a href="global.html#feedbackMessageNormal">feedbackMessageNormal</a></li><li><a href="global.html#flipSort">flipSort</a></li><li><a href="global.html#focusOut">focusOut</a></li><li><a href="global.html#generateID">generateID</a></li><li><a href="global.html#getDefaultTodos">getDefaultTodos</a></li><li><a href="global.html#getDragAfterElement">getDragAfterElement</a></li><li><a href="global.html#getEntries">getEntries</a></li><li><a href="global.html#getState">getState</a></li><li><a href="global.html#hideScrollBar">hideScrollBar</a></li><li><a href="global.html#initializeEventListeners">initializeEventListeners</a></li><li><a href="global.html#isOnline">isOnline</a></li><li><a href="global.html#loadGroups">loadGroups</a></li><li><a href="global.html#login">login</a></li><li><a href="global.html#logout">logout</a></li><li><a href="global.html#markTaskComplete">markTaskComplete</a></li><li><a href="global.html#observeUserState">observeUserState</a></li><li><a href="global.html#processGroupedTodos">processGroupedTodos</a></li><li><a href="global.html#processInput">processInput</a></li><li><a href="global.html#processTodo">processTodo</a></li><li><a href="global.html#readFromDatabase">readFromDatabase</a></li><li><a href="global.html#remindUserToSave">remindUserToSave</a></li><li><a href="global.html#removeTodo">removeTodo</a></li><li><a href="global.html#resetAppUI">resetAppUI</a></li><li><a href="global.html#resetLogo">resetLogo</a></li><li><a href="global.html#resetModalUI">resetModalUI</a></li><li><a href="global.html#retrieveFromLocalStorage">retrieveFromLocalStorage</a></li><li><a href="global.html#saveDOMOrder">saveDOMOrder</a></li><li><a href="global.html#saveState">saveState</a></li><li><a href="global.html#saveTodoOrder">saveTodoOrder</a></li><li><a href="global.html#saveUpdateConfig">saveUpdateConfig</a></li><li><a href="global.html#setSort">setSort</a></li><li><a href="global.html#showLogOut">showLogOut</a></li><li><a href="global.html#showLogin">showLogin</a></li><li><a href="global.html#showMoreDeleteOptions">showMoreDeleteOptions</a></li><li><a href="global.html#showMoreSortOptions">showMoreSortOptions</a></li><li><a href="global.html#showScrollBar">showScrollBar</a></li><li><a href="global.html#signup">signup</a></li><li><a href="global.html#sort">sort</a></li><li><a href="global.html#throttle">throttle</a></li><li><a href="global.html#todoExportString">todoExportString</a></li><li><a href="global.html#tutorial">tutorial</a></li><li><a href="global.html#tutorialOk">tutorialOk</a></li><li><a href="global.html#updateCompletedStatus">updateCompletedStatus</a></li><li><a href="global.html#updateDOM">updateDOM</a></li><li><a href="global.html#updateOneInLocalStorage">updateOneInLocalStorage</a></li><li><a href="global.html#updateTodo">updateTodo</a></li><li><a href="global.html#userSaveToDatabase">userSaveToDatabase</a></li><li><a href="global.html#writeToDatabase">writeToDatabase</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Wed May 14 2025 21:00:53 GMT-0400 (Atlantic Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
